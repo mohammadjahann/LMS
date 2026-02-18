@@ -1,11 +1,14 @@
+import { useRoutes } from "react-router-dom"
+import Routes from "./routes"
 
 
 function App() {
 
+  const router = useRoutes(Routes)
 
   return (
     <>
-<div className=" bg-red-300">sssssssssssss</div>
+      {router}
     </>
   )
 }
