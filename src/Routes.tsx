@@ -22,8 +22,8 @@ const Routes: RouteObject[] = [
     {path:'educator-login', element:<EducatorLogIn/>},
     {
         path: '/student', element: <StudentProtected />, children: [
-            { path: '/my-curses', element: <MyCurses /> },
-            { path: '/dashbord', element: <DashBoard /> },
+            { path: 'my-curses', element: <MyCurses /> },
+            { path: 'dashbord', element: <DashBoard /> },
         ]
     },
     { path: '/course/:id', element: <CourseDetails /> },
