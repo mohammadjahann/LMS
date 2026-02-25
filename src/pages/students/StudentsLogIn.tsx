@@ -19,7 +19,7 @@ const StudentsLogIn = () => {
       className=" bg-gradient-to-tr from-blue-50 to-cyan-100 w-full h-[90vh] flex justify-center items-center font-MTNIrancell-Medium">
 
       <div
-        className=" w-[30%] bg-white shadow-2xl rounded-xl flex items-center justify-around flex-col py-4">
+        className=" w-[90%] md:w-[50%] lg:w-[30%] bg-white shadow-2xl rounded-xl flex items-center justify-around flex-col py-4">
 
         {mode === 'login' ? 
           <LogInForm modeHandler={modeHandler}/> : <SignUpForm modeHandler={modeHandler}/>}
