@@ -1,9 +1,28 @@
+import React, { useState } from "react"
+import AuthInput from "./AuthInput"
 
 type props = {
     modeHandler: () => void
 }
 
-const SignUpForm = ({ modeHandler } : props) => {
+const SignUpForm = ({ modeHandler }: props) => {
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        tel: ''
+    })
+
+    const formChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+
+        const { name, value } = e.target
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
     return (
         <>
             <div className=" w-full flex justify-center items-center flex-col gap-2">
@@ -23,26 +42,26 @@ const SignUpForm = ({ modeHandler } : props) => {
 
             <form className=" w-full text-right flex flex-col py-3 px-5 gap-3">
 
-                <div className="flex flex-col items-end gap-2">
-                    <label className=" text-[12px]">ایمیل</label>
-                    <input
-                        className=" w-[70%] h-8 bg-slate-200 text-slate-600 outline-none rounded-md"
-                        type="email" />
-                </div>
+                <AuthInput
+                    name="email"
+                    label="ایمیل"
+                    type="email"
+                    value={formData.email}
+                    formChangeHandler={formChangeHandler} />
 
-                <div className="flex flex-col items-end gap-2">
-                    <label className=" text-[12px]">پسورد</label>
-                    <input
-                        className=" w-[70%] h-8 bg-slate-200 text-slate-600 outline-none rounded-md"
-                        type="email" />
-                </div>
+               <AuthInput
+                    name="password"
+                    label="پسورد"
+                    type="password"
+                    value={formData.password}
+                    formChangeHandler={formChangeHandler} />
 
-                <div className="flex flex-col items-end gap-2">
-                    <label className=" text-[12px]">تلفن همراه</label>
-                    <input
-                        className=" w-[70%] h-8 bg-slate-200 text-slate-600 outline-none rounded-md"
-                        type="email" />
-                </div>
+                    <AuthInput
+                    name="tel"
+                    label="تلفن همراه"
+                    type="tel"
+                    value={formData.tel}
+                    formChangeHandler={formChangeHandler} />
 
                 <button
                     className=" w-full bg-blue-300 py-2 rounded-lg">
