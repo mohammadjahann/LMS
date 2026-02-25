@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import AuthInput from "./AuthInput"
 import AuthHeader from "./AuthHeader"
+import AuthFooter from "./AuthFooter"
 
 type props = {
     modeHandler: () => void
@@ -59,21 +60,8 @@ const SignUpForm = ({ modeHandler }: props) => {
                 </button>
             </form>
 
-            <div
-                className=" w-full flex justify-center items-center flex-col gap-2">
-
-                <div className=" w-[90%] h-[1px] bg-black"></div>
-
-                <p
-                    className="text-[12px]">
-                    اکانت دارید ؟ <span
-                        onClick={() => modeHandler()}
-                        className="text-blue-500 cursor-pointer">
-                        وارد شوید
-                    </span>
-                </p>
-
-            </div>
+            <AuthFooter modeHandler={modeHandler} title="اکانت دارید ؟" callToAction="وارد شوید"/>
+           
         </>
     )
 }
