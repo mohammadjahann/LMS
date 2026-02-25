@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import AuthInput from "./AuthInput"
+import AuthHeader from "./AuthHeader"
 
 type props = {
     modeHandler: () => void
@@ -25,20 +26,9 @@ const SignUpForm = ({ modeHandler }: props) => {
 
     return (
         <>
-            <div className=" w-full flex justify-center items-center flex-col gap-2">
 
-                <h4
-                    className="">
-                    خوش حالیم که قراره به ما بپیوندی
-                </h4>
+            <AuthHeader title="خوش حالیم که قراره به ما بپیوندی" text="حسابی بسازید تا از دنیای اموزش های ما بهره مند شوید" />
 
-                <span className="text-[10px]">
-                    حسابی بسازید تا از دنیای اموزش های ما بهره مند شوید
-                </span>
-
-                <div className=" w-[90%] h-[1px] bg-black"></div>
-
-            </div>
 
             <form className=" w-full text-right flex flex-col py-3 px-5 gap-3">
 
@@ -49,14 +39,14 @@ const SignUpForm = ({ modeHandler }: props) => {
                     value={formData.email}
                     formChangeHandler={formChangeHandler} />
 
-               <AuthInput
+                <AuthInput
                     name="password"
                     label="پسورد"
                     type="password"
                     value={formData.password}
                     formChangeHandler={formChangeHandler} />
 
-                    <AuthInput
+                <AuthInput
                     name="tel"
                     label="تلفن همراه"
                     type="tel"

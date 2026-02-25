@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import AuthInput from "./AuthInput"
+import AuthHeader from "./AuthHeader"
 
 type props = {
     modeHandler: () => void
@@ -23,20 +24,8 @@ const LogInForm = ({ modeHandler }: props) => {
 
     return (
         <>
-            <div className=" w-full flex justify-center items-center flex-col gap-2">
-
-                <h4
-                    className="">
-                    خوش حالیم که برگشتی
-                </h4>
-
-                <span className="text-[10px]">
-                    به اکانت خود وارد شوید تا به دنیای آموزش بروید
-                </span>
-
-                <div className=" w-[90%] h-[1px] bg-black"></div>
-
-            </div>
+            <AuthHeader title="خوش حالیم که برگشتی" text="به اکانت خود وارد شوید تا به دنیای آموزش بروید"/>
+            
 
             <form className=" w-full text-right flex flex-col py-3 px-5 gap-3">
 
