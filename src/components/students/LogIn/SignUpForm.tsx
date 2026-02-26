@@ -3,6 +3,7 @@ import AuthInput from "./AuthInput"
 import AuthHeader from "./AuthHeader"
 import AuthFooter from "./AuthFooter"
 import { supabase } from "../../../supabase"
+import ErrorModal from "./ErrorModal"
 
 type props = {
     modeHandler: () => void
@@ -16,7 +17,11 @@ const SignUpForm = ({ modeHandler }: props) => {
         tel: ''
     })
 
-    const [loadScreen, setLoadScreen] = useState<boolean>(true)
+    const [loadScreen, setLoadScreen] = useState<boolean>(false)
+    const [showError, setShowError] = useState<boolean>(false)
+    const [errorText, setErrorText] = useState<string>('')
+
+    // Manage AuthInput Values
 
     const formChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
 
@@ -28,7 +33,10 @@ const SignUpForm = ({ modeHandler }: props) => {
         }))
     }
 
+    // Signup Logic 
+
     const signUpHandler = async () => {
+        setLoadScreen(true)
         const { email, password } = formData
         const { data, error } = await supabase.auth.signUp({
             email,
@@ -39,12 +47,22 @@ const SignUpForm = ({ modeHandler }: props) => {
 
 
         if (error) {
-            console.log("ERROR:", error.message)
+            console.log("ERROR:", error)
+
+            setErrorText(error.message)
+            setShowError(true)
         } else {
             console.log("USER CREATED:", data)
             alert("ثبت نام موفق 🎉")
         }
 
+    }
+
+    // Close ErrorModal
+
+    const errorModalClose = () : void => {
+        setShowError(false)
+        setLoadScreen(false)
     }
 
     return (
@@ -90,6 +108,10 @@ const SignUpForm = ({ modeHandler }: props) => {
             {/* Loading */}
 
             {loadScreen && <div className=" fixed inset-0 bg-black/50"></div>}
+
+            {/* Error Modal */}
+
+            {showError && <ErrorModal errorText={errorText} errorModalClose={errorModalClose}></ErrorModal>}
         </>
     )
 }
