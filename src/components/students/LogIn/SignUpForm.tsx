@@ -4,6 +4,8 @@ import AuthHeader from "./AuthHeader"
 import AuthFooter from "./AuthFooter"
 import { supabase } from "../../../supabase"
 import ErrorModal from "./ErrorModal"
+import SuccsessModal from "./SuccsessModal"
+
 
 type props = {
     modeHandler: () => void
@@ -20,6 +22,8 @@ const SignUpForm = ({ modeHandler }: props) => {
     const [loadScreen, setLoadScreen] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
     const [errorText, setErrorText] = useState<string>('')
+    const [showSuccsessModal, setShowSuccsessModal] = useState<boolean>(false)
+
 
     // Manage AuthInput Values
 
@@ -38,7 +42,7 @@ const SignUpForm = ({ modeHandler }: props) => {
     const signUpHandler = async () => {
         setLoadScreen(true)
         const { email, password } = formData
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
             email,
             password,
             phone: formData.tel
@@ -47,20 +51,28 @@ const SignUpForm = ({ modeHandler }: props) => {
 
 
         if (error) {
-            console.log("ERROR:", error)
 
             setErrorText(error.message)
             setShowError(true)
+
         } else {
-            console.log("USER CREATED:", data)
-            alert("ثبت نام موفق 🎉")
+
+            setShowSuccsessModal(true)
+
+            setTimeout(() => {
+
+                setShowSuccsessModal(true)
+                setLoadScreen(false)
+                modeHandler()
+
+            }, 3000);
         }
 
     }
 
     // Close ErrorModal
 
-    const errorModalClose = () : void => {
+    const errorModalClose = (): void => {
         setShowError(false)
         setLoadScreen(false)
     }
@@ -112,6 +124,10 @@ const SignUpForm = ({ modeHandler }: props) => {
             {/* Error Modal */}
 
             {showError && <ErrorModal errorText={errorText} errorModalClose={errorModalClose}></ErrorModal>}
+
+            {/* Succsess Modal */}
+
+            {showSuccsessModal && <SuccsessModal text="ثبت نام موفقیت امیز بود " action="لطفا ایمیل خود را تایید کنید" />}
         </>
     )
 }
