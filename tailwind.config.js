@@ -11,6 +11,11 @@ export default {
         'esm': '328px',
         'msm': '500px'
       },
+      fontSize : {
+        'course-deatails-heading-small':['26px','36px'],
+        'course-deatails-heading-large':['36px','44px'],
+        'default':['15px','21px']
+      },
 
       fontFamily: {
         'MTNIrancell-Bold': 'MTNIrancell-Bold',
