@@ -1,3 +1,4 @@
+import Companies from "../../components/students/Companies"
 import Hero from "../../components/students/Hero"
 
 
@@ -6,10 +7,13 @@ const Home = () => {
 
 
   return (
-    <>
-      <Hero />
+    <div
+      className="flex flex-col items-center space-y-7 text-center">
 
-    </>
+      <Hero />
+      <Companies />
+
+    </div>
   )
 }
 
