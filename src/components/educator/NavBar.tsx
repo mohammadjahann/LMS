@@ -1,9 +1,9 @@
 
 
-const NavBar = () => {
+const EducatorNavBar = () => {
   return (
-    <div>NavBar</div>
+    <div>EducatorNavBar</div>
   )
 }
 
-export default NavBar
+export default EducatorNavBar
