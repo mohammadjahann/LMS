@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState, type ChangeEvent } from "react"
-import { dummyCourses } from "../../assets/assets"
+import { assets, dummyCourses } from "../../assets/assets"
 import CourseCard from "../../components/students/CourseCard"
 import type { CourseType } from "../../Types"
 
@@ -40,6 +40,7 @@ const CoursesList = () => {
   const [allData, setAllData] = useState<CourseType[] | []>([])
   const [filteredData, setFilteredData] = useState<CourseType[] | []>([])
   const [activeFilters, setActiveFilters] = useReducer(filterReduser, initialFilterState)
+  const [searchInput, setSearchInput] = useState<string>('')
 
   useEffect(() => {
 
@@ -65,7 +66,7 @@ const CoursesList = () => {
     let finalData = [...allData]
 
     // choose category 
-    if (activeFilters.category !== 'all') {
+    if (activeFilters.category !== 'ََALL') {
       finalData = finalData.filter(
         course => course.category === activeFilters.category
       )
@@ -93,6 +94,15 @@ const CoursesList = () => {
     setFilteredData(finalData)
   }, [activeFilters, allData])
 
+  const handleSearchButtonClick = (): void => {
+    const clone = [...allData]
+    const result = clone.filter(course => course.courseTitle.includes(searchInput))
+    setFilteredData(result)
+    setSearchInput('')
+
+
+  }
+
 
   return (
     <div
@@ -102,10 +112,37 @@ const CoursesList = () => {
       <div
         className=" w-[90%] md:h-[700px] md:w-[73%] overflow-auto bg-white/50 backdrop-blur-3xl shadow-xl border border-white/20  rounded-b-2xl md:rounded-none md:rounded-tl-2xl md:rounded-bl-2xl p-3 flex flex-col gap-3">
 
-        <h3
-          className="font-MTNIrancell-Bold text-[12px] md:text-[18px] text-right">
-          لیست دوره ها
-        </h3>
+        <div className="flex w-full items-center justify-between">
+          <div
+            className="w-[400px] h-[50px] border-[1px] border-gray-400 rounded-md flex items-center justify-between flex-row-reverse px-2">
+
+            <div
+              className="flex flex-row-reverse">
+
+              <img
+                src={assets.search_icon} alt="search icon"
+                className="w-10 md:w-auto px-3" />
+
+              <input
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+                value={searchInput}
+                className="text-right text-black bg-transparent outline-none"
+                type="text" placeholder="جستجو دوره" />
+
+            </div>
+
+            <button
+              onClick={handleSearchButtonClick}
+              className=" bg-blue-500 px-3 py-2 text-white rounded-md">
+              جستجو
+            </button>
+
+          </div>
+          <h3
+            className="font-MTNIrancell-Bold text-[12px] md:text-[18px] text-right">
+            لیست دوره ها
+          </h3>
+        </div>
         <div
           className="flex flex-wrap flex-row-reverse justify-center items-center gap-6">
 
