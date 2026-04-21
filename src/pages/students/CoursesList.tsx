@@ -1,85 +1,102 @@
+import { useEffect, useReducer, useState, type ChangeEvent } from "react"
+import { dummyCourses } from "../../assets/assets"
 import CourseCard from "../../components/students/CourseCard"
+import type { CourseType } from "../../Types"
 
+const coursesData: CourseType[] = dummyCourses
 
-const coursesData = [
-  {
-    id: 245436,
-    courseTitle: 'Pro React',
-    author: 'Jahan abadi',
-    category: 'FRONT',
-    description: 'text',
-    rate: 4.5,
-    price: 1800000,
-    courseBanner: './src/assets/course_1.png',
-    seassens: [
-      {
-        seassenTitle: 'base', seassenChapters: [
-          { chapterTitle: 'install react', chapterSrc: 'https:asd', iswatched: false },
-          { chapterTitle: 'base react structure', chapterSrc: 'https:asd', iswatched: false },
-        ]
-      },
-      {
-        seassenTitle: 'how to code', seassenChapters: [
-          { chapterTitle: 'jsx', chapterSrc: 'https:asd', iswatched: false },
-          { chapterTitle: 'condetinalrendering', chapterSrc: 'https:asd', iswatched: false },
-        ]
-      },
-    ]
-  },
-  {
-    id: 4678,
-    courseTitle: 'Pro React',
-    author: 'Jahan abadi',
-    category: 'FRONT',
-    description: 'text',
-    rate: 4.5,
-    price: 1800000,
-    courseBanner: './src/assets/course_1.png',
-    seassens: [
-      {
-        seassenTitle: 'base', seassenChapters: [
-          { chapterTitle: 'install react', chapterSrc: 'https:asd', iswatched: false },
-          { chapterTitle: 'base react structure', chapterSrc: 'https:asd', iswatched: false },
-        ]
-      },
-      {
-        seassenTitle: 'how to code', seassenChapters: [
-          { chapterTitle: 'jsx', chapterSrc: 'https:asd', iswatched: false },
-          { chapterTitle: 'condetinalrendering', chapterSrc: 'https:asd', iswatched: false },
-        ]
-      },
-    ]
-  },
-  {
-    id: 7567,
-    courseTitle: 'Pro React',
-    author: 'Jahan abadi',
-    category: 'FRONT',
-    description: 'text',
-    rate: 4.5,
-    price: 1800000,
-    courseBanner: './src/assets/course_1.png',
-    seassens: [
-      {
-        seassenTitle: 'base', seassenChapters: [
-          { chapterTitle: 'install react', chapterSrc: 'https:asd', iswatched: false },
-          { chapterTitle: 'base react structure', chapterSrc: 'https:asd', iswatched: false },
-        ]
-      },
-      {
-        seassenTitle: 'how to code', seassenChapters: [
-          { chapterTitle: 'jsx', chapterSrc: 'https:asd', iswatched: false },
-          { chapterTitle: 'condetinalrendering', chapterSrc: 'https:asd', iswatched: false },
-        ]
-      },
-    ]
-  },
-]
+type Filterprops = {
+  category: string,
+  price: string,
+  date: string
+}
+
+type ActionProps = {
+  type: string,
+  payload: string
+}
 
 const CoursesList = () => {
+
+  const filterReduser = (state: Filterprops, action: ActionProps) => {
+
+    switch (action.type) {
+      case 'SET_CATEGORY':
+        return { ...state, category: action.payload };
+      case 'SET_PRICE':
+        return { ...state, price: action.payload };
+      case 'SET_DATE':
+        return { ...state, date: action.payload }
+    }
+
+  }
+
+  const initialFilterState: Filterprops = {
+    category: 'ALL',
+    price: '',
+    date: ''
+  }
+
+  const [allData, setAllData] = useState<CourseType[] | []>([])
+  const [filteredData, setFilteredData] = useState<CourseType[] | []>([])
+  const [activeFilters, setActiveFilters] = useReducer(filterReduser, initialFilterState)
+
+  useEffect(() => {
+
+    const getData = async () => {
+      setAllData(coursesData)
+      setFilteredData(coursesData)
+    }
+
+    getData()
+  }, [])
+
+
+
+  const addFilter = (e: ChangeEvent<HTMLFormElement>): void => {
+
+    const { name, value } = e.target
+
+    setActiveFilters({ type: `SET_${name.toUpperCase()}`, payload: value })
+
+  }
+  useEffect(() => {
+    if (allData.length === 0) return
+    let finalData = [...allData]
+
+    // choose category 
+    if (activeFilters.category !== 'all') {
+      finalData = finalData.filter(
+        course => course.category === activeFilters.category
+      )
+    }
+
+    // Sort by price
+    if (activeFilters.price === 'highest') {
+      finalData.sort((a, b) => b.coursePrice - a.coursePrice)
+    } else if (activeFilters.price === 'lowest') {
+      finalData.sort((a, b) => a.coursePrice - b.coursePrice)
+    }
+
+    // Sort by date 
+    if (activeFilters.date === 'newest') {
+      finalData.sort((a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+    } else if (activeFilters.date === 'oldest') {
+      finalData.sort((a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      )
+    }
+
+
+    setFilteredData(finalData)
+  }, [activeFilters, allData])
+
+
   return (
     <div
-      className="min-h-[100vh] md:h-[650px] bg-gradient-to-b from-cyan-200/70 py-3 px-3 flex flex-col-reverse md:flex-row justify-between items-start gap-3 md:gap-0">
+      className="min-h-[100vh] md:min-h-[650px] bg-gradient-to-b from-cyan-200/70 py-3 px-3 flex flex-col-reverse md:flex-row justify-between items-start gap-3 md:gap-0">
 
 
       <div
@@ -90,9 +107,9 @@ const CoursesList = () => {
           لیست دوره ها
         </h3>
         <div
-          className="flex flex-wrap justify-center items-center gap-6">
+          className="flex flex-wrap flex-row-reverse justify-center items-center gap-6">
 
-          {coursesData.map(course => (<CourseCard id={course.id} src={course.courseBanner} rating={course.rate} title={course.courseTitle} author={course.author} price={course.price} />))}
+          {filteredData.length !== 0 ? filteredData.map(course => (<CourseCard courseData={course} />)) : allData.map(course => (<CourseCard courseData={course} />))}
 
         </div>
       </div>
@@ -116,18 +133,20 @@ const CoursesList = () => {
           </h4>
 
           <form
+            name="category-form"
+            onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
             className=" flex w-full md:flex-col items-end px-3 border-b md:border-black pb-2 text-[8px] md:text-[14px] gap-1">
             <div className=" flex items-center justify-center gap-2">
               <label htmlFor="all">همه</label>
-              <input type='radio' />
+              <input id="all" name="category" type='radio' value={'all'} />
             </div>
             <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all">فرانت اند</label>
-              <input type='radio' />
+              <label htmlFor="front-end">فرانت اند</label>
+              <input id="front-end" name="category" type='radio' value={'FRONT_END'} />
             </div>
             <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all">بک اند</label>
-              <input type='radio' />
+              <label htmlFor="back-end">بک اند</label>
+              <input id="back-end" name="category" type='radio' value={'BACK_END'} />
             </div>
           </form>
 
@@ -142,14 +161,16 @@ const CoursesList = () => {
           </h4>
 
           <form
+            onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
+            name="price-form"
             className=" flex w-full md:flex-col items-end px-3 border-b md:border-black pb-2 text-[8px] md:text-[14px] gap-1">
             <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all">گران ترین</label>
-              <input type='radio' />
+              <label htmlFor="highest">گران ترین</label>
+              <input id="highest" name="price" type='radio' value={'highest'} />
             </div>
             <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all">ارزان ترین</label>
-              <input type='radio' />
+              <label htmlFor="lowest">ارزان ترین</label>
+              <input id="lowest" name="price" type='radio' value={'lowest'} />
             </div>
 
           </form>
@@ -165,14 +186,16 @@ const CoursesList = () => {
           </h4>
 
           <form
+            onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
+            name="date-form"
             className=" flex w-full md:flex-col items-end px-3 border-b md:border-black pb-2 text-[8px] md:text-[14px] gap-1">
             <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all"> جدید ترین</label>
-              <input type='radio' />
+              <label htmlFor="newest"> جدید ترین</label>
+              <input id="newest" name="date" type='radio' value={'newest'} />
             </div>
             <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all"> قدیمی ترین</label>
-              <input type='radio' />
+              <label htmlFor="oldest"> قدیمی ترین</label>
+              <input id="oldest" name="date" type='radio' value={'oldest'} />
             </div>
 
           </form>
