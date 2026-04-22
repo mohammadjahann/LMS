@@ -1,9 +1,11 @@
 import { useEffect, useReducer, useState, type ChangeEvent } from "react"
-import { assets, dummyCourses } from "../../assets/assets"
+import { assets, dummyCourses, filtersData } from "../../assets/assets"
 import CourseCard from "../../components/students/CourseCard"
-import type { CourseType } from "../../Types"
+import type { CourseType, FiltersDataTypes } from "../../Types"
+import Filters from "../../components/students/LogIn/Filters"
 
 const coursesData: CourseType[] = dummyCourses
+const filtersDatas: FiltersDataTypes[] = filtersData
 
 type Filterprops = {
   category: string,
@@ -146,7 +148,7 @@ const CoursesList = () => {
         <div
           className="flex flex-wrap flex-row-reverse justify-center items-center gap-6">
 
-          {filteredData.length !== 0 ? filteredData.map(course => (<CourseCard courseData={course} />)) : allData.map(course => (<CourseCard courseData={course} />))}
+          {filteredData.length !== 0 ? filteredData.map(course => (<CourseCard key={course._id} courseData={course} />)) : allData.map(course => (<CourseCard key={course._id} courseData={course} />))}
 
         </div>
       </div>
@@ -161,83 +163,9 @@ const CoursesList = () => {
           اعمال فیلتر ها
         </h3>
 
-        <div
-          className=" w-[90%] flex flex-row-reverse md:flex-col items-center pt-2">
-
-          <h4
-            className=" text-center pb-1 font-MTNIrancell-Bold text-[10px] md:text-[16px] text-gray-700">
-            کتگوری
-          </h4>
-
-          <form
-            name="category-form"
-            onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
-            className=" flex w-full md:flex-col items-end px-3 border-b md:border-black pb-2 text-[8px] md:text-[14px] gap-1">
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="all">همه</label>
-              <input id="all" name="category" type='radio' value={'all'} />
-            </div>
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="front-end">فرانت اند</label>
-              <input id="front-end" name="category" type='radio' value={'FRONT_END'} />
-            </div>
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="back-end">بک اند</label>
-              <input id="back-end" name="category" type='radio' value={'BACK_END'} />
-            </div>
-          </form>
-
-        </div>
-
-        <div
-          className=" w-[90%] flex flex-row-reverse md:flex-col items-center pt-2">
-
-          <h4
-            className="text-center pb-1 font-MTNIrancell-Bold text-[10px] md:text-[16px] text-gray-700 ">
-            قیمت
-          </h4>
-
-          <form
-            onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
-            name="price-form"
-            className=" flex w-full md:flex-col items-end px-3 border-b md:border-black pb-2 text-[8px] md:text-[14px] gap-1">
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="highest">گران ترین</label>
-              <input id="highest" name="price" type='radio' value={'highest'} />
-            </div>
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="lowest">ارزان ترین</label>
-              <input id="lowest" name="price" type='radio' value={'lowest'} />
-            </div>
-
-          </form>
-
-        </div>
-
-        <div
-          className=" w-[90%] flex flex-row-reverse md:flex-col items-center justify-end pt-2">
-
-          <h4
-            className=" text-center md:pb-1 font-MTNIrancell-Bold text-[10px] md:text-[16px] text-gray-700">
-            ترتیب تاریخ
-          </h4>
-
-          <form
-            onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
-            name="date-form"
-            className=" flex w-full md:flex-col items-end px-3 border-b md:border-black pb-2 text-[8px] md:text-[14px] gap-1">
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="newest"> جدید ترین</label>
-              <input id="newest" name="date" type='radio' value={'newest'} />
-            </div>
-            <div className=" flex items-center justify-center gap-2">
-              <label htmlFor="oldest"> قدیمی ترین</label>
-              <input id="oldest" name="date" type='radio' value={'oldest'} />
-            </div>
-
-          </form>
-
-        </div>
+        {filtersDatas.map((fliter, i) => {
+          return <Filters key={i} filterData={fliter} addFilter={addFilter} />
+        })}
 
       </div>
 
