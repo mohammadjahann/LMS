@@ -1,3 +1,5 @@
+// Course Types
+
 export type ChapterContent = {
   lectureId: string,
   lectureTitle: string,
@@ -22,6 +24,7 @@ export type CourseRatings = {
 
 export type CourseType = {
   _id: string,
+  category: string
   courseTitle: string,
   courseDescription: string,
   coursePrice: number,
@@ -31,9 +34,28 @@ export type CourseType = {
   educator: string,
   enrolledStudents: string[],
   courseRatings: CourseRatings[],
-  createdAt:string,
-  updatedAt:string,
-  __v:number,
-  courseThumbnail:string,
+  createdAt: string,
+  updatedAt: string,
+  __v: number,
+  courseThumbnail: string,
 
+}
+
+////////////////////////////
+
+
+// Filter Types
+
+export type Filters = {
+  title: string,
+  value: string,
+  id: string,
+}
+
+
+export type FiltersDataTypes = {
+  title: string,
+  formName: string,
+  inputsName: string,
+  filters: Filters[],
 }
