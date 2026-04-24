@@ -3,13 +3,24 @@ import { Link } from "react-router-dom"
 import { assets } from "../../assets/assets"
 import type { CourseType } from "../../Types"
 import { MdAddShoppingCart } from "react-icons/md"
+import { useContext } from "react"
+import { AppContext } from "../../context/AppContext"
 
 type Props = {
   courseData: CourseType,
 
 }
 
+
 const CourseCard = ({ courseData }: Props) => {
+
+  const context = useContext(AppContext)
+
+  if (context === null) {
+    throw new Error('error in loading context')
+  }
+
+  const { ratingCalculator } = context
 
   return (
     <div
@@ -38,19 +49,19 @@ const CourseCard = ({ courseData }: Props) => {
         <div
           className=" flex items-center space-x-2">
 
-          <p>4.5</p>
+          <p>{ratingCalculator(courseData.courseRatings)}</p>
 
           <div className="flex">
 
             {[...Array(5)].map((_, i) => (
-              <img key={i} src={assets.star} alt="" className=" w-3.5 h-3.5" />
+              <img key={i} src={i < Math.floor(ratingCalculator(courseData.courseRatings)) ? assets.star : assets.star_blank} alt="" className=" w-3.5 h-3.5" />
             ))}
 
           </div>
 
           <p
             className=" text-gray-500">
-            22
+            {courseData.courseRatings.length}
           </p>
 
         </div>

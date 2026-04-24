@@ -1,4 +1,11 @@
+import { useContext, useEffect, useState } from "react"
 import Session from "../../components/students/Session"
+import EnrollmentCard from "../../components/students/EnrollmentCard"
+import Player from "./Player"
+import { useParams } from "react-router-dom"
+import type { CourseType } from "../../Types"
+import { assets, dummyCourses } from "../../assets/assets"
+import { AppContext } from "../../context/AppContext"
 
 
 const coursesData =
@@ -27,16 +34,42 @@ const coursesData =
   ]
 }
 
-
+const allData: CourseType[] = dummyCourses
 
 
 const CourseDetails = () => {
+
+  const [courseData, setCourseData] = useState<CourseType | null>(null)
+  const [haveAccess,] = useState<boolean>(false)
+
+  const { id } = useParams()
+
+  useEffect(() => {
+
+    const getData: CourseType[] = allData.filter(course => course._id === id)
+
+    setCourseData(getData[0])
+    console.log(getData);
+
+
+  }, [])
+
+  const context = useContext(AppContext)
+
+  if (context === null) {
+    throw new Error('error in loading context')
+  }
+
+  const { ratingCalculator } = context
+
+
+
   return (
     <div
       className=" w-full min-h-screen bg-gradient-to-b from-cyan-100/70 py-2">
 
       {/* container */}
-      <div className="w-[80%] h-[90vh] mx-auto  flex flex-row-reverse items-start justify-between">
+      <div className="w-[90%] md:w-[80%] min-h-[90vh] mx-auto  flex flex-col items-center justify-center md:flex-row-reverse md:items-start md:justify-between">
 
         {/* Course Deatils */}
         <div
@@ -46,16 +79,28 @@ const CourseDetails = () => {
             className="w-full flex flex-col items-end pt-4 text-right ">
             <h3
               className=" font-MTNIrancell-Bold text-[28px]">
-              {coursesData.courseTitle}
+              {courseData?.courseTitle}
             </h3>
 
             <p
-              className=" pr-2 text-black/70">
-              {coursesData.description}
-            </p>
+              className=" pr-2 text-black/70"
+              dangerouslySetInnerHTML={{ __html: courseData?.courseDescription || '' }}></p>
 
-            <div>
-              rate : {coursesData.rate}
+            <div
+              className=" flex items-center space-x-2">
+
+              <p>{ratingCalculator(courseData?.courseRatings || [])}</p>
+
+              <div className="flex">
+
+                {[...Array(5)].map((_, i) => (
+                  <img key={i} src={i < Math.floor(ratingCalculator(courseData?.courseRatings || [])) ? assets.star : assets.star_blank} alt="" className=" w-3.5 h-3.5" />
+                ))}
+
+              </div>
+
+
+
             </div>
 
             <p
@@ -73,8 +118,8 @@ const CourseDetails = () => {
             </h4>
 
             <div
-            className=" w-full flex flex-col items-end overflow-hidden rounded-lg">
-              {coursesData.seassens.map(s=>(<Session data={s}/>))}
+              className=" w-full flex flex-col items-end overflow-hidden rounded-lg">
+              {coursesData.seassens.map(s => (<Session data={s} />))}
             </div>
           </div>
 
@@ -83,8 +128,8 @@ const CourseDetails = () => {
 
         {/* Enrolment / player */}
         <div
-          className="w-[50%]">
-          s
+          className="w-[90%] md:w-[50%]">
+          {haveAccess ? <Player /> : <EnrollmentCard />}
         </div>
 
       </div>
