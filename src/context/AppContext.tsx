@@ -8,7 +8,8 @@ type AppContextType = {
     ratingCalculator: (allRatings: CourseRatings[]) => number,
     humanizrDuration: (time: number) => string,
     chapterDurationCalculator: (chapters: ChapterContent[]) => number,
-    courseDurationCalculator: (courseContent: CourseContent[]) => string
+    courseDurationCalculator: (courseContent: CourseContent[]) => string,
+    lectureCountCalculator: (chapters: CourseContent[]) => number,
 
 }
 
@@ -62,10 +63,23 @@ const AppContextProvider = ({ children }: Props) => {
         return humanizeTime(time)
     }
 
+    // Function to calculate total numbers of chapters
+
+    const lectureCountCalculator = (chapters: CourseContent[]): number => {
+
+        let lectureCount = 0
+
+        chapters.forEach(chapter => {
+            chapter.chapterContent.forEach(() => ++lectureCount)
+        })
+
+        return lectureCount
+    }
+
     const [isDark, setIsDark] = useState(false)
 
     return (
-        <AppContext.Provider value={{ isDark, setIsDark, ratingCalculator, humanizrDuration, chapterDurationCalculator, courseDurationCalculator }}>
+        <AppContext.Provider value={{ isDark, setIsDark, ratingCalculator, humanizrDuration, chapterDurationCalculator, courseDurationCalculator, lectureCountCalculator }}>
             {children}
         </AppContext.Provider>
     )
