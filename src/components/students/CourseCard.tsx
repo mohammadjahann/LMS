@@ -3,8 +3,7 @@ import { Link } from "react-router-dom"
 import { assets } from "../../assets/assets"
 import type { CourseType } from "../../Types"
 import { MdAddShoppingCart } from "react-icons/md"
-import { useContext } from "react"
-import { AppContext } from "../../context/AppContext"
+import { useAppContext } from "../../context/useAppContext"
 
 type Props = {
   courseData: CourseType,
@@ -14,13 +13,7 @@ type Props = {
 
 const CourseCard = ({ courseData }: Props) => {
 
-  const context = useContext(AppContext)
-
-  if (context === null) {
-    throw new Error('error in loading context')
-  }
-
-  const { ratingCalculator } = context
+  const { ratingCalculator } = useAppContext()
 
   return (
     <div

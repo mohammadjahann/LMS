@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Session from "../../components/students/Session"
 import EnrollmentCard from "../../components/students/EnrollmentCard"
 import Player from "./Player"
 import { useParams } from "react-router-dom"
 import type { CourseType } from "../../Types"
 import { assets, dummyCourses } from "../../assets/assets"
-import { AppContext } from "../../context/AppContext"
+import { useAppContext } from "../../context/useAppContext"
 
 
 const coursesData =
@@ -37,6 +37,7 @@ const coursesData =
 const allData: CourseType[] = dummyCourses
 
 
+
 const CourseDetails = () => {
 
   const [courseData, setCourseData] = useState<CourseType | null>(null)
@@ -48,21 +49,13 @@ const CourseDetails = () => {
 
     const getData: CourseType[] = allData.filter(course => course._id === id)
 
+    // eslint-disable-next-line
     setCourseData(getData[0])
-    console.log(getData);
 
 
   }, [])
 
-  const context = useContext(AppContext)
-
-  if (context === null) {
-    throw new Error('error in loading context')
-  }
-
-  const { ratingCalculator } = context
-
-
+  const { ratingCalculator } = useAppContext()
 
   return (
     <div
