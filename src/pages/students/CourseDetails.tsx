@@ -102,19 +102,26 @@ const CourseDetails = () => {
             </p>
           </div>
 
-          <div
-            className="w-full flex flex-col items-end pt-4 text-right ">
+          {/* Course Stracture */}
 
-            <h4
-              className="font-MTNIrancell-Bold text-[20px]">
-              سر فصل ها
-            </h4>
+          <div
+            className=" pt-8 text-gray-800 w-full">
+
+            <h2
+              className=" text-xl font-semibold">
+              ساختار دوره
+            </h2>
 
             <div
-              className=" w-full flex flex-col items-end overflow-hidden rounded-lg">
-              {coursesData.seassens.map(s => (<Session data={s} />))}
+              className=" pt-5 min-w-[70%]">
+              {courseData?.courseContent.map(chapter => (
+                <Session key={chapter.chapterId} chapter={chapter} />
+              )) || ''}
+
             </div>
+
           </div>
+
 
         </div>
 
