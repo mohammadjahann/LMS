@@ -40,3 +40,9 @@
     font-display: swap;
   }
 }
+
+@layer components {
+  .dir {
+    direction: rtl;
+  }
+}
