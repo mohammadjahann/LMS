@@ -6,7 +6,7 @@ type AppContextType = {
     isDark: boolean,
     setIsDark: Dispatch<SetStateAction<boolean>>,
     ratingCalculator: (allRatings: CourseRatings[]) => number,
-    humanizrDuration: (time: number) => string,
+    humanizeTime: (time: number) => string,
     chapterDurationCalculator: (chapters: ChapterContent[]) => number,
     courseDurationCalculator: (courseContent: CourseContent[]) => string,
     lectureCountCalculator: (chapters: CourseContent[]) => number,
@@ -41,7 +41,7 @@ const AppContextProvider = ({ children }: Props) => {
     //Humanize time
     const humanizeTime = (time: number): string => {
 
-        return humanizrDuration(time * 60 * 1000, { units: ['h', 'm'] })
+        return humanizrDuration(time * 60 * 1000, { units: ['h', 'm'], language: 'fa' })
 
     }
 
@@ -79,7 +79,7 @@ const AppContextProvider = ({ children }: Props) => {
     const [isDark, setIsDark] = useState(false)
 
     return (
-        <AppContext.Provider value={{ isDark, setIsDark, ratingCalculator, humanizrDuration, chapterDurationCalculator, courseDurationCalculator, lectureCountCalculator }}>
+        <AppContext.Provider value={{ isDark, setIsDark, ratingCalculator, humanizeTime, chapterDurationCalculator, courseDurationCalculator, lectureCountCalculator }}>
             {children}
         </AppContext.Provider>
     )
