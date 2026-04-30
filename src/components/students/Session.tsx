@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
-import type { CourseContent } from "../../Types";
+import type { ChapterContent, CourseContent } from "../../Types";
 import { useAppContext } from "../../context/useAppContext";
 import { FaLock } from "react-icons/fa";
 
 type Props = {
-    chapter: CourseContent
+    chapter: CourseContent,
+    getLectureData: (lectureData: ChapterContent) => void
 }
 
-const Session = ({ chapter }: Props) => {
+const Session = ({ chapter, getLectureData }: Props) => {
 
     const [showLecture, setShowLecture] = useState<boolean>(false)
 
@@ -54,7 +55,7 @@ const Session = ({ chapter }: Props) => {
                         <div key={lecture.lectureId} className="w-full bg-white border border-r-gray-300 py-1 px-2">
                             <div className="flex items-center justify-end gap-2">
                                 <span
-
+                                    onClick={() => getLectureData(lecture)}
                                     className={`${lecture.isPreviewFree && 'cursor-pointer'}`}>
                                     {lecture.lectureTitle}
                                 </span>

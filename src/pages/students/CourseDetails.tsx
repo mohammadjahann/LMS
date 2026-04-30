@@ -3,7 +3,7 @@ import Session from "../../components/students/Session"
 import EnrollmentCard from "../../components/students/EnrollmentCard"
 import Player from "./Player"
 import { useParams } from "react-router-dom"
-import type { CourseType } from "../../Types"
+import type { ChapterContent, CourseType } from "../../Types"
 import { assets, dummyCourses } from "../../assets/assets"
 import { useAppContext } from "../../context/useAppContext"
 
@@ -41,7 +41,7 @@ const allData: CourseType[] = dummyCourses
 const CourseDetails = () => {
 
   const [courseData, setCourseData] = useState<CourseType | null>(null)
-  const [haveAccess,] = useState<boolean>(false)
+  const [playerData, setPlayerData] = useState<ChapterContent | null>(null)
 
   const { id } = useParams()
 
@@ -56,6 +56,14 @@ const CourseDetails = () => {
   }, [])
 
   const { ratingCalculator } = useAppContext()
+
+  const getLectureData = (lectureData: ChapterContent): void => {
+    if (!lectureData.isPreviewFree) return
+    setPlayerData(lectureData)
+    console.log(lectureData);
+
+
+  }
 
   return (
     <div
@@ -115,7 +123,7 @@ const CourseDetails = () => {
             <div
               className=" pt-5 min-w-[70%]">
               {courseData?.courseContent.map(chapter => (
-                <Session key={chapter.chapterId} chapter={chapter} />
+                <Session key={chapter.chapterId} chapter={chapter} getLectureData={getLectureData} />
               )) || ''}
 
             </div>
@@ -129,7 +137,7 @@ const CourseDetails = () => {
         {/* Enrolment / player */}
         <div
           className="w-[90%] md:w-[50%]">
-          {haveAccess ? <Player /> : <EnrollmentCard />}
+          {playerData ? <Player /> : <EnrollmentCard course={courseData} />}
         </div>
 
       </div>
