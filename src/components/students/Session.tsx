@@ -39,7 +39,7 @@ const Session = ({ chapter, getLectureData }: Props) => {
                     style={{ direction: 'rtl', textAlign: 'right' }}
                     className="flex flex-row-reverse text-sm md:text-default">
                     <span className=" text-right"> تعداد قسمت ها: {chapter.chapterContent.length} </span>
-                    -
+                    ,
                     <span >{humanizeTime(chapterDurationCalculator(chapter.chapterContent))}</span>
                 </p>
 
@@ -56,7 +56,7 @@ const Session = ({ chapter, getLectureData }: Props) => {
                             <div className="flex items-center justify-end gap-2">
                                 <span
                                     onClick={() => getLectureData(lecture)}
-                                    className={`${lecture.isPreviewFree && 'cursor-pointer'}`}>
+                                    className={`dir ${lecture.isPreviewFree && 'cursor-pointer'}`}>
                                     {lecture.lectureTitle}
                                 </span>
                                 {lecture.isPreviewFree ?
