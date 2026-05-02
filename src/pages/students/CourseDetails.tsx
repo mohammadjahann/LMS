@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom"
 import type { ChapterContent, CourseType } from "../../Types"
 import { assets, dummyCourses } from "../../assets/assets"
 import { useAppContext } from "../../context/useAppContext"
+import Loading from "../../components/students/Loading"
 
 
 const allData: CourseType[] = dummyCourses
@@ -23,8 +24,11 @@ const CourseDetails = () => {
 
     const getData: CourseType[] = allData.filter(course => course._id === id)
 
-    // eslint-disable-next-line
-    setCourseData(getData[0])
+    // To simulate Loading
+
+    setTimeout(() => {
+      setCourseData(getData[0])
+    }, 2000);
 
 
   }, [])
@@ -39,7 +43,7 @@ const CourseDetails = () => {
 
   }
 
-  return (
+  return courseData ? <>
     <div
       className=" w-full min-h-screen bg-gradient-to-b from-cyan-100/70 py-2">
 
@@ -117,7 +121,7 @@ const CourseDetails = () => {
       </div>
 
     </div>
-  )
+  </> : <Loading />
 }
 
 export default CourseDetails
