@@ -8,32 +8,6 @@ import { assets, dummyCourses } from "../../assets/assets"
 import { useAppContext } from "../../context/useAppContext"
 
 
-const coursesData =
-{
-  id: 245436,
-  courseTitle: 'ری اکت حرفه ای',
-  author: 'محمد جهان آبادی',
-  category: 'FRONT',
-  description: 'تومل سبیسل حجصف خ نلس کسل گلضفه بلب س خ صحفف صق صخثق صمیسل یلسیل یسلضن ش شففی قجف یمشلنبیل فقفض گکبل ش ضفقف.ل فضلبلنخحضف قمبلای',
-  rate: 4.5,
-  price: 1800000,
-  courseBanner: './src/assets/course_1.png',
-  seassens: [
-    {
-      seassenTitle: 'مباحث پایه', seassenChapters: [
-        { chapterTitle: 'نصب ری اکت', chapterSrc: 'https:asd', iswatched: false, duration: '24:10' },
-        { chapterTitle: 'استراکچر ری اکت', chapterSrc: 'https:asd', iswatched: false, duration: '24:10' },
-      ]
-    },
-    {
-      seassenTitle: 'چطور کد بزنیم', seassenChapters: [
-        { chapterTitle: 'jsx', chapterSrc: 'https:asd', iswatched: false, duration: '24:10' },
-        { chapterTitle: 'رندر شرطی', chapterSrc: 'https:asd', iswatched: false, duration: '24:10' },
-      ]
-    },
-  ]
-}
-
 const allData: CourseType[] = dummyCourses
 
 
@@ -60,7 +34,7 @@ const CourseDetails = () => {
   const getLectureData = (lectureData: ChapterContent): void => {
     if (!lectureData.isPreviewFree) return
     setPlayerData(lectureData)
-    console.log(lectureData);
+
 
 
   }
@@ -84,7 +58,7 @@ const CourseDetails = () => {
             </h3>
 
             <p
-              className=" pr-2 text-black/70"
+              className=" pr-2 text-black/70 dir"
               dangerouslySetInnerHTML={{ __html: courseData?.courseDescription || '' }}></p>
 
             <div
@@ -106,7 +80,7 @@ const CourseDetails = () => {
 
             <p
               className=" text-[16px] font-MTNIrancell-Medium">
-              مدرس : <span>{coursesData.author}</span>
+              مدرس : <span>{courseData?.educator}</span>
             </p>
           </div>
 
@@ -137,7 +111,7 @@ const CourseDetails = () => {
         {/* Enrolment / player */}
         <div
           className="w-[90%] md:w-[50%]">
-          {playerData ? <Player /> : <EnrollmentCard course={courseData} />}
+          {playerData ? <Player lectureData={playerData} /> : <EnrollmentCard course={courseData} />}
         </div>
 
       </div>
