@@ -3,7 +3,6 @@ import Home from "./pages/students/Home";
 import CourseDetails from "./pages/students/CourseDetails";
 import CoursesList from "./pages/students/CoursesList";
 import MyCurses from "./pages/students/MyCurses";
-import Player from "./pages/students/Player";
 import Loading from "./components/students/Loading";
 import Dashboard from "./pages/educator/Dashboard";
 import AddCourse from "./pages/educator/AddCourse";
@@ -23,7 +22,7 @@ const Routes: RouteObject[] = [
             { path: '/courses-list', element: <CoursesList /> },
             { path: '/courses-list/:input', element: <CoursesList /> },
             { path: 'students-login', element: <StudentsLogIn /> },
-            
+
             {
                 path: '/student', element: <StudentProtected />, children: [
                     { path: 'my-curses', element: <MyCurses /> },
@@ -31,13 +30,11 @@ const Routes: RouteObject[] = [
                 ]
             },
             { path: '/course/:id', element: <CourseDetails /> },
-
-            { path: '/player/:courseId', element: <Player /> },
             { path: '/loading/:path', element: <Loading /> },
         ]
     },
     {
-         element: <EducatorLayout />, children: [
+        element: <EducatorLayout />, children: [
             { path: 'educator-login', element: <EducatorLogIn /> },
             { path: 'educator', element: <Dashboard /> },
             { path: 'add-course', element: <AddCourse /> },
