@@ -1,20 +1,28 @@
-import { useState, type ReactElement } from "react"
+import { useEffect, useState, type ReactElement } from "react"
 import { Link, NavLink } from "react-router-dom"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
+import LoggedInPanel from "../LoggedInPanel";
+
+const mockUserData = {
+    name: "محمد"
+}
 
 
 const Navbar = () => {
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [showSideMenu, setShowSideMenu] = useState<boolean>(false)
-
-
-
-
-
     const isActive = ({ isActive }: { isActive: boolean }) => {
         return isActive ? 'border-b-2 border-lime-500 animate-fill-border' : '';
     };
+
+    // Check if user Logged in
+    useEffect(() => {
+
+        // eslint-disable-next-line
+        setIsLoggedIn(true)
+    })
 
     const menu = (styles?: string): ReactElement => {
 
@@ -58,18 +66,22 @@ const Navbar = () => {
 
             {/* Log in Call to actions */}
 
-            <div
-                className=" hidden md:flex flex-row-reverse justify-center items-center gap-9 text-gray-500">
+            {isLoggedIn ? (
+                <LoggedInPanel userData={mockUserData} styles="hidden md:flex items-center" />
+            ) : (
+                <div
+                    className=" hidden md:flex flex-row-reverse justify-center items-center gap-9 text-gray-500">
 
-                <Link to={'educator-login'}>ورود مدرس</Link>
+                    <Link to={'educator-login'}>ورود مدرس</Link>
 
-                <Link
-                    to={'students-login'}
-                    className=" bg-blue-600 text-white px-5 py-2 rounded-full">
-                    ساخت اکانت
-                </Link>
+                    <Link
+                        to={'students-login'}
+                        className=" bg-blue-600 text-white px-5 py-2 rounded-full">
+                        ورود اکانت
+                    </Link>
 
-            </div>
+                </div >
+            )}
 
             {/* Blur when SideMenu is shownig */}
             <div
@@ -86,28 +98,31 @@ const Navbar = () => {
                     className=" text-xl esm:text-2xl"
                     onClick={() => setShowSideMenu(false)} />
                 {menu('flex flex-col text-center text-[15px] esm:text-[17px]')}
-                <div
-                    className=" flex flex-col-reverse justify-center items-center gap-9 text-gray-500">
 
-                    <Link
-                        to={'educator-login'}
-                        className=" border-white/20 border text-white px-3 py-2 rounded-lg">
-                        ورود مدرس
-                    </Link>
+                {isLoggedIn ? <LoggedInPanel userData={mockUserData} styles="flex flex-col items-center gap-4 text-white" sideMenuStyles=" text-white/80 border-white/80 " /> : (
+                    <div
+                        className=" flex flex-col-reverse justify-center items-center gap-9 text-gray-500">
 
-                    <Link
-                        to={'students-login'}
-                        className=" bg-blue-600 text-white px-5 py-2 rounded-full">
-                        ساخت اکانت
-                    </Link>
+                        <Link
+                            to={'educator-login'}
+                            className=" border-white/20 border text-white px-3 py-2 rounded-lg">
+                            ورود مدرس
+                        </Link>
 
-                </div>
+                        <Link
+                            to={'students-login'}
+                            className=" bg-blue-600 text-white px-5 py-2 rounded-full">
+                            ساخت اکانت
+                        </Link>
+
+                    </div>
+                )}
 
             </div>
 
 
 
-        </nav>
+        </nav >
     )
 }
 
