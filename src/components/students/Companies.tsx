@@ -26,8 +26,8 @@ const Companies = () => {
       <div
         className="flex flex-wrap items-center justify-center gap-6 md:gap-16 mt-5 md:mt-10">
 
-        {companiesData.map(company => (
-          <img src={company.src} alt={company.alt} />
+        {companiesData.map((company,i) => (
+          <img key={i} src={company.src} alt={company.alt} />
         ))}
 
       </div>
