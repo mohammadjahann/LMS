@@ -59,3 +59,13 @@ export type FiltersDataTypes = {
   inputsName: string,
   filters: Filters[],
 }
+
+// User 
+
+export type UserProfileDataType = {
+  id: string,
+  name: string,
+  family: string,
+  phone: number,
+  enenrollments: string[],
+}
