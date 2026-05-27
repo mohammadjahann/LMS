@@ -6,6 +6,7 @@ import { supabase } from "../../../supabase"
 import ErrorModal from "./ErrorModal"
 import SuccsessModal from "./SuccsessModal"
 import { useNavigate } from "react-router-dom"
+import useAuth from "../../../hooks/useAuth"
 
 type props = {
     modeHandler: () => void
@@ -25,6 +26,7 @@ const LogInForm = ({ modeHandler }: props) => {
 
     const navigate = useNavigate()
 
+    const { setUserData } = useAuth()
 
     // Handle AuthInputs
 
@@ -37,12 +39,32 @@ const LogInForm = ({ modeHandler }: props) => {
         }))
     }
 
+
+    // Get user Data by ID Function
+    async function getProfileById(userId: string) {
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .single()
+
+        if (error) {
+            console.log(error)
+        } else {
+            setUserData(data)
+        }
+    }
+
+
+
+
+
     // LogIn Logic
 
     const userLogInHandler = async () => {
         setShowLoadScreen(true)
 
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error, data } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password
         })
@@ -52,15 +74,17 @@ const LogInForm = ({ modeHandler }: props) => {
             setShowErrorModal(true)
         } else {
             setShowSuccessModal(true)
-           
+            getProfileById(data.user.id)
+
+
             setTimeout(() => {
-                 navigate('/')
+                navigate('/')
             }, 3000);
         }
 
     }
 
-    const errorModalClose = () :void =>{
+    const errorModalClose = (): void => {
         setShowLoadScreen(false)
         setShowErrorModal(false)
 
@@ -104,11 +128,11 @@ const LogInForm = ({ modeHandler }: props) => {
 
             {/* Error Modal */}
 
-            {showErrorModal && <ErrorModal errorText={errorText} errorModalClose={errorModalClose}/>}
+            {showErrorModal && <ErrorModal errorText={errorText} errorModalClose={errorModalClose} />}
 
             {/* Success Modal */}
 
-            {showSuccessModal && <SuccsessModal text="ورود با موفقیت انجام شد" action="هم اکنون به صفحه اصلی هدایت میشوید"/>}
+            {showSuccessModal && <SuccsessModal text="ورود با موفقیت انجام شد" action="هم اکنون به صفحه اصلی هدایت میشوید" />}
 
         </>
     )
