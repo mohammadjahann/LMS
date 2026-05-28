@@ -16,7 +16,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState<UserProfileDataType | null>(null)
 
   useEffect(() => {
@@ -44,8 +44,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   //   Logout functionF
 
   const logout = async () => {
+    setLoading(true)
     await supabase.auth.signOut()
     setUser(null)
+    setUserData(null)
+    setLoading(false)
   }
 
 
