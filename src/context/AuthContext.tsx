@@ -10,7 +10,9 @@ type AuthContextType = {
   userData: UserProfileDataType | null,
   setUserData: Dispatch<SetStateAction<UserProfileDataType | null>>,
   showBasket: boolean,
-  setShowBasket: Dispatch<SetStateAction<boolean>>
+  setShowBasket: Dispatch<SetStateAction<boolean>>,
+  basketSeter: () => void,
+  isClosing: boolean
 }
 // eslint-disable-next-line
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -20,6 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState<UserProfileDataType | null>(null)
   const [showBasket, setShowBasket] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
 
   useEffect(() => {
     // Get curent session data
@@ -53,9 +56,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false)
   }
 
+  const basketSeter = () => {
+
+    if (showBasket) {
+
+      setIsClosing(true)
+
+      setTimeout(() => {
+        setShowBasket(false)
+      }, 1000);
+
+    } else {
+      setIsClosing(false)
+      setShowBasket(true)
+    }
+  }
+
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout, userData, setUserData, showBasket, setShowBasket }}>
+    <AuthContext.Provider value={{ user, loading, logout, userData, setUserData, showBasket, setShowBasket, isClosing, basketSeter }}>
       {children}
     </AuthContext.Provider>
   )

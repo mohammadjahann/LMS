@@ -15,7 +15,7 @@ const LoggedInPanel = ({ userData, styles = '', sideMenuStyles = 'text-gray-600 
 
 
 
-    const { logout, setShowBasket } = useAuth()
+    const { logout, basketSeter } = useAuth()
 
     return (
         <>
@@ -23,7 +23,7 @@ const LoggedInPanel = ({ userData, styles = '', sideMenuStyles = 'text-gray-600 
             <div
                 className={`${styles} gap-2`}>
 
-                <RiShoppingCartLine onClick={() => setShowBasket(prev => !prev)} className=" cursor-pointer" size={24} color="#333" />
+                <RiShoppingCartLine onClick={basketSeter} className=" cursor-pointer" size={24} color="#333" />
 
                 <button className="loggedin-panel border flex  py-2 px-3 rounded-md text-gray-6 cursor-pointer">
 
