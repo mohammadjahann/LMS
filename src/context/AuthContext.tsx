@@ -8,8 +8,9 @@ type AuthContextType = {
   loading: boolean,
   logout: () => Promise<void>,
   userData: UserProfileDataType | null,
-  setUserData: Dispatch<SetStateAction<UserProfileDataType | null>>
-
+  setUserData: Dispatch<SetStateAction<UserProfileDataType | null>>,
+  showBasket: boolean,
+  setShowBasket: Dispatch<SetStateAction<boolean>>
 }
 // eslint-disable-next-line
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -18,6 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState<UserProfileDataType | null>(null)
+  const [showBasket, setShowBasket] = useState(false)
 
   useEffect(() => {
     // Get curent session data
@@ -53,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout, userData, setUserData }}>
+    <AuthContext.Provider value={{ user, loading, logout, userData, setUserData, showBasket, setShowBasket }}>
       {children}
     </AuthContext.Provider>
   )
