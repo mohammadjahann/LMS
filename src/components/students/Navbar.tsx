@@ -1,28 +1,21 @@
-import { useEffect, useState, type ReactElement } from "react"
+import { useState, type ReactElement } from "react"
 import { Link, NavLink } from "react-router-dom"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import LoggedInPanel from "../LoggedInPanel";
-
-const mockUserData = {
-    name: "محمد"
-}
+import useAuth from "../../hooks/useAuth";
 
 
 const Navbar = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
     const [showSideMenu, setShowSideMenu] = useState<boolean>(false)
     const isActive = ({ isActive }: { isActive: boolean }) => {
         return isActive ? 'border-b-2 border-lime-500 animate-fill-border' : '';
     };
 
-    // Check if user Logged in
-    useEffect(() => {
+    const { userData } = useAuth()
 
-        // eslint-disable-next-line
-        setIsLoggedIn(true)
-    })
 
     const menu = (styles?: string): ReactElement => {
 
@@ -66,8 +59,8 @@ const Navbar = () => {
 
             {/* Log in Call to actions */}
 
-            {isLoggedIn ? (
-                <LoggedInPanel userData={mockUserData} styles="hidden md:flex items-center" />
+            {userData ? (
+                <LoggedInPanel userData={userData} styles="hidden md:flex items-center" />
             ) : (
                 <div
                     className=" hidden md:flex flex-row-reverse justify-center items-center gap-9 text-gray-500">
@@ -99,7 +92,7 @@ const Navbar = () => {
                     onClick={() => setShowSideMenu(false)} />
                 {menu('flex flex-col text-center text-[15px] esm:text-[17px]')}
 
-                {isLoggedIn ? <LoggedInPanel userData={mockUserData} styles="flex flex-col items-center gap-4 text-white" sideMenuStyles=" text-white/80 border-white/80 " /> : (
+                {userData ? <LoggedInPanel userData={userData} styles="flex flex-col items-center gap-4 text-white" sideMenuStyles=" text-white/80 border-white/80 " /> : (
                     <div
                         className=" flex flex-col-reverse justify-center items-center gap-9 text-gray-500">
 
