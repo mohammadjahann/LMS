@@ -1,48 +1,62 @@
-import React from 'react'
+import { IoMdArrowDropdown } from "react-icons/io";
 import { RiShoppingCartLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
+import type { UserProfileDataType } from '../Types'
+import useAuth from '../hooks/useAuth'
 
 type Props = {
-    userData: {
-        name: string,
-    },
+    userData: UserProfileDataType,
     styles?: string
     sideMenuStyles?: string
 }
 
 
 const LoggedInPanel = ({ userData, styles = '', sideMenuStyles = 'text-gray-600 border-gray-500' }: Props) => {
+
+
+
+    const { logout, setShowBasket } = useAuth()
+
     return (
-        <div
-            className={`${styles} gap-2`}>
+        <>
 
-            <RiShoppingCartLine className=" cursor-pointer" size={24} color="#333" />
+            <div
+                className={`${styles} gap-2`}>
 
-            <div className="loggedin-panel">
-                <span
-                    className={`font-MTNIrancell-Bold border  py-2 px-3 rounded-md text-gray-6 cursor-pointer ${sideMenuStyles}`}>
-                    کار بر {userData.name}
-                </span>
+                <RiShoppingCartLine onClick={() => setShowBasket(prev => !prev)} className=" cursor-pointer" size={24} color="#333" />
 
-                <div>
+                <button className="loggedin-panel border flex  py-2 px-3 rounded-md text-gray-6 cursor-pointer">
+
+                    <IoMdArrowDropdown className="panel-icon transition-all duration-200" />
                     <span
-                        className=" border-b border-gray-500 w-full py-1">
-                        <Link to={'/student/dashbord'}>پنل کاربری</Link>
-                    </span>
-                    <span
-                        className=" border-b border-gray-500 w-full py-1">
-                        <Link to={'/student/my-curses'}> دوره های شما</Link>
-                    </span>
-                    <span
-                        className=" pt-1">
-                        خروج
+                        className={`font-MTNIrancell-Bold  ${sideMenuStyles}`}>
+                        کار بر {userData.name}
+
                     </span>
 
-                </div>
+
+
+                    <div className='panel'>
+                        <span
+                            className=" border-b border-gray-500 w-full py-1">
+                            <Link to={'/student/dashbord'}>پنل کاربری</Link>
+                        </span>
+                        <span
+                            className=" border-b border-gray-500 w-full py-1">
+                            <Link to={'/student/my-curses'}> دوره های شما</Link>
+                        </span>
+                        <span
+                            onClick={() => logout()}
+                            className=" pt-1">
+                            خروج
+                        </span>
+
+                    </div>
+
+                </button>
 
             </div>
-
-        </div>
+        </>
     )
 }
 
