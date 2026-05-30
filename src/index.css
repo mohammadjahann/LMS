@@ -76,5 +76,33 @@
     }
   }
 
+  @keyframes basket-in {
+    0% {
+      transform: translateX(130%);
+    }
+
+    100% {
+      transform: translateX(0)
+    }
+  }
+
+  @keyframes basket-out {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(130%)
+    }
+  }
+
+  .basket-in {
+    animation: basket-in .7s ease-out
+  }
+
+  .basket-out {
+    animation: basket-out .7s ease-out forwards
+  }
+
 
 }

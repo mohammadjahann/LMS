@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import LoggedInPanel from "../LoggedInPanel";
 import useAuth from "../../hooks/useAuth";
+import UserBasket from "./UserBasket";
 
 
 const Navbar = () => {
@@ -14,7 +15,7 @@ const Navbar = () => {
         return isActive ? 'border-b-2 border-lime-500 animate-fill-border' : '';
     };
 
-    const { userData } = useAuth()
+    const { userData, showBasket } = useAuth()
 
 
     const menu = (styles?: string): ReactElement => {
@@ -35,7 +36,7 @@ const Navbar = () => {
     return (
         <nav
             className={`font-MTNIrancell-DemiBold flex  flex-row-reverse items-center justify-between px-4 sm:px-10 md:px-14 lg:px-36 border-b border-gray-500 py-4 bg-cyan-100/70`}>
-
+            {showBasket && <UserBasket />}
             {/* Logo */}
             <Link to={'/'}>
                 <img
@@ -60,7 +61,7 @@ const Navbar = () => {
             {/* Log in Call to actions */}
 
             {userData ? (
-                <LoggedInPanel userData={userData} styles="hidden md:flex items-center" />
+                <LoggedInPanel userData={userData} styles="hidden md:flex items-center gap-10" />
             ) : (
                 <div
                     className=" hidden md:flex flex-row-reverse justify-center items-center gap-9 text-gray-500">
