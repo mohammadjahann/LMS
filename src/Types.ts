@@ -62,10 +62,16 @@ export type FiltersDataTypes = {
 
 // User 
 
+type EnroledData = {
+  courseID: string,
+  watchedLecture: string[]
+}
+
 export type UserProfileDataType = {
   id: string,
   name: string,
   family: string,
   phone: number,
-  enenrollments: string[],
+  enrollments: EnroledData[],
+  basket: string[]
 }
