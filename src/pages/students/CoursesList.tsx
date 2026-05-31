@@ -1,10 +1,12 @@
 import { useEffect, useReducer, useState, type ChangeEvent } from "react"
-import { assets, dummyCourses, filtersData } from "../../assets/assets"
+import { assets, filtersData } from "../../assets/assets"
 import CourseCard from "../../components/students/CourseCard"
 import type { CourseType, FiltersDataTypes } from "../../Types"
 import Filters from "../../components/students/LogIn/Filters"
+import { useAppDispatch, useAppSelector } from "../../redux/student/hooks"
+import { fetchProducts } from "../../redux/student/productSlice"
 
-const coursesData: CourseType[] = dummyCourses
+// const coursesData: CourseType[] = dummyCourses
 const filtersDatas: FiltersDataTypes[] = filtersData
 
 type Filterprops = {
@@ -19,6 +21,8 @@ type ActionProps = {
 }
 
 const CoursesList = () => {
+
+
 
   const filterReduser = (state: Filterprops, action: ActionProps) => {
 
@@ -39,21 +43,20 @@ const CoursesList = () => {
     date: ''
   }
 
-  const [allData, setAllData] = useState<CourseType[] | []>([])
+  const { products, status } = useAppSelector(state => state.productsData)
+
   const [filteredData, setFilteredData] = useState<CourseType[] | []>([])
   const [activeFilters, setActiveFilters] = useReducer(filterReduser, initialFilterState)
   const [searchInput, setSearchInput] = useState<string>('')
 
+  // fetch Data if isnt fetched
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
-
-    const getData = async () => {
-      setAllData(coursesData)
-      setFilteredData(coursesData)
+    if (status !== 'FULLFILED') {
+      dispatch(fetchProducts())
     }
-
-    getData()
   }, [])
-
 
 
   const addFilter = (e: ChangeEvent<HTMLFormElement>): void => {
@@ -63,9 +66,10 @@ const CoursesList = () => {
     setActiveFilters({ type: `SET_${name.toUpperCase()}`, payload: value })
 
   }
+
   useEffect(() => {
-    if (allData.length === 0) return
-    let finalData = [...allData]
+    if (products.length === 0) return
+    let finalData = [...products]
 
     // choose category 
     if (activeFilters.category !== 'ََALL') {
@@ -92,12 +96,12 @@ const CoursesList = () => {
       )
     }
 
-
+    // eslint-disable-next-line
     setFilteredData(finalData)
-  }, [activeFilters, allData])
+  }, [activeFilters, products])
 
   const handleSearchButtonClick = (): void => {
-    const clone = [...allData]
+    const clone = [...products]
     const result = clone.filter(course => course.courseTitle.includes(searchInput))
     setFilteredData(result)
     setSearchInput('')
@@ -145,12 +149,22 @@ const CoursesList = () => {
             لیست دوره ها
           </h3>
         </div>
-        <div
-          className="flex flex-wrap flex-row-reverse justify-center items-center gap-6">
+        {status === 'FULLFILED' ? (
+          <div
+            className="flex flex-wrap flex-row-reverse justify-center items-center gap-6">
 
-          {filteredData.length !== 0 ? filteredData.map(course => (<CourseCard key={course._id} courseData={course} />)) : allData.map(course => (<CourseCard key={course._id} courseData={course} />))}
+            {filteredData.length !== 0 ? filteredData.map(course => (<CourseCard key={course._id} courseData={course} />)) : products.map(course => (<CourseCard key={course._id} courseData={course} />))}
 
-        </div>
+          </div>
+        ) : (
+          <div className=" w-full flex items-center justify-center my-8 flex-col gap-3">
+            <h4>بارگذاری دوره ها</h4>
+            <div
+              className=" w-16 sm:w-20 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Filter Section */}
