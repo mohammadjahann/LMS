@@ -4,13 +4,10 @@ import EnrollmentCard from "../../components/students/EnrollmentCard"
 import Player from "./Player"
 import { useParams } from "react-router-dom"
 import type { ChapterContent, CourseType } from "../../Types"
-import { assets, dummyCourses } from "../../assets/assets"
+import { assets } from "../../assets/assets"
 import { useAppContext } from "../../context/useAppContext"
-import Loading from "../../components/students/Loading"
-
-
-const allData: CourseType[] = dummyCourses
-
+import { useAppDispatch, useAppSelector } from "../../redux/student/hooks"
+import { fetchProducts } from "../../redux/student/productSlice"
 
 
 const CourseDetails = () => {
@@ -20,18 +17,21 @@ const CourseDetails = () => {
 
   const { id } = useParams()
 
+  const { products, status } = useAppSelector(state => state.productsData)
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
 
-    const getData: CourseType[] = allData.filter(course => course._id === id)
+    if (status !== 'FULLFILED') {
+      dispatch(fetchProducts())
+    }
 
-    // To simulate Loading
+    const getData: CourseType[] = products.filter(course => course._id === id)
 
-    setTimeout(() => {
-      setCourseData(getData[0])
-    }, 2000);
+    // eslint-disable-next-line
+    setCourseData(getData[0])
 
-
-  }, [])
+  }, [status])
 
   const { ratingCalculator } = useAppContext()
 
@@ -40,88 +40,95 @@ const CourseDetails = () => {
     setPlayerData(lectureData)
 
 
-
   }
 
-  return courseData ? <>
-    <div
-      className=" w-full min-h-screen bg-gradient-to-b from-cyan-100/70 py-2">
+  return (
+    <>
+      <div
+        className=" w-full min-h-screen bg-gradient-to-b from-cyan-100/70 py-2">
 
-      {/* container */}
-      <div className="w-[90%] md:w-[80%] min-h-[90vh] mx-auto  flex flex-col items-center justify-center md:flex-row-reverse md:items-start md:justify-between">
+        {status === 'FULLFILED' ? <div className="w-[90%] md:w-[80%] min-h-[90vh] mx-auto  flex flex-col items-center justify-center md:flex-row-reverse md:items-start md:justify-between">
 
-        {/* Course Deatils */}
-        <div
-          className="w-[50%] flex flex-col items-end pt-4 text-right gap-8">
-
+          {/* Course Deatils */}
           <div
-            className="w-full flex flex-col items-end pt-4 text-right ">
-            <h3
-              className=" font-MTNIrancell-Bold text-[28px]">
-              {courseData?.courseTitle}
-            </h3>
-
-            <p
-              className=" pr-2 text-black/70 dir"
-              dangerouslySetInnerHTML={{ __html: courseData?.courseDescription || '' }}></p>
+            className="w-[50%] flex flex-col items-end pt-4 text-right gap-8">
 
             <div
-              className=" flex items-center space-x-2">
+              className="w-full flex flex-col items-end pt-4 text-right ">
+              <h3
+                className=" font-MTNIrancell-Bold text-[28px]">
+                {courseData?.courseTitle}
+              </h3>
 
-              <p>{ratingCalculator(courseData?.courseRatings || [])}</p>
+              <p
+                className=" pr-2 text-black/70 dir"
+                dangerouslySetInnerHTML={{ __html: courseData?.courseDescription || '' }}></p>
 
-              <div className="flex">
+              <div
+                className=" flex items-center space-x-2">
 
-                {[...Array(5)].map((_, i) => (
-                  <img key={i} src={i < Math.floor(ratingCalculator(courseData?.courseRatings || [])) ? assets.star : assets.star_blank} alt="" className=" w-3.5 h-3.5" />
-                ))}
+                <p>{ratingCalculator(courseData?.courseRatings || [])}</p>
+
+                <div className="flex">
+
+                  {[...Array(5)].map((_, i) => (
+                    <img key={i} src={i < Math.floor(ratingCalculator(courseData?.courseRatings || [])) ? assets.star : assets.star_blank} alt="" className=" w-3.5 h-3.5" />
+                  ))}
+
+                </div>
+
+
 
               </div>
 
-
-
+              <p
+                className=" text-[16px] font-MTNIrancell-Medium">
+                مدرس : <span>{courseData?.educator}</span>
+              </p>
             </div>
 
-            <p
-              className=" text-[16px] font-MTNIrancell-Medium">
-              مدرس : <span>{courseData?.educator}</span>
-            </p>
-          </div>
-
-          {/* Course Stracture */}
-
-          <div
-            className=" pt-8 text-gray-800 w-full">
-
-            <h2
-              className=" text-xl font-semibold">
-              ساختار دوره
-            </h2>
+            {/* Course Stracture */}
 
             <div
-              className=" pt-5 min-w-[70%]">
-              {courseData?.courseContent.map(chapter => (
-                <Session key={chapter.chapterId} chapter={chapter} getLectureData={getLectureData} />
-              )) || ''}
+              className=" pt-8 text-gray-800 w-full">
+
+              <h2
+                className=" text-xl font-semibold">
+                ساختار دوره
+              </h2>
+
+              <div
+                className=" pt-5 min-w-[70%]">
+                {courseData?.courseContent.map(chapter => (
+                  <Session key={chapter.chapterId} chapter={chapter} getLectureData={getLectureData} />
+                )) || ''}
+
+              </div>
 
             </div>
+
 
           </div>
 
 
-        </div>
+          {/* Enrolment / player */}
+          <div
+            className="w-[90%] md:w-[50%]">
+            {playerData ? <Player lectureData={playerData} /> : <EnrollmentCard course={courseData} />}
+          </div>
 
+        </div> : <div className=" w-full flex items-center justify-center my-8 flex-col gap-3">
+          <h4>بارگذاری داده ها</h4>
+          <div
+            className=" w-16 sm:w-20 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
 
-        {/* Enrolment / player */}
-        <div
-          className="w-[90%] md:w-[50%]">
-          {playerData ? <Player lectureData={playerData} /> : <EnrollmentCard course={courseData} />}
-        </div>
+          </div>
+        </div>}
+
 
       </div>
-
-    </div>
-  </> : <Loading />
+    </>
+  )
 }
 
 export default CourseDetails
