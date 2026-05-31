@@ -23,12 +23,12 @@ export const fetchProducts = createAsyncThunk(
 )
 
 type StateType = {
-    poducts: CourseType[],
+    products: CourseType[],
     status: "" | "LOADING" | "FULLFILED" | "FAILED"
 }
 
 const initialState: StateType = {
-    poducts: [],
+    products: [],
     status: ""
 
 }
@@ -50,7 +50,7 @@ const productSlice = createSlice({
             })
 
             .addCase(fetchProducts.fulfilled, (state, action) => {
-                state.poducts = action.payload
+                state.products = action.payload
                 state.status = 'FULLFILED'
             })
 
