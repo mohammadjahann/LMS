@@ -7,6 +7,8 @@ import ErrorModal from "./ErrorModal"
 import SuccsessModal from "./SuccsessModal"
 import { useNavigate } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
+import { useDispatch } from "react-redux"
+import cartSlice from "../../../redux/student/cartSlice"
 
 type props = {
     modeHandler: () => void
@@ -39,6 +41,8 @@ const LogInForm = ({ modeHandler }: props) => {
         }))
     }
 
+    const dispatch = useDispatch()
+    const { fetchData } = cartSlice.actions
 
     // Get user Data by ID Function
     async function getProfileById(userId: string) {
@@ -52,6 +56,7 @@ const LogInForm = ({ modeHandler }: props) => {
             console.log(error)
         } else {
             setUserData(data)
+            dispatch(fetchData(data.basket))
         }
     }
 
