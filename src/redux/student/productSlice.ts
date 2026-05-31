@@ -4,7 +4,7 @@ import type { CourseType } from "../../Types";
 
 
 
-const fetchProducts = createAsyncThunk(
+export const fetchProducts = createAsyncThunk(
 
     'fetchProducts',
 

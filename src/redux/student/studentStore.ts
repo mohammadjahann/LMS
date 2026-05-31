@@ -4,7 +4,9 @@ import productSlice from "./productSlice";
 
 
 const studentStore = configureStore({
-    reducer: productSlice.reducer
+    reducer: {
+        productsData: productSlice.reducer,
+    }
 })
 
 export type RootState = ReturnType<typeof studentStore.getState>
