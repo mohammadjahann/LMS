@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-const initialState: string[] | [] = []
+const initialState: string[] = []
 
 const cartSlice = createSlice({
 
@@ -9,13 +9,13 @@ const cartSlice = createSlice({
     initialState,
 
     reducers: {
-        fetchData: (_, action) => {
+        fetchData: (_, action: PayloadAction<string[]>) => {
             return action.payload
         },
-        addToCart: (state, action) => {
+        addToCart: (state, action: PayloadAction<string>) => {
             return [...state, action.payload]
         },
-        removeFromCart: (state, action) => {
+        removeFromCart: (state, action: PayloadAction<string>) => {
             return state.filter(id => id !== action.payload)
         }
     }
