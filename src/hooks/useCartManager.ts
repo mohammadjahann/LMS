@@ -10,7 +10,7 @@ const useCartManager = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const { user, userData, setUserData } = useAuth()
+    const { userData, setUserData } = useAuth()
 
     // RTK
     const cartData = useAppSelector(state => state.cartData)
@@ -22,7 +22,7 @@ const useCartManager = () => {
 
 
 
-        if (!user) {
+        if (!userData) {
             toast.error('لطفا ابتدا وارد اکانت خود شوید')
             return
         }
