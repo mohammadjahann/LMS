@@ -1,9 +1,10 @@
-// import { Link } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { assets } from "../../assets/assets"
 import type { CourseType } from "../../Types"
 import { MdAddShoppingCart } from "react-icons/md"
 import { useAppContext } from "../../context/useAppContext"
+import useCartManager from "../../hooks/useCartManager"
+
 
 type Props = {
   courseData: CourseType,
@@ -14,10 +15,11 @@ type Props = {
 const CourseCard = ({ courseData }: Props) => {
 
   const { ratingCalculator } = useAppContext()
+  const { addToCartHandler, loading } = useCartManager()
 
   return (
     <div
-      className=" flex flex-col gap-2 items-end justify-between border border-gray-500/30 overflow-hidden pb-4 rounded-lg w-[80%] esm:w-[65%] md:w-[45%] lg:w-[24%] h-[350px]">
+      className=" flex flex-col gap-2 items-end justify-between border border-gray-500/30 overflow-hidden pb-4 rounded-lg w-[100%] esm:w-[65%] md:w-[45%] lg:w-[24%] h-[350px]">
 
       <img
         className="w-full max-h-[200px]"
@@ -75,9 +77,16 @@ const CourseCard = ({ courseData }: Props) => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             اطلاعات بیشتر
           </Link>
-          <button>
-            <MdAddShoppingCart className=" text-blue-400 hover:text-blue-600 transition-colors duration-300" size={24} />
-          </button>
+          {loading ? (
+            <div
+              className=" w-4 sm:w-5 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+            </div>
+          ) : (
+            <button>
+              <MdAddShoppingCart onClick={() => addToCartHandler(courseData._id)} className=" text-blue-400 hover:text-blue-600 transition-colors duration-300" size={24} />
+            </button>
+          )}
         </div>
 
       </div>
