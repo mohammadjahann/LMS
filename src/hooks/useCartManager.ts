@@ -3,9 +3,12 @@ import cartSlice from "../redux/student/cartSlice"
 import { useAppDispatch, useAppSelector } from "../redux/student/hooks"
 import useAuth from "./useAuth"
 import { supabase } from "../supabase"
+import { useState } from "react"
 
 
 const useCartManager = () => {
+
+    const [loading, setLoading] = useState(false)
 
     const { user, userData, setUserData } = useAuth()
 
@@ -39,6 +42,8 @@ const useCartManager = () => {
             return
         }
 
+
+        setLoading(true)
         const updatedCart = [...cartData, ID]
 
         try {
@@ -68,6 +73,8 @@ const useCartManager = () => {
             console.log(er);
 
             toast.error('خطای ناشناخته');
+        } finally {
+            setLoading(false)
         }
 
 
@@ -75,7 +82,7 @@ const useCartManager = () => {
     }
 
 
-    return { addToCartHandler }
+    return { addToCartHandler, loading }
 }
 
 export default useCartManager
