@@ -1,27 +1,16 @@
 import useAuth from "../../hooks/useAuth"
-import { useAppSelector } from "../../redux/student/hooks"
-import type { CourseType } from "../../Types"
 import { MdDelete } from "react-icons/md";
 import useCartManager from "../../hooks/useCartManager";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import useExtractCartData from "../../hooks/useExtractCartData";
 
 
 const UserBasket = () => {
 
     const { isClosing, basketSeter } = useAuth()
-    const cartData = useAppSelector(state => state.cartData)
-    const products = useAppSelector(state => state.productsData.products)
 
-    const cartSet = new Set(cartData)
-
-    const productsinCartData: CourseType[] = products.filter(product => cartSet.has(product._id))
-
-    let totalPrice = 0
-
-    productsinCartData.forEach(product => {
-        totalPrice += product.coursePrice - (product.coursePrice * product.discount) / 100
-    })
+    const { productsinCartData, totalPrice } = useExtractCartData()
 
     const { removeFromCartHandler } = useCartManager()
 
