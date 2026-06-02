@@ -13,6 +13,7 @@ import StudentsLogIn from "./pages/students/StudentsLogIn";
 import EducatorLogIn from "./pages/educator/EducatorLogIn";
 import StudentLayout from "./pages/students/StudentLayout";
 import EducatorLayout from "./pages/educator/EducatorLayout";
+import Cart from "./pages/students/Cart";
 
 
 const Routes: RouteObject[] = [
@@ -27,6 +28,7 @@ const Routes: RouteObject[] = [
                 path: '/student', element: <StudentProtected />, children: [
                     { path: 'my-curses', element: <MyCurses /> },
                     { path: 'dashbord', element: <DashBoard /> },
+                    { path: 'cart', element: <Cart /> },
                 ]
             },
             { path: '/course/:id', element: <CourseDetails /> },
