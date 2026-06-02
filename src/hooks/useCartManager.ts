@@ -14,7 +14,7 @@ const useCartManager = () => {
 
     // RTK
     const cartData = useAppSelector(state => state.cartData)
-    const { addToCart } = cartSlice.actions
+    const { addToCart, removeFromCart } = cartSlice.actions
     const dispatch = useAppDispatch()
 
 
@@ -81,8 +81,36 @@ const useCartManager = () => {
 
     }
 
+    const removeFromCartHandler = async (ID: string) => {
 
-    return { addToCartHandler, loading }
+        try {
+
+            const updatedData = cartData.filter(id => id !== ID)
+
+            const { error } = await supabase
+                .from('profiles')
+                .update({
+                    basket: updatedData
+                })
+                .eq('id', userData?.id)
+
+            if (error) throw error
+
+            dispatch(removeFromCart(ID))
+
+            toast.success('محصول از سبد خرید شما حذف شد')
+
+        } catch (error) {
+            toast.error('مشکلی پیش امده است')
+            console.log(error);
+
+        }
+    }
+
+
+
+
+    return { addToCartHandler, loading, removeFromCartHandler }
 }
 
 export default useCartManager
