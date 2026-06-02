@@ -15,9 +15,11 @@ const StudentLayout = (): ReactNode => {
 
     return (
         <>
-            <Navbar />
-            {loading ? <Loading /> : <Provider store={studentStore}> <ToastContainer rtl /><Outlet /></Provider>}
-            <Footer />
+            <Provider store={studentStore}>
+                <Navbar />
+                {loading ? <Loading /> : <> <ToastContainer rtl /><Outlet /></>}
+                <Footer />
+            </Provider>
         </>
     )
 }
