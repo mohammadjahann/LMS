@@ -1,16 +1,11 @@
-import { Outlet, useNavigate } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
 
 
 const StudentProtected = () => {
+  const { user } = useAuth()
 
-  const navigate = useNavigate()
-
-  // simulate logged in 
-  const isLoggedIn = true
-
-  if (!isLoggedIn) navigate('/students-login')
-
-  return <Outlet />
+  return user ? <Outlet /> : <Navigate to="/students-login" replace />;
 }
 
 export default StudentProtected
