@@ -1,4 +1,5 @@
 
+import useCartManager from "../../hooks/useCartManager"
 import useExtractCartData from "../../hooks/useExtractCartData"
 import type { Dispatch, SetStateAction } from "react"
 
@@ -10,6 +11,7 @@ type Props = {
 const Chekout = ({ setShowCheckout }: Props) => {
 
     const { productsinCartData, totalPrice } = useExtractCartData()
+    const { successPay, loading } = useCartManager()
 
     return (
         <div
@@ -93,18 +95,29 @@ const Chekout = ({ setShowCheckout }: Props) => {
                 </div>
 
                 {/* Footer */}
-                <div className="border-t bg-gray-50 p-5 flex flex-col sm:flex-row gap-3">
+                <div className="border-t bg-gray-50 p-5 flex flex-col sm:flex-row justify-between gap-3">
 
-                    <button
-                        className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-xl font-bold transition">
-                        اتصال به درگاه
-                    </button>
+                    {loading ? (
+                        <div
+                            className=" w-8 h-8 mx-auto aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
 
-                    <button
-                        onClick={() => setShowCheckout(false)}
-                        className="flex-1 border border-red-300 text-red-500 hover:bg-red-50 py-3 rounded-xl font-bold transition">
-                        لغو
-                    </button>
+                        </div>
+                    ) : (
+                        <>
+                            <button
+                                onClick={successPay}
+                                className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-xl font-bold transition">
+                                اتصال به درگاه
+                            </button>
+                            <button
+                                onClick={() => setShowCheckout(false)}
+                                className="flex-1 border border-red-300 text-red-500 hover:bg-red-50 py-3 rounded-xl font-bold transition">
+                                لغو
+                            </button>
+                        </>
+                    )}
+
+
 
                 </div>
 

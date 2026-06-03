@@ -4,9 +4,13 @@ import { useAppDispatch, useAppSelector } from "../redux/student/hooks"
 import useAuth from "./useAuth"
 import { supabase } from "../supabase"
 import { useState } from "react"
+import type { EnroledData } from "../Types"
+import { useNavigate } from "react-router-dom"
 
 
 const useCartManager = () => {
+
+    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -131,10 +135,59 @@ const useCartManager = () => {
 
     }
 
+    const successPay = async () => {
+
+        try {
+
+            setLoading(true)
+            const updatedData: EnroledData[] = []
+
+            cartData.forEach(product => {
+                updatedData.push({
+                    courseID: product,
+                    watchedLecture: []
+                })
+            })
+
+            const { error } = await supabase
+                .from('profiles')
+                .update({
+                    enrollments: [...userData?.enrollments ?? [], ...updatedData],
+                    basket: []
+                })
+                .eq('id', userData?.id)
+
+            if (error) throw error;
+
+            setUserData(prev => {
+                if (!prev) return null;
+                return { ...prev, enrollments: [...userData?.enrollments ?? [], ...updatedData] }
+            })
+
+            dispatch(cartEmptier())
+
+            toast.success('پرداخت با موفقیت انجام شد')
+            toast.info('در حال هدایت به صفحه دوره ها')
+
+            setTimeout(() => {
+                navigate('/student/my-curses')
+            }, 1500);
+
+
+        } catch (error) {
+            toast.error('خطای ناشناخته')
+            console.log(error);
+
+        } finally {
+            setLoading(false)
+        }
+
+    }
 
 
 
-    return { addToCartHandler, loading, removeFromCartHandler, cartEmptierHandler }
+
+    return { addToCartHandler, loading, removeFromCartHandler, cartEmptierHandler, successPay }
 }
 
 export default useCartManager
