@@ -1,8 +1,12 @@
+import { useState } from "react"
 import useCartManager from "../../hooks/useCartManager"
 import useExtractCartData from "../../hooks/useExtractCartData"
+import Chekout from "../../components/students/Chekout"
 
 
 const Cart = () => {
+
+    const [showCheckout, setShowCheckout] = useState(false)
 
     const { productsinCartData, totalPrice } = useExtractCartData()
 
@@ -10,8 +14,12 @@ const Cart = () => {
     const { removeFromCartHandler, cartEmptierHandler, loading } = useCartManager()
 
 
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-cyan-100 p-4 md:p-8 font-MTNIrancell-Medium" dir="rtl">
+        <div className="min-h-screen bg-gradient-to-br from-cyan-100 p-4 md:p-8 font-MTNIrancell-Medium relative" dir="rtl">
+            {/* Chekout */}
+
+            {showCheckout && <Chekout setShowCheckout={setShowCheckout} />}
 
             <div className="max-w-7xl mx-auto">
 
@@ -120,7 +128,9 @@ const Cart = () => {
 
                         </div>
 
-                        <button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-xl font-semibold transition">
+                        <button
+                            onClick={() => setShowCheckout(true)}
+                            className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-xl font-semibold transition">
                             تسویه حساب
                         </button>
 
