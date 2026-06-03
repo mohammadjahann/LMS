@@ -3,10 +3,11 @@ import { assets } from '../../assets/assets'
 import { useAppContext } from '../../context/useAppContext'
 
 type Props = {
-    course: CourseType | null
+    course: CourseType | null,
+    isEnrolled: boolean
 }
 
-const EnrollmentCard = ({ course }: Props) => {
+const EnrollmentCard = ({ course, isEnrolled }: Props) => {
 
 
 
@@ -73,10 +74,17 @@ const EnrollmentCard = ({ course }: Props) => {
 
                 </div>
 
-                <button
-                    className=' mt-4 md:mt-6 w-full py-3 bg-blue-600 text-white font-MTNIrancell-Medium rounded '>
-                    افزودن به سبد خرید
-                </button>
+                {isEnrolled ? (
+                    <div
+                        className=' mt-4 md:mt-6 w-full py-3 bg-blue-600 text-white font-MTNIrancell-Medium rounded  text-center '>
+                        شما دانشجو دوره هستید
+                    </div>
+                ) : (
+                    <button
+                        className=' mt-4 md:mt-6 w-full py-3 bg-blue-600 text-white font-MTNIrancell-Medium rounded '>
+                        افزودن به سبد خرید
+                    </button>
+                )}
 
                 <div className=' pt-6'>
 

@@ -8,17 +8,21 @@ import { assets } from "../../assets/assets"
 import { useAppContext } from "../../context/useAppContext"
 import { useAppDispatch, useAppSelector } from "../../redux/student/hooks"
 import { fetchProducts } from "../../redux/student/productSlice"
+import useAuth from "../../hooks/useAuth"
 
 
 const CourseDetails = () => {
 
+  const [isEnrolled, setIsEnrolled] = useState(false)
   const [courseData, setCourseData] = useState<CourseType | null>(null)
   const [playerData, setPlayerData] = useState<ChapterContent | null>(null)
 
   const { id } = useParams()
-
+  // RTK
   const { products, status } = useAppSelector(state => state.productsData)
   const dispatch = useAppDispatch()
+
+  const { userData } = useAuth()
 
   useEffect(() => {
 
@@ -26,10 +30,29 @@ const CourseDetails = () => {
       dispatch(fetchProducts())
     }
 
+    // Check if user erolled the course
+
     const getData: CourseType[] = products.filter(course => course._id === id)
 
-    // eslint-disable-next-line
-    setCourseData(getData[0])
+    const enrollmentData = userData?.enrollments.find(product => product.courseID === id)
+
+    // Make links watchable
+    if (enrollmentData) {
+
+      const clone = { ...getData[0] }
+
+      const updatedCoursecontent = getData[0].courseContent.map(chapter => ({ ...chapter, chapterContent: chapter.chapterContent.map(lecture => ({ ...lecture, isPreviewFree: true })) }))
+
+      clone.courseContent = updatedCoursecontent
+
+      // eslint-disable-next-line
+      setCourseData(clone)
+      setIsEnrolled(true)
+
+    } else {
+      setCourseData(getData[0])
+    }
+
 
   }, [status])
 
@@ -114,7 +137,7 @@ const CourseDetails = () => {
           {/* Enrolment / player */}
           <div
             className="w-[90%] md:w-[50%]">
-            {playerData ? <Player lectureData={playerData} /> : <EnrollmentCard course={courseData} />}
+            {playerData ? <Player lectureData={playerData} /> : <EnrollmentCard course={courseData} isEnrolled={isEnrolled} />}
           </div>
 
         </div> : <div className=" w-full flex items-center justify-center my-8 flex-col gap-3">
