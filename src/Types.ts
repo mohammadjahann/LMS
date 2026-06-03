@@ -62,7 +62,7 @@ export type FiltersDataTypes = {
 
 // User 
 
-type EnroledData = {
+export type EnroledData = {
   courseID: string,
   watchedLecture: string[]
 }
