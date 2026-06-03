@@ -1,25 +1,54 @@
-import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { mockMyCoursesData } from "../../assets/assets"
-import type { CourseType } from "../../Types"
 import useAppContext from "../../hooks/useAppContext"
+import useAuth from "../../hooks/useAuth"
+import { useAppSelector } from "../../redux/student/hooks"
+import type { CourseType } from "../../Types"
 
-const mockData = mockMyCoursesData
 
 const MyCurses = () => {
 
-  const [myCoursesData, setMyCoursesData] = useState<CourseType[] | null>(null)
-
   const { courseDurationCalculator } = useAppContext()
 
-  useEffect(() => {
+  const { userData } = useAuth()
 
-    // simulate get Data
+  const products = useAppSelector(state => state.productsData.products)
 
-    // eslint-disable-next-line
-    setMyCoursesData(mockData)
+  const enrolledIDs: string[] = []
 
-  }, [])
+  userData?.enrollments.forEach(product => enrolledIDs.push(product.courseID))
+
+  const enrolledSet = new Set(enrolledIDs)
+
+  const enrolledData = products.filter(product => enrolledSet.has(product._id))
+
+  const watchedLectureCount = (ID: string) => {
+
+    const selectedCourse = userData?.enrollments.filter(product => product.courseID === ID)
+
+    if (!selectedCourse) return 10;
+
+    let count = 0
+
+    selectedCourse[0].watchedLecture.forEach(() => ++count)
+
+
+    return count
+  }
+
+  const allLectureCount = (course: CourseType) => {
+
+    let count = 0
+
+    course.courseContent.forEach(chapter => {
+      chapter.chapterContent.forEach(() => ++count)
+
+    })
+
+    return count
+
+  }
+
+
   return (
     <>
       <div
@@ -49,7 +78,7 @@ const MyCurses = () => {
 
           <tbody
             className=" text-gray-700">
-            {myCoursesData?.map(course => (
+            {enrolledData?.map(course => (
               <tr key={course._id}
                 className=" max-sm:grid max-sm:grid-cols-4">
 
@@ -69,7 +98,7 @@ const MyCurses = () => {
                 </td>
 
                 <td className=" px-4 py-3 max-sm:hidden">
-                  4 / 10 <span>قسمت</span>
+                  {watchedLectureCount(course._id)} / {allLectureCount(course)} <span>قسمت</span>
                 </td>
 
                 <td className=" px-4 py-3 max-sm:text-left">
