@@ -7,7 +7,7 @@ const Cart = () => {
     const { productsinCartData, totalPrice } = useExtractCartData()
 
     // RTK
-    const { removeFromCartHandler } = useCartManager()
+    const { removeFromCartHandler, cartEmptierHandler, loading } = useCartManager()
 
 
     return (
@@ -21,9 +21,18 @@ const Cart = () => {
                         سبد خرید
                     </h1>
 
-                    <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-xl transition">
-                        پاک کردن همه
-                    </button>
+                    {loading ? (
+                        <div
+                            className=" w-4 sm:w-5 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+                        </div>
+                    ) : (
+                        <button
+                            onClick={cartEmptierHandler}
+                            className="bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-xl transition">
+                            پاک کردن همه
+                        </button>)}
+
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -63,7 +72,7 @@ const Cart = () => {
 
                                                 </div>
                                                 <span className="text-xl font-bold text-cyan-600">
-                                                    {product.coursePrice.toLocaleString('fa-IR')} تومان
+                                                    {(product.coursePrice - ((product.coursePrice * product.discount) / 100)).toLocaleString('fa-IR')} تومان
                                                 </span>
 
                                             </div>
@@ -73,7 +82,6 @@ const Cart = () => {
                                                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition w-full sm:w-[150px]">
                                                 حذف محصول
                                             </button>
-
                                         </div>
                                     </div>
                                 </div>
