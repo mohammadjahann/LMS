@@ -137,7 +137,7 @@ const CourseDetails = () => {
           {/* Enrolment / player */}
           <div
             className="w-[90%] md:w-[50%]">
-            {playerData ? <Player lectureData={playerData} /> : <EnrollmentCard course={courseData} isEnrolled={isEnrolled} />}
+            {playerData ? <Player lectureData={playerData} courseID={courseData?._id} isEnrolled={isEnrolled} /> : <EnrollmentCard course={courseData} isEnrolled={isEnrolled} />}
           </div>
 
         </div> : <div className=" w-full flex items-center justify-center my-8 flex-col gap-3">
