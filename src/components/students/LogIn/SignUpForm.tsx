@@ -16,7 +16,9 @@ const SignUpForm = ({ modeHandler }: props) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        tel: ''
+        tel: '',
+        name: '',
+        family: ''
     })
 
     const [loadScreen, setLoadScreen] = useState<boolean>(false)
@@ -42,7 +44,7 @@ const SignUpForm = ({ modeHandler }: props) => {
     const signUpHandler = async () => {
         setLoadScreen(true)
         const { email, password } = formData
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email,
             password,
             phone: formData.tel
@@ -56,6 +58,20 @@ const SignUpForm = ({ modeHandler }: props) => {
             setShowError(true)
 
         } else {
+
+            const { error } = await supabase
+                .from('profiles')
+                .insert({
+                    id: data.user?.id,
+                    name: formData.name,
+                    family: formData.family,
+                    phone: formData.tel,
+                    basket: [],
+                    enrollments: []
+                })
+
+            if (error) console.log(error);
+
 
             setShowSuccsessModal(true)
 
@@ -86,6 +102,19 @@ const SignUpForm = ({ modeHandler }: props) => {
             <form
                 onSubmit={(e: React.SubmitEvent<HTMLFormElement>) => e.preventDefault()}
                 className=" w-full text-right flex flex-col py-3 px-5 gap-3">
+
+                <AuthInput
+                    name="name"
+                    label="نام شما"
+                    type="text"
+                    value={formData.name}
+                    formChangeHandler={formChangeHandler} />
+                <AuthInput
+                    name="family"
+                    label="نام خانوادگی شما"
+                    type="text"
+                    value={formData.family}
+                    formChangeHandler={formChangeHandler} />
 
                 <AuthInput
                     name="email"
