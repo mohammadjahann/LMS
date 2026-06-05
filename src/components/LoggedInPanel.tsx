@@ -43,6 +43,10 @@ const LoggedInPanel = ({ userData, styles = '', sideMenuStyles = 'text-gray-600 
                         </span>
                         <span
                             className=" border-b border-gray-500 w-full py-1">
+                            <Link to={'/student/cart'}> سبد خرید</Link>
+                        </span>
+                        <span
+                            className=" border-b border-gray-500 w-full py-1">
                             <Link to={'/student/my-curses'}> دوره های شما</Link>
                         </span>
                         <span
