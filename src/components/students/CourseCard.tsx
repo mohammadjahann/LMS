@@ -19,7 +19,7 @@ const CourseCard = ({ courseData }: Props) => {
 
   return (
     <div
-      className=" flex flex-col gap-2 items-end justify-between border border-gray-500/30 overflow-hidden pb-4 rounded-lg w-[100%] esm:w-[65%] md:w-[45%] lg:w-[24%] h-[350px]">
+      className=" flex flex-col gap-2 items-end justify-between border border-gray-500/30 overflow-hidden pb-4 rounded-lg w-[100%]  h-[350px] font-MTNIrancell-Medium">
 
       <img
         className="w-full max-h-[200px]"
@@ -72,7 +72,7 @@ const CourseCard = ({ courseData }: Props) => {
         <div
           className=" w-full flex flex-row-reverse items-center gap-1">
           <Link
-            className=" w-[85%] py-2 bg-blue-400 text-center rounded-md text-white hover:bg-blue-600 transition-colors duration-300"
+            className=" w-[85%] py-2 bg-cyan-600 text-center rounded-md text-white hover:bg-cyan-700 transition-colors duration-300"
             to={`/course/${courseData._id}`}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             اطلاعات بیشتر
@@ -83,8 +83,10 @@ const CourseCard = ({ courseData }: Props) => {
 
             </div>
           ) : (
-            <button>
-              <MdAddShoppingCart onClick={() => addToCartHandler(courseData._id)} className=" text-blue-400 hover:text-blue-600 transition-colors duration-300" size={24} />
+            <button
+              onClick={() => addToCartHandler(courseData._id)}
+              className=" border border-cyan-200 p-1 rounded-md hover:bg-cyan-100 transition-colors duration-100">
+              <MdAddShoppingCart className=" text-blue-400  transition-colors duration-300" size={24} />
             </button>
           )}
         </div>
