@@ -4,9 +4,14 @@ import type { FiltersDataTypes } from "../../../Types"
 type Props = {
     filterData: FiltersDataTypes
     addFilter: (e: ChangeEvent<HTMLFormElement>) => void
+    activeFilters: {
+        category: 'ALL' | 'FRONT_END' | 'BACK_END',
+        price: '' | 'highest' | 'lowest',
+        date: '' | 'newest' | 'oldest'
+    }
 }
 
-const Filters = ({ filterData, addFilter }: Props) => {
+const Filters = ({ filterData, addFilter, activeFilters }: Props) => {
     return (
         <div
             className="
@@ -44,6 +49,7 @@ const Filters = ({ filterData, addFilter }: Props) => {
                             name={filterData.inputsName}
                             type="radio"
                             value={filter.value}
+                            checked={activeFilters[filterData.inputsName as keyof typeof activeFilters] === filter.value}
                             className=" h-4 w-4 accent-cyan-600 cursor-pointer" />
                     </label>
                 ))}

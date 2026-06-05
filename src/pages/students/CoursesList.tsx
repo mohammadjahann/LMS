@@ -226,6 +226,7 @@ const CoursesList = () => {
               key={i}
               filterData={filter}
               addFilter={addFilter}
+              activeFilters={activeFilters}
             />
           ))}
         </div>
