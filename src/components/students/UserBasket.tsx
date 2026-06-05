@@ -19,7 +19,7 @@ const UserBasket = () => {
 
     return (
         <div
-            className={`dir fixed right-[5%] top-[11%] w-[90%] sm:w-[420px]  h-[80vh] bg-white z-10 rounded-2xl shadow-2xl overflow-hidden flex flex-col items-end ${isClosing ? "basket-out" : "basket-in"}`}>
+            className={`dir fixed right-[5%] top-[11%] w-[90%] sm:w-[420px]  h-[80vh] bg-white z-[60] rounded-2xl shadow-2xl overflow-hidden flex flex-col items-end ${isClosing ? "basket-out" : "basket-in"}`}>
             {/* Header */}
             <div className="border-b p-2 sm:p-5 w-full flex items-center justify-between">
                 <h2 className="text-xl font-bold flex items-center gap-2">
@@ -95,6 +95,7 @@ const UserBasket = () => {
                 </div>
 
                 <Link
+                    onClick={basketSeter}
                     to={'/student/cart'}
                     className="w-full text-[10px] sm:text-[16px] inline-block text-center py-2 sm:py-3 rounded-xl bg-cyan-600 text-white font-bold hover:bg-cyan-700 transition">
                     ادامه فرایند خرید
