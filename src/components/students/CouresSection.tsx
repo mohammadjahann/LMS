@@ -11,8 +11,8 @@ const CouresSection = () => {
   return (
 
     <div
-      className=" w-full  bg-gradient-to-t from-cyan-100/70 ">
-      <div className="flex flex-col justify-center items-center my-3 gap-4 py-16 px-8 md:px-40">
+      className=" w-full  bg-gradient-to-t from-cyan-100/70  ">
+      <div className="flex flex-col justify-center items-center my-3 gap-4 py-16 px-8 md:px-20 lg:px-40">
 
         <h2
           className="text-3xl font-MTNIrancell-Light text-gray-800">
@@ -27,7 +27,7 @@ const CouresSection = () => {
 
         {status === 'FULLFILED' ? (
           <div
-            className=" w-full flex items-center justify-center gap-2 flex-wrap">
+            className=" w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 ">
             {products.slice(0, 4).map((course) => (
 
               <CourseCard courseData={course} key={course._id} />
@@ -50,7 +50,7 @@ const CouresSection = () => {
         <Link
           to={'/courses-list'}
           onClick={() => scrollTo(0, 0)}
-          className="text-gray-500 border border-gray-500/30 px-10 py-3 rounded mt-4">
+          className="text-gray-500 border border-gray-500/30 px-10 py-3 rounded mt-4 bg-cyan-600 text-white">
           نمایش تمام دوره ها
         </Link>
 
