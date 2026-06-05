@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
 import type { ChapterContent, CourseContent } from "../../Types";
-import { useAppContext } from "../../context/useAppContext";
-import { FaLock } from "react-icons/fa";
+import { useAppContext } from "../../context/useAppContext"
+import Lecture from "./Lecture";
 
 type Props = {
     chapter: CourseContent,
-    getLectureData: (lectureData: ChapterContent) => void
+    getLectureData: (lectureData: ChapterContent) => void,
+    isEnrolled: boolean;
 }
 
-const Session = ({ chapter, getLectureData }: Props) => {
+const Session = ({ chapter, getLectureData, isEnrolled }: Props) => {
 
     const [showLecture, setShowLecture] = useState<boolean>(false)
 
@@ -51,21 +52,7 @@ const Session = ({ chapter, getLectureData }: Props) => {
                 <div
                     className={`overflow-hidden transition-all duration-300 ${showLecture ? 'opacity-100' : 'opacity-0'}`}>
                     {/* lectures */}
-                    {chapter.chapterContent.map(lecture => (
-                        <div key={lecture.lectureId} className="w-full bg-white border border-r-gray-300 py-1 px-2">
-                            <div className="flex items-center justify-end gap-2">
-                                <span
-                                    onClick={() => getLectureData(lecture)}
-                                    className={`dir ${lecture.isPreviewFree && 'cursor-pointer'}`}>
-                                    {lecture.lectureTitle}
-                                </span>
-                                {lecture.isPreviewFree ?
-                                    <img src={assets.play_icon} alt="" className=" cursor-pointer" /> :
-                                    <FaLock />
-                                }
-                            </div>
-                        </div>
-                    ))}
+                    {chapter.chapterContent.map(lecture => <Lecture isEnrolled={isEnrolled} key={lecture.lectureId} lectureData={lecture} getLectureData={getLectureData} />)}
                 </div>
             </div>
 
