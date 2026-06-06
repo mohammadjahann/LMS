@@ -1,22 +1,25 @@
-import { Outlet } from "react-router-dom"
-import DashBoardNav from "../../components/students/DashBoardNav"
-
+import { Outlet } from "react-router-dom";
+import DashBoardNav from "../../components/students/DashBoardNav";
 
 const DashBoard = () => {
   return (
     <div
-      className="dir w-full h-screen bg-gradient-to-b from-cyan-100 to-cyan-50 font-MTNIrancell-Medium">
+      className="dir min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-blue-50 py-8">
 
-      <div className=" px-4 sm:px-10 md:px-14 lg:px-36 flex flex-col md:flex-row h-full">
+      <div
+        className="w-[95%] xl:w-[85%] mx-auto flex flex-col md:flex-row gap-6 ">
 
-        {/* DashBoard nav */}
         <DashBoardNav />
 
-        <Outlet />
+        <div
+          className="flex-1 bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-6">
+          <Outlet />
+        </div>
+
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default DashBoard
+export default DashBoard;
