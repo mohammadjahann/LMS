@@ -14,6 +14,7 @@ import EducatorLogIn from "./pages/educator/EducatorLogIn";
 import StudentLayout from "./pages/students/StudentLayout";
 import EducatorLayout from "./pages/educator/EducatorLayout";
 import Cart from "./pages/students/Cart";
+import OverallData from "./components/students/OverallData";
 
 
 const Routes: RouteObject[] = [
@@ -29,7 +30,7 @@ const Routes: RouteObject[] = [
                     { path: 'my-curses', element: <MyCurses /> },
                     {
                         path: 'dashbord', element: <DashBoard />, children: [
-                            { path: 'overal', element: <div className=" w-full">overal</div> },
+                            { path: 'overal', element: <OverallData /> },
                             { path: 'checkouts', element: <div className=" w-full">checkOut</div> },
                         ]
                     },
