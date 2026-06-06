@@ -27,7 +27,12 @@ const Routes: RouteObject[] = [
             {
                 path: '/student', element: <StudentProtected />, children: [
                     { path: 'my-curses', element: <MyCurses /> },
-                    { path: 'dashbord', element: <DashBoard /> },
+                    {
+                        path: 'dashbord', element: <DashBoard />, children: [
+                            { path: 'overal', element: <div className=" w-full">overal</div> },
+                            { path: 'checkouts', element: <div className=" w-full">checkOut</div> },
+                        ]
+                    },
                     { path: 'cart', element: <Cart /> },
                 ]
             },
