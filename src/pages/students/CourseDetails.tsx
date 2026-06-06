@@ -1,157 +1,250 @@
-import { useEffect, useState } from "react"
-import Session from "../../components/students/Session"
-import EnrollmentCard from "../../components/students/EnrollmentCard"
-import Player from "./Player"
-import { useParams } from "react-router-dom"
-import type { ChapterContent, CourseType } from "../../Types"
-import { assets } from "../../assets/assets"
-import { useAppContext } from "../../context/useAppContext"
-import { useAppDispatch, useAppSelector } from "../../redux/student/hooks"
-import { fetchProducts } from "../../redux/student/productSlice"
-import useAuth from "../../hooks/useAuth"
-
+import { useEffect, useState } from "react";
+import Session from "../../components/students/Session";
+import EnrollmentCard from "../../components/students/EnrollmentCard";
+import Player from "./Player";
+import { useParams } from "react-router-dom";
+import type {
+  ChapterContent,
+  CourseType,
+} from "../../Types";
+import { assets } from "../../assets/assets";
+import { useAppContext } from "../../context/useAppContext";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../redux/student/hooks";
+import { fetchProducts } from "../../redux/student/productSlice";
+import useAuth from "../../hooks/useAuth";
 
 const CourseDetails = () => {
 
-  const [isEnrolled, setIsEnrolled] = useState(false)
-  const [courseData, setCourseData] = useState<CourseType | null>(null)
-  const [playerData, setPlayerData] = useState<ChapterContent | null>(null)
+  const [isEnrolled, setIsEnrolled] =
+    useState(false);
 
-  const { id } = useParams()
-  // RTK
-  const { products, status } = useAppSelector(state => state.productsData)
-  const dispatch = useAppDispatch()
+  const [courseData, setCourseData] =
+    useState<CourseType | null>(null);
 
-  const { userData } = useAuth()
+  const [playerData, setPlayerData] =
+    useState<ChapterContent | null>(null);
+
+  const { id } = useParams();
+
+  const {
+    products,
+    status,
+  } = useAppSelector(
+    state => state.productsData
+  );
+
+  const dispatch = useAppDispatch();
+
+  const { userData } = useAuth();
 
   useEffect(() => {
 
-    if (status !== 'FULLFILED') {
-      dispatch(fetchProducts())
+    if (status !== "FULLFILED") {
+      dispatch(fetchProducts());
     }
 
-    // Check if user erolled the course
+    const getData =
+      products.filter(
+        course => course._id === id
+      );
 
-    const getData: CourseType[] = products.filter(course => course._id === id)
+    if (!getData.length) return;
 
-    const enrollmentData = userData?.enrollments.find(product => product.courseID === id)
+    const enrollmentData =
+      userData?.enrollments.find(
+        product => product.courseID === id
+      );
 
-    // Make links watchable
     if (enrollmentData) {
 
-      const clone = { ...getData[0] }
+      const clone = { ...getData[0] };
 
-      const updatedCoursecontent = getData[0].courseContent.map(chapter => ({ ...chapter, chapterContent: chapter.chapterContent.map(lecture => ({ ...lecture, isPreviewFree: true })) }))
-
-      clone.courseContent = updatedCoursecontent
+      clone.courseContent =
+        getData[0].courseContent.map(
+          chapter => ({
+            ...chapter,
+            chapterContent:
+              chapter.chapterContent.map(
+                lecture => ({
+                  ...lecture,
+                  isPreviewFree: true,
+                })
+              ),
+          })
+        );
 
       // eslint-disable-next-line
-      setCourseData(clone)
-      setIsEnrolled(true)
+      setCourseData(clone);
+      setIsEnrolled(true);
 
     } else {
-      setCourseData(getData[0])
+      setCourseData(getData[0]);
     }
 
+  }, [
+    status,
+    products,
+    id,
+    userData,
+    dispatch,
+  ]);
 
-  }, [status])
+  const { ratingCalculator } =
+    useAppContext();
 
-  const { ratingCalculator } = useAppContext()
+  const getLectureData = (
+    lectureData: ChapterContent
+  ) => {
 
-  const getLectureData = (lectureData: ChapterContent): void => {
-    if (!lectureData.isPreviewFree) return
-    setPlayerData(lectureData)
+    if (!lectureData.isPreviewFree)
+      return;
 
+    setPlayerData(lectureData);
+  };
 
+  if (status !== "FULLFILED") {
+    return (
+      <div
+        className=" min-h-screen flex flex-col items-center justify-center gap-5">
+        <div
+          className="w-16 h-16 rounded-full border-4 border-slate-200 border-t-cyan-500 animate-spin" />
+
+        <p className="text-slate-500">
+          در حال بارگذاری...
+        </p>
+      </div>
+    );
   }
 
   return (
-    <>
+    <div
+      className=" min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-blue-50 py-8">
+
       <div
-        className=" w-full min-h-screen bg-gradient-to-b from-cyan-100/70 py-2">
+        className="w-[95%] xl:w-[85%] mx-auto flex flex-col lg:flex-row gap-8">
 
-        {status === 'FULLFILED' ? <div className="w-[90%] md:w-[80%] min-h-[90vh] mx-auto  flex flex-col items-center justify-center md:flex-row-reverse md:items-start md:justify-between">
+        {/* Sidebar */}
 
-          {/* Course Deatils */}
+        <div
+          className="w-full lg:w-[40%]">
+          {playerData ? (
+            <Player
+              lectureData={playerData}
+              courseID={courseData?._id || ""}
+              isEnrolled={isEnrolled}
+            />
+          ) : (
+            <EnrollmentCard
+              course={courseData}
+              isEnrolled={isEnrolled}
+            />
+          )}
+        </div>
+
+        {/* Content */}
+
+        <div
+          className="w-full lg:w-[60%] flex flex-col gap-6 ">
+
           <div
-            className="w-[50%] flex flex-col items-end pt-4 text-right gap-8">
+            className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-6 text-right">
+
+            <h1
+              className="text-3xl font-MTNIrancell-Bold text-slate-800">
+              {courseData?.courseTitle}
+            </h1>
 
             <div
-              className="w-full flex flex-col items-end pt-4 text-right ">
-              <h3
-                className=" font-MTNIrancell-Bold text-[28px]">
-                {courseData?.courseTitle}
-              </h3>
+              className="flex justify-end items-center gap-3 mt-5">
+              <span>
+                {ratingCalculator(
+                  courseData?.courseRatings || []
+                )}
+              </span>
 
-              <p
-                className=" pr-2 text-black/70 dir"
-                dangerouslySetInnerHTML={{ __html: courseData?.courseDescription || '' }}></p>
-
-              <div
-                className=" flex items-center space-x-2">
-
-                <p>{ratingCalculator(courseData?.courseRatings || [])}</p>
-
-                <div className="flex">
-
-                  {[...Array(5)].map((_, i) => (
-                    <img key={i} src={i < Math.floor(ratingCalculator(courseData?.courseRatings || [])) ? assets.star : assets.star_blank} alt="" className=" w-3.5 h-3.5" />
-                  ))}
-
-                </div>
-
-
-
+              <div className="flex">
+                {[...Array(5)].map(
+                  (_, i) => (
+                    <img
+                      key={i}
+                      src={
+                        i <
+                          Math.floor(
+                            ratingCalculator(
+                              courseData?.courseRatings ||
+                              []
+                            )
+                          )
+                          ? assets.star
+                          : assets.star_blank
+                      }
+                      alt=""
+                      className="w-4 h-4"
+                    />
+                  )
+                )}
               </div>
-
-              <p
-                className=" text-[16px] font-MTNIrancell-Medium">
-                مدرس : <span>{courseData?.educator}</span>
-              </p>
             </div>
-
-            {/* Course Stracture */}
 
             <div
-              className=" pt-8 text-gray-800 w-full">
+              className="mt-5 text-slate-600 leading-8 dir"
+              dangerouslySetInnerHTML={{
+                __html:
+                  courseData?.courseDescription || "",
+              }} />
 
-              <h2
-                className=" text-xl font-semibold">
-                ساختار دوره
-              </h2>
+            <div
+              className="dir mt-6 inline-flex items-center gap-2 bg-cyan-50 border border-cyan-100 px-4 py-2 rounded-xl">
+              <span>
+                مدرس:
+              </span>
 
-              <div
-                className=" pt-5 min-w-[70%]">
-                {courseData?.courseContent.map(chapter => (
-                  <Session key={chapter.chapterId} chapter={chapter} getLectureData={getLectureData} />
-                )) || ''}
-
-              </div>
-
+              <span>
+                {courseData?.educator}
+              </span>
             </div>
 
-
           </div>
 
-
-          {/* Enrolment / player */}
           <div
-            className="w-[90%] md:w-[50%]">
-            {playerData ? <Player lectureData={playerData} courseID={courseData?._id} isEnrolled={isEnrolled} /> : <EnrollmentCard course={courseData} isEnrolled={isEnrolled} />}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-6">
+
+            <h2
+              className="text-2xl font-MTNIrancell-Bold text-right text-slate-800 mb-5">
+              سرفصل‌های دوره
+            </h2>
+
+            <div
+              className="flex flex-col gap-4">
+              {courseData?.courseContent.map(
+                chapter => (
+                  <Session
+                    key={
+                      chapter.chapterId
+                    }
+                    chapter={chapter}
+                    getLectureData={
+                      getLectureData
+                    }
+                    isEnrolled={
+                      isEnrolled
+                    }
+                  />
+                )
+              )}
+            </div>
+
           </div>
 
-        </div> : <div className=" w-full flex items-center justify-center my-8 flex-col gap-3">
-          <h4>بارگذاری داده ها</h4>
-          <div
-            className=" w-16 sm:w-20 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
-
-          </div>
-        </div>}
-
+        </div>
 
       </div>
-    </>
-  )
-}
 
-export default CourseDetails
+    </div>
+  );
+};
+
+export default CourseDetails;

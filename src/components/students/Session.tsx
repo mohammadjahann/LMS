@@ -1,65 +1,91 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
 import type { ChapterContent, CourseContent } from "../../Types";
-import { useAppContext } from "../../context/useAppContext"
+import { useAppContext } from "../../context/useAppContext";
 import Lecture from "./Lecture";
 
 type Props = {
-    chapter: CourseContent,
-    getLectureData: (lectureData: ChapterContent) => void,
+    chapter: CourseContent;
+    getLectureData: (lectureData: ChapterContent) => void;
     isEnrolled: boolean;
-}
+};
 
-const Session = ({ chapter, getLectureData, isEnrolled }: Props) => {
+const Session = ({
+    chapter,
+    getLectureData,
+    isEnrolled,
+}: Props) => {
 
-    const [showLecture, setShowLecture] = useState<boolean>(false)
+    const [showLecture, setShowLecture] = useState(false);
 
-    const { humanizeTime, chapterDurationCalculator } = useAppContext()
-
+    const {
+        humanizeTime,
+        chapterDurationCalculator,
+    } = useAppContext();
 
     return (
         <div
-            className=" w-full overflow-hidden">
-            <div
-                className={` flex flex-row-reverse z-10 items-center justify-between gap-4 w-full border border-gray-300 bg-white mb-2 rounded px-2`}>
+            className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 
-                <div
-                    onClick={() => setShowLecture(prev => !prev)}
-                    className=" flex flex-row-reverse gap-2 cursor-pointer items-center justify-between px-4 py-3 select-none">
+            <div
+                onClick={() => setShowLecture(prev => !prev)}
+                className="flex flex-row-reverse items-center justify-between px-5 py-4 cursor-pointer select-none hover:bg-slate-50 transition-all">
+
+                <div className="flex flex-row-reverse items-center gap-3">
+
                     <img
+                        src={assets.down_arrow_icon}
+                        alt="arrow"
+                        className={`transition-transform duration-300 ${showLecture ? "rotate-180" : ""}`} />
 
-                        className={`rotate-0 ${showLecture ? ' rotate-180' : ''} transition-transform duration-300`}
-                        src={assets.down_arrow_icon} alt="arrow" />
-                    <p
-                        className=" font-medium text-sm md:text-base">
-                        {chapter.chapterTitle}
-                    </p>
+                    <div className="text-right">
+                        <h3
+                            className="font-MTNIrancell-Bold text-slate-800">
+                            {chapter.chapterTitle}
+                        </h3>
+
+                        <p
+                            className=" text-xs text-slate-500 mt-1">
+                            {chapter.chapterContent.length} جلسه
+                        </p>
+                    </div>
+
                 </div>
 
-                <p
-                    style={{ direction: 'rtl', textAlign: 'right' }}
-                    className="flex flex-row-reverse text-sm md:text-default">
-                    <span className=" text-right"> تعداد قسمت ها: {chapter.chapterContent.length} </span>
-                    ,
-                    <span >{humanizeTime(chapterDurationCalculator(chapter.chapterContent))}</span>
-                </p>
-
-
-
-            </div>
-            <div
-                className={`grid transition-all duration-300 ease-in-out ${showLecture ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                 <div
-                    className={`overflow-hidden transition-all duration-300 ${showLecture ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* lectures */}
-                    {chapter.chapterContent.map(lecture => <Lecture isEnrolled={isEnrolled} key={lecture.lectureId} lectureData={lecture} getLectureData={getLectureData} />)}
+                    className="dir bg-cyan-50 border border-cyan-100 px-3 py-2 rounded-xl text-sm text-slate-600">
+                    {humanizeTime(
+                        chapterDurationCalculator(
+                            chapter.chapterContent
+                        )
+                    )}
                 </div>
+
             </div>
 
+            <div
+                className={`grid transition-all duration-300 ${showLecture ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
 
+                <div className="overflow-hidden">
+
+                    <div
+                        className="px-3 pb-3 flex flex-col gap-2">
+                        {chapter.chapterContent.map(lecture => (
+                            <Lecture
+                                key={lecture.lectureId}
+                                lectureData={lecture}
+                                getLectureData={getLectureData}
+                                isEnrolled={isEnrolled}
+                            />
+                        ))}
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
-    )
-}
+    );
+};
 
-export default Session
+export default Session;
