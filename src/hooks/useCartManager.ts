@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from "../redux/student/hooks"
 import useAuth from "./useAuth"
 import { supabase } from "../supabase"
 import { useState } from "react"
-import type { EnroledData } from "../Types"
+import type { Checkout, EnroledData } from "../Types"
 import { useNavigate } from "react-router-dom"
+import useExtractCartData from "./useExtractCartData"
 
 
 const useCartManager = () => {
@@ -15,6 +16,8 @@ const useCartManager = () => {
     const [loading, setLoading] = useState(false)
 
     const { userData, setUserData } = useAuth()
+
+    const { totalPrice } = useExtractCartData()
 
     // RTK
     const cartData = useAppSelector(state => state.cartData)
@@ -137,6 +140,8 @@ const useCartManager = () => {
 
     const successPay = async () => {
 
+        if (!userData) return;
+
         try {
 
             setLoading(true)
@@ -149,20 +154,35 @@ const useCartManager = () => {
                 })
             })
 
+
+
+            const updatedCheckouts: Checkout[] = [...userData.checkouts, {
+                checkoutID: Date.now(),
+                date: Date.now(),
+                courses: [...cartData],
+                totalPrice: totalPrice
+            }]
+
             const { error } = await supabase
                 .from('profiles')
                 .update({
                     enrollments: [...userData?.enrollments ?? [], ...updatedData],
-                    basket: []
+                    basket: [],
+                    checkouts: updatedCheckouts
                 })
                 .eq('id', userData?.id)
 
             if (error) throw error;
 
             setUserData(prev => {
-                if (!prev) return null;
-                return { ...prev, enrollments: [...userData?.enrollments ?? [], ...updatedData] }
-            })
+                if (!prev) return prev;
+
+                return {
+                    ...prev,
+                    enrollments: [...prev.enrollments, ...updatedData],
+                    checkouts: updatedCheckouts
+                };
+            });
 
             dispatch(cartEmptier())
 
