@@ -1,6 +1,7 @@
 import type { CourseType } from '../../Types'
 import { assets } from '../../assets/assets'
 import { useAppContext } from '../../context/useAppContext'
+import useCartManager from '../../hooks/useCartManager'
 
 type Props = {
     course: CourseType | null,
@@ -9,9 +10,15 @@ type Props = {
 
 const EnrollmentCard = ({ course, isEnrolled }: Props) => {
 
-
-
     const { ratingCalculator, courseDurationCalculator, lectureCountCalculator } = useAppContext()
+
+    const { addToCartHandler, loading } = useCartManager()
+
+    if (!course) return (
+        <div>
+            no data
+        </div>
+    )
 
     return (
         <div
@@ -80,10 +87,18 @@ const EnrollmentCard = ({ course, isEnrolled }: Props) => {
                         شما دانشجو دوره هستید
                     </div>
                 ) : (
-                    <button
-                        className=' mt-4 md:mt-6 w-full py-3 bg-blue-600 text-white font-MTNIrancell-Medium rounded '>
-                        افزودن به سبد خرید
-                    </button>
+                    loading ? (
+                        <div
+                            className=" w-4 sm:w-5 my-3 mx-auto aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => addToCartHandler(course._id)}
+                            className=' mt-4 md:mt-6 w-full py-3 bg-blue-600 text-white font-MTNIrancell-Medium rounded '>
+                            افزودن به سبد خرید
+                        </button>
+                    )
                 )}
 
                 <div className=' pt-6'>
