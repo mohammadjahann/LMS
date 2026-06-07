@@ -4,6 +4,7 @@ import AuthInput from "../../components/students/LogIn/AuthInput"
 import { supabase } from "../../supabase"
 import SuccsessModal from "../../components/students/LogIn/SuccsessModal"
 import ErrorModal from "../../components/students/LogIn/ErrorModal"
+import { useNavigate } from "react-router-dom"
 
 
 const EducatorLogIn = () => {
@@ -16,6 +17,8 @@ const EducatorLogIn = () => {
     email: '',
     password: ''
   })
+
+  const navigate = useNavigate()
 
   const formChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -42,6 +45,7 @@ const EducatorLogIn = () => {
       if (error) throw error;
 
       setShowSuccessModal(true)
+      navigate('/educator')
 
 
       console.log(data);
