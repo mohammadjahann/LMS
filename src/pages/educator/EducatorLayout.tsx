@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom"
-import EducatorNavBar from "../../components/educator/NavBar"
 import EducatorFooter from "../../components/educator/EducatorFooter"
+import { EducatorAuthContextProvider } from "../../context/EducatorAuthContext"
 
 
 const EducatorLayout = () => {
   return (
     <>
-      <EducatorNavBar />
-      {<Outlet />}
+      <EducatorAuthContextProvider>
+        <Outlet />
+      </EducatorAuthContextProvider>
       <EducatorFooter />
     </>
   )
