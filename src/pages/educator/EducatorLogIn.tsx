@@ -2,10 +2,12 @@ import { useState } from "react"
 import AuthHeader from "../../components/students/LogIn/AuthHeader"
 import AuthInput from "../../components/students/LogIn/AuthInput"
 import { supabase } from "../../supabase"
+import SuccsessModal from "../../components/students/LogIn/SuccsessModal"
 
 
 const EducatorLogIn = () => {
 
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
@@ -35,6 +37,8 @@ const EducatorLogIn = () => {
         .eq('id', ID)
         .single()
       if (error) throw error;
+
+      setShowSuccessModal(true)
 
 
       console.log(data);
@@ -83,6 +87,12 @@ const EducatorLogIn = () => {
       {loading && (
         <div className=" absolute inset-0   bg-black/40"></div>
       )}
+
+
+      {/* Success Modal */}
+
+      {showSuccessModal && <SuccsessModal text="ورود با موفقیت انجام شد" action="هم اکنون به داشبرد هدایت میشوید" />}
+
 
 
 
