@@ -1,6 +1,7 @@
 import { useState } from "react"
 import AuthHeader from "../../components/students/LogIn/AuthHeader"
 import AuthInput from "../../components/students/LogIn/AuthInput"
+import { supabase } from "../../supabase"
 
 
 const EducatorLogIn = () => {
@@ -20,6 +21,56 @@ const EducatorLogIn = () => {
         [name]: value
       }
     })
+
+  }
+
+  const getEducatorData = async (ID: string) => {
+
+
+    try {
+
+      const { data, error } = await supabase
+        .from('educators')
+        .select('*')
+        .eq('id', ID)
+        .single()
+      if (error) throw error;
+
+
+      console.log(data);
+
+    } catch (error) {
+
+      console.log(error);
+
+
+    } finally {
+      setLoading(false)
+    }
+
+
+  }
+
+  const logInClickHandler = async () => {
+
+    setLoading(true)
+
+    try {
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
+      })
+      if (error) throw error
+
+      getEducatorData(data.user.id)
+
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
 
   }
 
@@ -62,7 +113,7 @@ const EducatorLogIn = () => {
 
 
           <button
-
+            onClick={logInClickHandler}
             className=" w-full bg-blue-300 py-2 rounded-lg hover:bg-blue-400 hover:text-white transition-colors duration-200">
             ورود
           </button>
