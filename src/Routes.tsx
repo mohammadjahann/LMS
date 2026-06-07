@@ -16,6 +16,7 @@ import EducatorLayout from "./pages/educator/EducatorLayout";
 import Cart from "./pages/students/Cart";
 import OverallData from "./components/students/OverallData";
 import Checkouts from "./components/students/Checkouts";
+import EducatorProtected from "./components/educator/EducatorProtected";
 
 
 const Routes: RouteObject[] = [
@@ -45,10 +46,15 @@ const Routes: RouteObject[] = [
     {
         element: <EducatorLayout />, children: [
             { path: 'educator-login', element: <EducatorLogIn /> },
-            { path: 'educator', element: <Dashboard /> },
-            { path: 'add-course', element: <AddCourse /> },
-            { path: 'my-courses', element: <MyCurses /> },
-            { path: 'my-students', element: <MyStudents /> },
+            {
+                element: <EducatorProtected />, children: [
+                    { path: 'educator', element: <Dashboard /> },
+                    { path: 'add-course', element: <AddCourse /> },
+                    { path: 'my-courses', element: <MyCurses /> },
+                    { path: 'my-students', element: <MyStudents /> },
+                ]
+            }
+
         ]
     },
 ]
