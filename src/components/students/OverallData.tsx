@@ -126,7 +126,7 @@ const OverallData = () => {
                             text-slate-800
                         "
                     >
-                        {userData?.enrollments.length || 0}
+                        {userData?.checkouts.length || 0}
                     </p>
                 </div>
 
