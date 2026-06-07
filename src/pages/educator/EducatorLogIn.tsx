@@ -5,6 +5,7 @@ import AuthInput from "../../components/students/LogIn/AuthInput"
 
 const EducatorLogIn = () => {
 
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,10 +24,16 @@ const EducatorLogIn = () => {
   }
 
 
-
   return (
     <div
-      className=" bg-gradient-to-tr from-blue-50 to-cyan-100 w-full min-h-[90vh] py-4 flex justify-center  font-MTNIrancell-Medium">
+      className=" relative bg-gradient-to-tr from-blue-50 to-cyan-100 w-full min-h-[90vh] py-4 flex justify-center  font-MTNIrancell-Medium">
+
+      {/* Loading */}
+      {loading && (
+        <div className=" absolute inset-0   bg-black/40"></div>
+      )}
+
+
 
       <div
         className=" w-[90%] md:w-[50%] lg:w-[30%] bg-white shadow-2xl rounded-xl flex items-center justify-around flex-col py-4 my-auto">
