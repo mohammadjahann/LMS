@@ -3,10 +3,13 @@ import AuthHeader from "../../components/students/LogIn/AuthHeader"
 import AuthInput from "../../components/students/LogIn/AuthInput"
 import { supabase } from "../../supabase"
 import SuccsessModal from "../../components/students/LogIn/SuccsessModal"
+import ErrorModal from "../../components/students/LogIn/ErrorModal"
 
 
 const EducatorLogIn = () => {
 
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
+  const [errorText, setErrorText] = useState<string>('')
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -45,8 +48,8 @@ const EducatorLogIn = () => {
 
     } catch (error) {
 
-      console.log(error);
-
+      setErrorText(error.message)
+      setShowErrorModal(true)
 
     } finally {
       setLoading(false)
@@ -65,16 +68,23 @@ const EducatorLogIn = () => {
         email: formData.email,
         password: formData.password
       })
-      if (error) throw error
+      if (error) throw error;
 
-      getEducatorData(data.user.id)
+      await getEducatorData(data.user.id)
 
 
     } catch (error) {
-
-      console.log(error);
+      setErrorText(error.message)
+      setShowErrorModal(true)
+      setLoading(false)
 
     }
+
+  }
+
+  const errorModalClose = (): void => {
+    setLoading(false)
+    setShowErrorModal(false)
 
   }
 
@@ -93,7 +103,9 @@ const EducatorLogIn = () => {
 
       {showSuccessModal && <SuccsessModal text="ورود با موفقیت انجام شد" action="هم اکنون به داشبرد هدایت میشوید" />}
 
+      {/* Error Modal */}
 
+      {showErrorModal && <ErrorModal errorText={errorText} errorModalClose={errorModalClose} />}
 
 
       <div
