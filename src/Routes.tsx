@@ -15,6 +15,7 @@ import StudentLayout from "./pages/students/StudentLayout";
 import EducatorLayout from "./pages/educator/EducatorLayout";
 import Cart from "./pages/students/Cart";
 import OverallData from "./components/students/OverallData";
+import Checkouts from "./components/students/Checkouts";
 
 
 const Routes: RouteObject[] = [
@@ -31,7 +32,7 @@ const Routes: RouteObject[] = [
                     {
                         path: 'dashbord', element: <DashBoard />, children: [
                             { path: 'overal', element: <OverallData /> },
-                            { path: 'checkouts', element: <div className=" w-full">checkOut</div> },
+                            { path: 'checkouts', element: <Checkouts /> },
                         ]
                     },
                     { path: 'cart', element: <Cart /> },
