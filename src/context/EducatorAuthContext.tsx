@@ -8,6 +8,7 @@ type EducatorAuthContextTypes = {
     setEducatorData: Dispatch<SetStateAction<EducatorProfileDataType | null>>
     educator: User | null,
     loading: boolean,
+    logout: () => void
 }
 
 
@@ -43,8 +44,17 @@ export const EducatorAuthContextProvider = ({ children }: { children: React.Reac
     }, [])
 
 
+    const logout = async () => {
+        setLoading(true)
+        await supabase.auth.signOut()
+        setEducator(null)
+        setEducatorData(null)
+        setLoading(false)
+    }
+
+
     return (
-        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading }}>
+        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout }}>
             {children}
         </EducatorAuthContext.Provider>
     )
