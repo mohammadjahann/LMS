@@ -83,3 +83,14 @@ export type UserProfileDataType = {
   basket: string[],
   checkouts: Checkout[],
 }
+
+// Educator 
+
+export type EducatorProfileDataType = {
+  id: string,
+  name: string,
+  family: string,
+  email: string,
+  courses: string[]
+  students: string[]
+}
