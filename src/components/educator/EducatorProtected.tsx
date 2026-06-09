@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom"
+import useEducatorAuth from "../../hooks/useEducatorAuth"
 
 
 const EducatorProtected = () => {
 
-    // simulate loged in
-    const isLoggedIn = true
+    const { educatorData } = useEducatorAuth()
 
-    return isLoggedIn ? <Outlet /> : <Navigate to={'educator-login'} replace />
+    return educatorData ? <Outlet /> : <Navigate to={'educator-login'} replace />
 
 }
 
