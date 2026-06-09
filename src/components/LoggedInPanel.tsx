@@ -39,7 +39,7 @@ const LoggedInPanel = ({ userData, styles = '', sideMenuStyles = 'text-gray-600 
                     <div className='panel'>
                         <span
                             className=" border-b border-gray-500 w-full py-1">
-                            <Link to={'/student/dashbord'}>پنل کاربری</Link>
+                            <Link to={'/student/dashbord/overal'}>پنل کاربری</Link>
                         </span>
                         <span
                             className=" border-b border-gray-500 w-full py-1">

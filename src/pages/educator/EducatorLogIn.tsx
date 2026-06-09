@@ -25,7 +25,7 @@ const EducatorLogIn = () => {
     if (!showSuccessModal) return
 
     const timeout = setTimeout(() => {
-      navigate('/educator')
+      navigate('/educator/panel')
     }, 1000)
 
     return () => clearTimeout(timeout)
