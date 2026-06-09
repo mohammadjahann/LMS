@@ -93,4 +93,5 @@ export type EducatorProfileDataType = {
   email: string,
   courses: string[]
   students: string[]
+  imgURL: string | null
 }
