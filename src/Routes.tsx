@@ -48,10 +48,15 @@ const Routes: RouteObject[] = [
             { path: 'educator-login', element: <EducatorLogIn /> },
             {
                 element: <EducatorProtected />, children: [
-                    { path: 'educator', element: <Dashboard /> },
-                    { path: 'add-course', element: <AddCourse /> },
-                    { path: 'my-courses', element: <MyCurses /> },
-                    { path: 'my-students', element: <MyStudents /> },
+                    {
+                        path: 'educator', element: <Dashboard />, children: [
+                            { path: 'panel', element: <h4>panel</h4> },
+                            { path: 'add-course', element: <AddCourse /> },
+                            { path: 'my-courses', element: <MyCurses /> },
+                            { path: 'my-students', element: <MyStudents /> },
+                        ]
+                    },
+
                 ]
             }
 
