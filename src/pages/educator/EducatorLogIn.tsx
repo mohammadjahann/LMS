@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AuthHeader from "../../components/students/LogIn/AuthHeader"
 import AuthInput from "../../components/students/LogIn/AuthInput"
 import { supabase } from "../../supabase"
 import SuccsessModal from "../../components/students/LogIn/SuccsessModal"
 import ErrorModal from "../../components/students/LogIn/ErrorModal"
 import { useNavigate } from "react-router-dom"
+import useEducatorAuth from "../../hooks/useEducatorAuth"
 
 
 const EducatorLogIn = () => {
@@ -19,6 +20,20 @@ const EducatorLogIn = () => {
   })
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!showSuccessModal) return
+
+    const timeout = setTimeout(() => {
+      navigate('/educator')
+    }, 1000)
+
+    return () => clearTimeout(timeout)
+
+  }, [showSuccessModal, navigate])
+
+  const { setEducatorData } = useEducatorAuth()
+
 
   const formChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -44,16 +59,19 @@ const EducatorLogIn = () => {
         .single()
       if (error) throw error;
 
+      setEducatorData(data)
       setShowSuccessModal(true)
-      navigate('/educator')
 
-
-      console.log(data);
 
     } catch (error) {
 
-      setErrorText(error.message)
-      setShowErrorModal(true)
+      if (error instanceof Error) {
+        setErrorText(error.message)
+        setShowErrorModal(true)
+      } else {
+        setErrorText('Something went wrong')
+        setShowErrorModal(true)
+      }
 
     } finally {
       setLoading(false)
@@ -78,9 +96,14 @@ const EducatorLogIn = () => {
 
 
     } catch (error) {
-      setErrorText(error.message)
-      setShowErrorModal(true)
-      setLoading(false)
+
+      if (error instanceof Error) {
+        setErrorText(error.message)
+        setShowErrorModal(true)
+      } else {
+        setErrorText('Something went wrong')
+        setShowErrorModal(true)
+      }
 
     }
 
