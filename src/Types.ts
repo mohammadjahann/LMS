@@ -104,6 +104,7 @@ export type EnrolledStydentType = {
   course_id: string,
   created_at: string,
   timestamp: number
+  cost: number
 
 }
 
