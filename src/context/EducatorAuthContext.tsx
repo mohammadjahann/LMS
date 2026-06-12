@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import type { EducatorProfileDataType } from "../Types";
+import type { EducatorProfileDataType, EnrolledStydentType } from "../Types";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
 
@@ -8,7 +8,9 @@ type EducatorAuthContextTypes = {
     setEducatorData: Dispatch<SetStateAction<EducatorProfileDataType | null>>
     educator: User | null,
     loading: boolean,
-    logout: () => void
+    logout: () => void,
+    enrollmentsData: EnrolledStydentType[] | null,
+    setEnrollmentsData: Dispatch<SetStateAction<EnrolledStydentType[] | null>>
 }
 
 
@@ -20,6 +22,7 @@ export const EducatorAuthContextProvider = ({ children }: { children: React.Reac
     const [educator, setEducator] = useState<User | null>(null)
     const [educatorData, setEducatorData] = useState<EducatorProfileDataType | null>(null)
     const [loading, setLoading] = useState(false)
+    const [enrollmentsData, setEnrollmentsData] = useState<EnrolledStydentType[] | null>(null)
 
     useEffect(() => {
         // Get curent session data
@@ -54,7 +57,7 @@ export const EducatorAuthContextProvider = ({ children }: { children: React.Reac
 
 
     return (
-        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout }}>
+        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout, enrollmentsData, setEnrollmentsData }}>
             {children}
         </EducatorAuthContext.Provider>
     )
