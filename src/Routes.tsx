@@ -18,6 +18,7 @@ import OverallData from "./components/students/OverallData";
 import Checkouts from "./components/students/Checkouts";
 import EducatorProtected from "./components/educator/EducatorProtected";
 import EducatorMyCourses from "./pages/educator/EducatorMyCourses";
+import EducatorPanel from "./pages/EducatorPanel";
 
 
 const Routes: RouteObject[] = [
@@ -51,7 +52,7 @@ const Routes: RouteObject[] = [
                 element: <EducatorProtected />, children: [
                     {
                         path: 'educator', element: <Dashboard />, children: [
-                            { path: 'panel', element: <h4>panel</h4> },
+                            { path: 'panel', element: <EducatorPanel /> },
                             { path: 'add-course', element: <AddCourse /> },
                             { path: 'my-courses', element: <EducatorMyCourses /> },
                             { path: 'my-students', element: <MyStudents /> },
