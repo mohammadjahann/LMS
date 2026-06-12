@@ -1,8 +1,79 @@
 import { FaBookOpen, FaGraduationCap, FaMoneyBillWave } from "react-icons/fa"
 import EducatorPanelBox from "../components/educator/EducatorPanelBox"
+import { useEffect, useState } from "react"
+import useEducatorAuth from "../hooks/useEducatorAuth"
+import { supabase } from "../supabase"
 
+type StatsTypes = {
+    courseCount: number,
+    income: number,
+    studentCount: number
+}
 
 const EducatorPanel = () => {
+
+    const [statsData, setStatsData] = useState<StatsTypes>({
+        courseCount: 0,
+        income: 0,
+        studentCount: 0
+    })
+
+    const { educatorData, enrollmentsData } = useEducatorAuth()
+
+    useEffect(() => {
+        if (!educatorData || !enrollmentsData) return;
+
+        const courseCount = educatorData.courses.length
+
+        const getStudentCount = async () => {
+
+            try {
+                const { count, error } =
+                    await supabase
+                        .from("enrollments")
+                        .select("*", {
+                            count: "exact",
+                            head: true
+                        })
+                        .in("course_id", educatorData.courses)
+                if (error) throw error;
+
+                return count
+
+            } catch (error) {
+                console.log(error);
+                return 0
+
+            }
+        }
+
+        const studentCount = getStudentCount()
+
+        const incomeCalculator = () => {
+
+            let total = 0
+
+            enrollmentsData.forEach(enrollment => {
+                total += +enrollment.cost
+            })
+
+            return total
+        }
+
+        const income = incomeCalculator()
+
+        // eslint-disable-next-line
+        setStatsData(prev => {
+
+            return {
+                courseCount,
+                studentCount,
+                income
+            }
+        })
+
+
+    }, [educatorData, enrollmentsData])
 
     return (
         <div className="w-full dir">
@@ -34,7 +105,7 @@ const EducatorPanel = () => {
                 <EducatorPanelBox
                     styles="bg-cyan-50 border-cyan-100"
                     title=" تعداد کل دانشجو"
-                    data={0}
+                    data={statsData.studentCount}
                 >
                     <FaGraduationCap
                         size={30}
@@ -45,7 +116,7 @@ const EducatorPanel = () => {
                 <EducatorPanelBox
                     styles="bg-emerald-50 border-emerald-100"
                     title="درآمد ماه اخیر"
-                    data={0}
+                    data={statsData.income.toLocaleString('fa-IR')}
                 >
                     <FaMoneyBillWave
                         size={30}
@@ -55,7 +126,7 @@ const EducatorPanel = () => {
                 <EducatorPanelBox
                     styles="bg-violet-50 border-violet-100"
                     title=" تعداد دوره‌ها"
-                    data={0}
+                    data={statsData.courseCount}
                 >
                     <FaBookOpen
                         size={30}
