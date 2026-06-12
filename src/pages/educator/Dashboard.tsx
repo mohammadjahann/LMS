@@ -1,10 +1,48 @@
 import { Outlet } from "react-router-dom"
 import EducatorDashBoardNav from "../../components/educator/EducatorDashBoardNav";
-
+import useEducatorAuth from "../../hooks/useEducatorAuth";
+import { supabase } from "../../supabase";
+import { useEffect } from "react";
 
 
 
 const Dashboard = () => {
+
+  const { educatorData, setEnrollmentsData } = useEducatorAuth()
+
+  const fetcher = async () => {
+
+    if (!educatorData) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("enrollments")
+        .select("*")
+        .in("course_id", educatorData.courses)
+        .order("timestamp", { ascending: false })
+        .limit(100)
+
+
+      if (error) throw error;
+
+      setEnrollmentsData(data)
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+
+  }
+
+  useEffect(() => {
+
+    fetcher()
+
+
+
+  }, [])
 
 
 
