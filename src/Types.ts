@@ -95,3 +95,16 @@ export type EducatorProfileDataType = {
   students: string[]
   imgURL: string | null
 }
+
+// Students Enrolled
+
+export type EnrolledStydentType = {
+  id: number,
+  user_id: string,
+  course_id: string,
+  created_at: string,
+  timestamp: number
+
+}
+
+
