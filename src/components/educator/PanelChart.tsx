@@ -1,5 +1,6 @@
 import { FaChartLine } from "react-icons/fa";
 import PanelAreaChart from "./PanelAreaChart";
+import PanelPieChart from "../PanelPieChart";
 
 const PanelChart = () => {
 
@@ -30,9 +31,10 @@ const PanelChart = () => {
 
 
 
-            <div className="w-full h-[400px] flex items-center justify-center">
+            <div className="w-full flex items-center justify-center flex-col lg:flex-row ">
 
                 <PanelAreaChart />
+                <PanelPieChart />
 
 
             </div>
