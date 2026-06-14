@@ -32,7 +32,8 @@ const EducatorDashBoardNav = () => {
                 className={`absolute inset-0 bg-black/50 z-10 ${showSideBar ? 'opacity-1' : 'opacity-0 pointer-events-none'} transition-all duration-200 md:opacity-0`}></div>
 
             <div
-                className={`fixed inset-y-0 right-0 h-full z-30 top-[0%] w-[70%] sm:w-[50%] ${showSideBar ? 'translate-x-0' : ' translate-x-full'} md:translate-x-0  md:h-fit md:w-[280px] md:top-0 md:min-w-[280px] bg-white/80 backdrop-blur-xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] md:rounded-3xl p-4  md:static  md:flex md:flex-col gap-3 overflow-x-auto md:overflow-visible transition-transform duration-300`}>
+                // تغییرات در این خط اعمال شده است: md:static -> md:sticky و md:top-0 -> md:top-6
+                className={`fixed inset-y-0 right-0 h-full z-30 top-[0%] w-[70%] sm:w-[50%] ${showSideBar ? 'translate-x-0' : ' translate-x-full'} md:translate-x-0 md:h-fit md:w-[280px] md:top-6 md:min-w-[280px] bg-white/80 backdrop-blur-xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] md:rounded-3xl p-4 md:sticky md:flex md:flex-col gap-3 overflow-x-auto md:overflow-visible transition-transform duration-300`}>
 
                 <div
                     className="flex flex-col items-center pb-5 mb-2 border-b border-slate-200">
