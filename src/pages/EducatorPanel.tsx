@@ -3,6 +3,7 @@ import EducatorPanelBox from "../components/educator/EducatorPanelBox"
 import { useEffect, useState } from "react"
 import useEducatorAuth from "../hooks/useEducatorAuth"
 import { supabase } from "../supabase"
+import PanelChart from "../components/educator/PanelChart"
 
 type StatsTypes = {
     courseCount: number,
@@ -139,6 +140,8 @@ const EducatorPanel = () => {
 
             </div>
 
+            {/* Chart */}
+            <PanelChart />
 
         </div>
     )
