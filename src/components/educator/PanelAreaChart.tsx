@@ -106,7 +106,7 @@ const PanelAreaChart = () => {
                             domain={['auto', 'auto']}
                             width={isMobile ? 0 : 40}
                             hide={isMobile}
-                            tick={{ fontSize: 10, dx: -5 }}
+                            tick={{ fontSize: 8, dx: -5 }}
                         />
 
                         <Tooltip formatter={(value) => value?.toLocaleString("fa-IR")} />
