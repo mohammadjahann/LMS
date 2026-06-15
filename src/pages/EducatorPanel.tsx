@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import useEducatorAuth from "../hooks/useEducatorAuth"
 import { supabase } from "../supabase"
 import PanelChart from "../components/educator/PanelChart"
+import RecentlyStudents from "./RecentlyStudents"
 
 type StatsTypes = {
     courseCount: number,
@@ -22,6 +23,12 @@ const EducatorPanel = () => {
     const { educatorData, enrollmentsData } = useEducatorAuth()
 
     useEffect(() => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+
         if (!educatorData || !enrollmentsData) return;
 
         const courseCount = educatorData.courses.length
@@ -142,6 +149,16 @@ const EducatorPanel = () => {
 
             {/* Chart */}
             <PanelChart />
+
+            {/* Bottom */}
+            {/* <PanelBottom /> */}
+            <div className="w-full dir mt-6 font-MTNIrancell-Medium ">
+                <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-5">
+
+                    <RecentlyStudents />
+                </div>
+
+            </div>
 
         </div>
     )
