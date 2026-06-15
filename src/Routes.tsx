@@ -18,7 +18,7 @@ import OverallData from "./components/students/OverallData";
 import Checkouts from "./components/students/Checkouts";
 import EducatorProtected from "./components/educator/EducatorProtected";
 import EducatorMyCourses from "./pages/educator/EducatorMyCourses";
-import EducatorPanel from "./pages/EducatorPanel";
+import EducatorPanel from "./pages/educator/EducatorPanel";
 
 
 const Routes: RouteObject[] = [

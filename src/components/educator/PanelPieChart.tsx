@@ -4,7 +4,7 @@ import {
     Cell,
 
 } from "recharts";
-import useEducatorAuth from "../hooks/useEducatorAuth";
+import useEducatorAuth from "../../hooks/useEducatorAuth";
 import { useEffect, useState } from "react";
 
 const colors = [

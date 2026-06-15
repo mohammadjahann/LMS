@@ -1,11 +1,11 @@
 import { FaBookOpen, FaGraduationCap, FaMoneyBillWave } from "react-icons/fa"
-import EducatorPanelBox from "../components/educator/EducatorPanelBox"
 import { useEffect, useMemo, useState } from "react"
-import useEducatorAuth from "../hooks/useEducatorAuth"
-import { supabase } from "../supabase"
-import PanelChart from "../components/educator/PanelChart"
-import RecentlyStudents from "./RecentlyStudents"
-import DetailsCard from "../components/educator/DetailsCard"
+import RecentlyStudents from "../../components/educator/RecentlyStudents"
+import EducatorPanelBox from "../../components/educator/EducatorPanelBox"
+import useEducatorAuth from "../../hooks/useEducatorAuth"
+import PanelChart from "../../components/educator/PanelChart"
+import { supabase } from "../../supabase"
+import DetailsCard from "../../components/educator/DetailsCard"
 
 type StatsTypes = {
     courseCount: number,

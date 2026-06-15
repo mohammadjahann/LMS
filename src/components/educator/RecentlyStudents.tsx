@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { FaUserCircle } from 'react-icons/fa'
-import useEducatorAuth from '../hooks/useEducatorAuth'
+import useEducatorAuth from '../../hooks/useEducatorAuth'
 
 const RecentlyStudents = () => {
 

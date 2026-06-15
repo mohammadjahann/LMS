@@ -1,6 +1,6 @@
 import { FaChartLine } from "react-icons/fa";
 import PanelAreaChart from "./PanelAreaChart";
-import PanelPieChart from "../PanelPieChart";
+import PanelPieChart from "./PanelPieChart";
 
 const PanelChart = () => {
 
