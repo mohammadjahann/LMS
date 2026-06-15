@@ -1,10 +1,11 @@
 import { FaBookOpen, FaGraduationCap, FaMoneyBillWave } from "react-icons/fa"
 import EducatorPanelBox from "../components/educator/EducatorPanelBox"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import useEducatorAuth from "../hooks/useEducatorAuth"
 import { supabase } from "../supabase"
 import PanelChart from "../components/educator/PanelChart"
 import RecentlyStudents from "./RecentlyStudents"
+import DetailsCard from "../components/educator/DetailsCard"
 
 type StatsTypes = {
     courseCount: number,
@@ -83,6 +84,31 @@ const EducatorPanel = () => {
 
     }, [educatorData, enrollmentsData])
 
+    const bestSellingCourse = useMemo(() => {
+
+        if (!enrollmentsData) return;
+
+        const courseSellCounter: { courseTitle: string, total: number }[] = []
+
+        enrollmentsData.forEach(enroll => {
+
+            const foundedCourse = courseSellCounter.find(item => item.courseTitle === enroll.course_title)
+
+            if (!foundedCourse) {
+
+                courseSellCounter.push({ courseTitle: enroll.course_title, total: 1 })
+
+            } else {
+                foundedCourse.total += 1
+
+            }
+
+        })
+
+        return courseSellCounter.sort((a, b) => b.total - a.total)[0].courseTitle
+
+    }, [enrollmentsData])
+
     return (
         <div className="w-full dir">
 
@@ -156,6 +182,15 @@ const EducatorPanel = () => {
                 <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-5">
 
                     <RecentlyStudents />
+
+                    <div
+                        className="flex flex-col gap-5">
+
+                        <DetailsCard content={bestSellingCourse} contentStyles="text-[16px]" title="پر فروش ترین دوره" styles="bg-white text-black" />
+
+                        <DetailsCard content="2" title="میانگین خرید هر دانشجو" styles="from-cyan-600 to-blue-600 text-white" />
+
+                    </div>
                 </div>
 
             </div>
