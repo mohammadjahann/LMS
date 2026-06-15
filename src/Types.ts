@@ -106,7 +106,8 @@ export type EnrolledStydentType = {
   timestamp: number
   cost: number
   course_title: string
-
+  user_name: string,
+  user_family: string
 }
 
 
