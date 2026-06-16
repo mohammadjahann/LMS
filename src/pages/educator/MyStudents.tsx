@@ -8,6 +8,7 @@ import type { EnrolledStydentType } from "../../Types"
 const MyStudents = () => {
 
   const [serchText, setSerchText] = useState('')
+  const [curentPage, setCurentPage] = useState(1)
 
   const { enrollmentsData } = useEducatorAuth()
 
@@ -22,6 +23,44 @@ const MyStudents = () => {
 
     return foundedData
   }, [serchText, enrollmentsData])
+
+
+  // Pagination Action
+
+  const paginationData = useMemo(() => {
+
+    if (!enrollmentsData) return;
+    if (!searchResult) return;
+
+    const clone: EnrolledStydentType[] = [...searchResult]
+
+    const showingCount = 20
+
+    const endIndex = curentPage * showingCount
+
+    const startIndex = endIndex - showingCount
+
+    return clone?.splice(startIndex, endIndex)
+
+  }, [searchResult, curentPage])
+
+  const buttonsArray = useMemo(() => {
+
+    if (!searchResult) return;
+
+    const showingCount = 20
+
+    const pages = Math.ceil(searchResult?.length / showingCount)
+
+    const totoalPagesArray: number[] = []
+
+    for (let i = 1; i < pages + 1; ++i) {
+      totoalPagesArray.push(i)
+    }
+
+    return totoalPagesArray
+  }, [searchResult])
+
 
 
   // Calculate Stats Section Datas
@@ -61,7 +100,7 @@ const MyStudents = () => {
       top: 0,
       behavior: 'smooth'
     })
-  }, [])
+  }, [curentPage])
 
   // ////////////////////////////////////
 
@@ -79,6 +118,7 @@ const MyStudents = () => {
     timeOutRef.current = setTimeout(() => {
 
       setSerchText(value)
+      setCurentPage(1)
 
     }, 1000);
 
@@ -138,10 +178,22 @@ const MyStudents = () => {
         </div>
 
         {/* Row */}
-        {searchResult?.map(enroll => (
+        {paginationData?.map(enroll => (
           <EnrollmentDetails key={enroll.id} enrollmentData={enroll} />
         ))}
 
+      </div>
+
+      {/* Data Buttons */}
+      <div className="w-full flex items-center justify-center gap-1 mt-3" dir="ltr">
+        {buttonsArray?.map(number => (
+          <button
+            key={number}
+            onClick={() => setCurentPage(number)}
+            className={`py-2 px-3  ${curentPage === number ? 'bg-cyan-600 text-white' : 'bg-cyan-300'} hover:bg-cyan-500 transition-all duration-100`}>
+            {number}
+          </button>
+        ))}
       </div>
 
     </div>
