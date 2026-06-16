@@ -9,7 +9,7 @@ type Props = {
 
 const DetailsCard = ({ title, content, styles, contentStyles }: Props) => {
     return (
-        <div className={`bg-gradient-to-br  rounded-3xl p-6 ${styles}`}>
+        <div className={`bg-gradient-to-br font-MTNIrancell-Medium shadow-md  rounded-3xl p-6 ${styles}`}>
 
             <h3 className="text-lg">
                 {title}
