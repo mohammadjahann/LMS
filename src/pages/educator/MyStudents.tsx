@@ -1,7 +1,43 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
+import DetailsCard from "../../components/educator/DetailsCard"
+import useEducatorAuth from "../../hooks/useEducatorAuth"
 
 
 const MyStudents = () => {
+
+  const { enrollmentsData } = useEducatorAuth()
+
+
+  // Calculate Stats Section Datas
+
+  const statsDatas: { totalSell: number, topSeller: string } = useMemo(() => {
+
+    if (!enrollmentsData) return;
+
+    const countedEnrollment: { courseTitle: string, count: number }[] = []
+
+    let total: number = 0
+
+    enrollmentsData.forEach(enroll => {
+      total += +enroll.cost
+
+      const isInArray = countedEnrollment.find(item => item.courseTitle === enroll.course_title)
+
+      if (isInArray) {
+        isInArray.count += 1
+      } else {
+        countedEnrollment.push({ courseTitle: enroll.course_title, count: 1 })
+      }
+
+    })
+
+    countedEnrollment.sort((a, b) => b.count - a.count)
+
+    return { totalSell: total, topSeller: countedEnrollment[0].courseTitle }
+  }, [enrollmentsData])
+
+
+  // Smooth scroll to top when entered page
 
   useEffect(() => {
 
@@ -11,8 +47,12 @@ const MyStudents = () => {
     })
   }, [])
 
-  const timeOutRef = useRef<number | null>(null)
+  // ////////////////////////////////////
 
+
+  // Debounce for Search Input
+
+  const timeOutRef = useRef<number | null>(null)
 
   const handleSearchType = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -30,6 +70,7 @@ const MyStudents = () => {
 
   }
 
+  // //////////////////////////////////
 
   return (
     <div className="w-full min-h-screen dir  p-4 md:p-8">
@@ -58,6 +99,15 @@ const MyStudents = () => {
             جستجو
           </button>
         </div>
+
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 ">
+
+        <DetailsCard title="کل دانشجویان" content={enrollmentsData?.length.toString()} styles="bg-white" contentStyles="text-xl" />
+        <DetailsCard title='درآمد این ماه' content={statsDatas.totalSell.toLocaleString('fa-IR')} styles="bg-white" contentStyles="text-xl" />
+        <DetailsCard title='پرفوش ترین دوره' content={statsDatas.topSeller} styles="bg-gradient-to-tl from-blue-400 to-cyan-500 text-white" contentStyles="text-xl" />
 
       </div>
 
