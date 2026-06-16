@@ -1,12 +1,27 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import DetailsCard from "../../components/educator/DetailsCard"
 import useEducatorAuth from "../../hooks/useEducatorAuth"
 import EnrollmentDetails from "../../components/educator/EnrollmentDetails"
+import type { EnrolledStydentType } from "../../Types"
 
 
 const MyStudents = () => {
 
+  const [serchText, setSerchText] = useState('')
+
   const { enrollmentsData } = useEducatorAuth()
+
+  // Search Action
+
+  const searchResult = useMemo(() => {
+
+    if (!enrollmentsData) return;
+    if (serchText.trim().length === 0) return enrollmentsData;
+
+    const foundedData: EnrolledStydentType[] = enrollmentsData.filter(enroll => enroll.course_title.toLowerCase().includes(serchText))
+
+    return foundedData
+  }, [serchText, enrollmentsData])
 
 
   // Calculate Stats Section Datas
@@ -63,8 +78,7 @@ const MyStudents = () => {
 
     timeOutRef.current = setTimeout(() => {
 
-      console.log(value);
-
+      setSerchText(value)
 
     }, 1000);
 
@@ -124,7 +138,7 @@ const MyStudents = () => {
         </div>
 
         {/* Row */}
-        {enrollmentsData?.map(enroll => (
+        {searchResult?.map(enroll => (
           <EnrollmentDetails key={enroll.id} enrollmentData={enroll} />
         ))}
 
