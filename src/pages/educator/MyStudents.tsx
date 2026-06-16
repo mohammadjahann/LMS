@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 
 const MyStudents = () => {
@@ -10,6 +10,25 @@ const MyStudents = () => {
       behavior: 'smooth'
     })
   }, [])
+
+  const timeOutRef = useRef<number | null>(null)
+
+
+  const handleSearchType = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const value = e.target.value
+
+    if (timeOutRef.current) clearTimeout(timeOutRef.current);
+
+    timeOutRef.current = setTimeout(() => {
+
+      console.log(value);
+
+
+    }, 1000);
+
+
+  }
 
 
   return (
@@ -30,6 +49,7 @@ const MyStudents = () => {
         {/* Search / Filter */}
         <div className="flex items-center gap-2 w-full md:w-[350px] bg-white border border-slate-200 rounded-2xl px-3 py-2 shadow-sm">
           <input
+            onChange={handleSearchType}
             type="text"
             placeholder="فیلتر بر اساس نام دوره..."
             className="w-full bg-transparent outline-none text-sm text-right text-slate-700"
