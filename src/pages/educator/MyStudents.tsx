@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react"
 import DetailsCard from "../../components/educator/DetailsCard"
 import useEducatorAuth from "../../hooks/useEducatorAuth"
+import EnrollmentDetails from "../../components/educator/EnrollmentDetails"
 
 
 const MyStudents = () => {
@@ -111,7 +112,23 @@ const MyStudents = () => {
 
       </div>
 
+      {/* List */}
+      <div className="bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden">
 
+        {/* Table Header */}
+        <div className="hidden md:grid grid-cols-4 gap-4 bg-slate-50 px-6 py-4 text-slate-500 text-sm font-medium">
+          <span>دانشجو</span>
+          <span>دوره</span>
+          <span>تاریخ خرید</span>
+          <span>مبلغ</span>
+        </div>
+
+        {/* Row */}
+        {enrollmentsData?.map(enroll => (
+          <EnrollmentDetails key={enroll.id} enrollmentData={enroll} />
+        ))}
+
+      </div>
 
     </div>
   )
