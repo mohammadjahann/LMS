@@ -1,7 +1,145 @@
+import { v4 as uuidv4 } from "uuid";
+import type { CourseType } from "../../Types"
+import React, { useReducer, useState } from "react";
+import AddCourseChapter from "../../components/educator/AddCourseChapter";
+import { MdDownloadDone } from "react-icons/md";
+import { ImCancelCircle } from "react-icons/im";
+
 const AddCourse = () => {
+
+  const [showAddChapterModal, setShowAddChapterModal] = useState(false)
+  const [addChapterText, setAddChapterText] = useState<string>('')
+
+  const initialCourseData: CourseType = {
+    _id: uuidv4(),
+    category: "",
+    courseTitle: "",
+    courseDescription: "",
+    coursePrice: 0,
+    isPublished: false,
+    discount: 0,
+    courseContent: [
+      {
+        "chapterId": "chapter1",
+        "chapterOrder": 1,
+        "chapterTitle": "معرفی دوره",
+        "chapterContent": [
+          {
+            "lectureId": "lecture1",
+            "lectureTitle": "HTML چیست ؟",
+            "lectureDuration": 600,
+            "lectureUrl": "https://caspian24.cdn.asset.aparat.com/aparat-video/6ba88fa53ead0a9770eeed684db0f05e67541479-360p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjZhNzYyNDZjOTNlODIyNzJmZTM1ZjQxNWQwNDJjZGIzIiwiZXhwIjoxNzgwMTAwNTc2LCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.N2LjqtMiHWg9bx4RnpplL4MzAPOawDznxBNLzaHNuVA",
+            "isPreviewFree": true,
+            "lectureOrder": 1
+          },
+          {
+            "lectureId": "lecture2",
+            "lectureTitle": "آشنایی با ساختار صفحات",
+            "lectureDuration": 720,
+            "lectureUrl": "https://caspian24.cdn.asset.aparat.com/aparat-video/55d5a287170de1c2c3eaa88d4ac82d6b67322031-360p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjJmZDJkMTdlMTViMTIyM2YyY2IxN2IwNjhiZGM5Y2RlIiwiZXhwIjoxNzgwMTAwNjQxLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.g89OUt5xZDcLUIYOsawJfz24EtE4phmhEo-JSuqRCZ0",
+            "isPreviewFree": false,
+            "lectureOrder": 2
+          }
+        ]
+      },
+      {
+        "chapterId": "chapter2",
+        "chapterOrder": 2,
+        "chapterTitle": "تگ ها",
+        "chapterContent": [
+          {
+            "lectureId": "lecture3",
+            "lectureTitle": "تگ های Heading",
+            "lectureDuration": 800,
+            "lectureUrl": "https://persian22.cdn.asset.aparat.com/aparat-video/3b9d5770876e32363d3b71fd2ec6593a67322727-360p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBiMjg1NzhmMjZmMzJhY2Y4OGY0ZGU0YzQ2ZDdmMmJlIiwiZXhwIjoxNzgwMTAwNzQ4LCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.e7ka8cI5-HRcsngCN6lP99yKO5xzC2AnOjwx-KIvbys",
+            "isPreviewFree": true,
+            "lectureOrder": 1
+          },
+          {
+            "lectureId": "lecture4",
+            "lectureTitle": "تگ پاراگراف",
+            "lectureDuration": 850,
+            "lectureUrl": "https://persian24.cdn.asset.aparat.com/aparat-video/974ac188460fc19f3a0714df9c1c5e5d67322232-360p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImJiZTQ2OWFmNDJjYmFmNTQ2NWI5MzJlYjI2ZTE3ODAyIiwiZXhwIjoxNzgwMTAwNzkwLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.stBOq0K3zs0jrje47wAPvLZdWtUcgvtlIFkSjJdzcno",
+            "isPreviewFree": false,
+            "lectureOrder": 2
+          }
+        ]
+      }
+    ],
+    educator: "",
+    enrolledStudents: [],
+    courseRatings: [],
+    createdAt: "",
+    updatedAt: "",
+    __v: 0,
+    courseThumbnail: "",
+  }
+
+  type ActionProps = {
+    type: "ADD_Chapter" | "SET_courseTitle" | "SET_category" | "SET_coursePrice" | "SET_discount" | "SET_courseThumbnail" | "SET_courseDescription",
+    payload?: string | number
+  }
+
+  const courseReducer = (state: CourseType, action: ActionProps) => {
+
+    switch (action.type) {
+      case "SET_courseTitle":
+        return { ...state, courseTitle: action.payload };
+
+      case "SET_category":
+        return { ...state, category: action.payload };
+
+      case "SET_coursePrice":
+        return { ...state, coursePrice: action.payload }
+
+      case "SET_discount":
+        return { ...state, discount: action.payload }
+
+      case "SET_courseThumbnail":
+        return { ...state, courseThumbnail: action.payload }
+
+      case "SET_courseDescription":
+        return { ...state, courseDescription: action.payload }
+
+      case "ADD_Chapter":
+        return {
+          ...state, courseContent: [
+            ...state.courseContent,
+            {
+              chapterId: `chapter${state.courseContent.length + 1}`,
+              chapterOrder: state.courseContent.length + 1,
+              chapterTitle: addChapterText,
+              chapterContent: []
+
+            }
+          ]
+
+        }
+    }
+
+
+
+  }
+
+  const [courseData, courseDataDispatch] = useReducer(courseReducer, initialCourseData)
+
+  const addChapterModalCloser = () => {
+
+    setAddChapterText('')
+    setShowAddChapterModal(false)
+  }
+
+  const addNewChapter = async () => {
+    await courseDataDispatch({ type: 'ADD_Chapter' })
+    addChapterModalCloser()
+  }
+
+
+  console.log(courseData);
+
   return (
     <div
-      className="font-MTNIrancell-Medium dir min-h-screen  p-4 md:p-8">
+      className="font-MTNIrancell-Medium dir min-h-screen  p-4 md:p-8 relative">
 
       {/* Header */}
 
@@ -28,7 +166,7 @@ const AddCourse = () => {
 
       </div>
 
-      <div className=" grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
+      <div className=" grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6 ">
 
         {/* Right */}
 
@@ -55,6 +193,7 @@ const AddCourse = () => {
                 </label>
 
                 <input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: 'SET_courseTitle', payload: e.target.value })}
                   className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
 
               </div>
@@ -66,13 +205,14 @@ const AddCourse = () => {
                 </label>
 
                 <select
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => courseDataDispatch({ type: 'SET_category', payload: e.target.value })}
                   className="w-full mt-2 rounded-2xl border p-4">
 
-                  <option>
+                  <option value={"FRONT_END"}>
                     فرانت اند
                   </option>
 
-                  <option>
+                  <option value={"BACK_END"}>
                     بک اند
                   </option>
 
@@ -87,6 +227,7 @@ const AddCourse = () => {
                 </label>
 
                 <input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_coursePrice", payload: e.target.value })}
                   className="w-full mt-2 rounded-2xl border p-4" />
 
               </div>
@@ -98,6 +239,7 @@ const AddCourse = () => {
                 </label>
 
                 <input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_discount", payload: e.target.value })}
                   className="w-full mt-2 rounded-2xl border p-4" />
 
               </div>
@@ -116,18 +258,13 @@ const AddCourse = () => {
               تصویر دوره
             </h2>
 
-            <div
-              className="mt-6 border-2 border-dashed rounded-3xl h-[260px] flex flex-col items-center justify-center text-slate-400">
+            <label htmlFor="image"> URL  را وارد نمایید</label>
+            <input
+              id="image"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_courseThumbnail", payload: e.target.value })}
+              className="w-full mt-2 rounded-2xl border p-4" />
 
-              <span className="text-5xl">
-                +
-              </span>
 
-              <p>
-                آپلود تصویر
-              </p>
-
-            </div>
 
           </section>
 
@@ -141,104 +278,88 @@ const AddCourse = () => {
               توضیحات دوره
             </h2>
 
-            <div
-              className="h-[300px] rounded-3xl border bg-slate-50" />
+            <textarea
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => courseDataDispatch({ type: "SET_courseDescription", payload: e.target.value })}
+              className="h-[300px] rounded-3xl border bg-slate-50 w-full p-4" />
 
           </section>
 
-          {/* Chapters */}
-
           <section
-            className="bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[30px] p-6 border">
+            className="bg-gradient-to-b from-cyan-50 via-white to-white rounded-[32px] border border-cyan-100 shadow-sm p-5 md:p-7 ">
+
+            {/* Header */}
 
             <div
-              className=" flex justify-between items-center">
+              className=" w-full flex flex-col gap-4 items-center justify-between pb-6 border-b border-cyan-100">
 
-              <h2
-                className=" text-xl font-MTNIrancell-Bold">
-                ساختار دوره
-              </h2>
+              <div className=" w-full flex gap-4 justify-between items-end">
+                <div>
 
-              <button
-                className=" px-5 py-3 rounded-xl bg-cyan-600 text-white">
-                افزودن فصل
-              </button>
+                  <h2
+                    className="text-2xl text-slate-800 font-MTNIrancell-Bold">
+                    ساختار دوره
+                  </h2>
 
-            </div>
+                  <p
+                    className=" mt-1 text-sm text-slate-500">
+                    فصل‌ها و جلسات دوره را مدیریت کنید
+                  </p>
 
-            {/* Chapter */}
+                </div>
 
-            <div
-              className=" mt-6 rounded-3xl border p-5">
-
-              <div
-                className=" flex justify-between  mb-5">
-
-                <input
-                  placeholder="نام فصل"
-                  className=" rounded-xl border p-3 flex-1" />
-
-                <button
-                  className=" px-5 text-red-500">
-                  حذف
-                </button>
-
+                {!showAddChapterModal && (
+                  <button
+                    onClick={() => setShowAddChapterModal(true)}
+                    className=" px-6 py-3 rounded-2xl bg-gradient-to-r from-cyan-600 to-cyan-500 text-white hover:scale-[1.03] active:scale-100 transition shadow-lg shadow-cyan-300/40">
+                    + افزودن فصل
+                  </button>
+                )}
               </div>
 
-              {/* Lectures */}
+              {/* Add Chapter Modal */}
 
-              <div
-                className="flex flex-col gap-3">
+              {showAddChapterModal && (
+                <div className="w-full ">
 
-                <div
-                  className=" rounded-2xl border p-4 bg-slate-50">
+                  <label>
+                    عنوان فصل
+                  </label>
 
-                  <div
-                    className=" grid md:grid-cols-3 gap-4">
-
+                  <div className=" w-full mt-2 rounded-2xl border p-4 bg-white flex justify-between items-center">
                     <input
-                      placeholder="عنوان جلسه"
-                      className=" rounded-xl border p-3 " />
+                      value={addChapterText}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddChapterText(e.target.value)}
+                      placeholder="عنوان را وارد نمایید"
+                      className=" bg-transparent outline-none " />
 
-                    <input
-                      placeholder="لینک ویدیو"
-                      className="rounded-xl border p-3 " />
 
-                    <input
-                      placeholder="مدت"
-                      className="rounded-xl border p-3" />
-
-                  </div>
-
-                  <div
-                    className=" mt-4 flex justify-between">
-
-                    <label
-                      className="flex items-center gap-2">
-
-                      <input
-                        type="checkbox"
-                      />
-
-                      پیش نمایش
-
-                    </label>
-
-                    <button
-                      className="text-red-500">
-                      حذف جلسه
-                    </button>
+                    <div className=" flex gap-2">
+                      <MdDownloadDone
+                        onClick={addNewChapter}
+                        size={20} className="text-green-600 cursor-pointer" />
+                      <ImCancelCircle
+                        onClick={addChapterModalCloser}
+                        size={20} className="text-red-500 cursor-pointer" />
+                    </div>
 
                   </div>
 
                 </div>
+              )}
 
-              </div>
+            </div>
 
-              <button
-                className="mt-5 w-full py-3 rounded-xl border border-cyan-400 text-cyan-600">
-                افزودن جلسه
-              </button>
+            {/* Chapters */}
+
+            <div className="mt-6 flex flex-col gap-5">
+
+              {courseData.courseContent.map((chapter, index) => (
+                <AddCourseChapter
+                  key={chapter.chapterId}
+                  chapterData={chapter}
+                  index={index}
+                />
+              ))}
 
             </div>
 
@@ -246,7 +367,7 @@ const AddCourse = () => {
 
         </div>
 
-        {/* RIGHT */}
+        {/* left */}
 
         <aside
           className="h-fit sticky top-5 flex flex-col gap-5 " >
@@ -301,9 +422,8 @@ const AddCourse = () => {
 
         </aside>
 
-      </div>
-
-    </div>
+      </div >
+    </div >
   )
 }
 
