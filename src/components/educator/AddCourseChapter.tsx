@@ -1,14 +1,43 @@
 import { MdDelete } from "react-icons/md";
 import { HiOutlinePlay } from "react-icons/hi";
 import type { CourseContent } from "../../Types";
+import { IoAddCircleOutline } from "react-icons/io5";
+import React, { useState } from "react";
 
 type Props = {
     chapterData: CourseContent
     index?: number
     removeChapter: (chapterID: string) => void
+    addLecture: (chapterID: string, newLectureTitle: string, newLectureDuration: string, newLectureURL: string, newLectureIsFree: string) => void
 }
 
-const AddCourseChapter = ({ chapterData, index = 0, removeChapter }: Props) => {
+const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture }: Props) => {
+
+    const [showADDLectureModal, setShowADDLectureModal] = useState<boolean>(false)
+    const [newLectureTitle, setNewLectureTitle] = useState<string>('')
+    const [newLectureDuration, setNewLectureDuration] = useState<string>('')
+    const [newLectureURL, setNewLectureURL] = useState<string>('')
+    const [newLectureIsFree, setNewLectureIsFree] = useState<string>('رایگان')
+
+
+    const cleanupModal = () => {
+        setNewLectureTitle('')
+        setNewLectureDuration('')
+        setNewLectureURL('')
+        setNewLectureIsFree('رایگان')
+
+        setShowADDLectureModal(false)
+    }
+
+
+
+    const addNewLectureHandler = () => {
+
+        addLecture(chapterData.chapterId, newLectureTitle, newLectureDuration, newLectureURL, newLectureIsFree)
+        cleanupModal()
+
+    }
+
 
     return (
 
@@ -107,6 +136,98 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter }: Props) => {
                     </div>
 
                 ))}
+
+                {/* ADD Lecture */}
+
+                <div
+                    className="flex flex-col gap-2  rounded-2xl border border-slate-100 bg-slate-50/70 px-4 py-3 hover:border-cyan-200 hover:bg-cyan-50 transition">
+
+                    {!showADDLectureModal && (
+                        <div className="flex gap-2 items-center">
+                            <div
+                                onClick={() => setShowADDLectureModal(true)}
+                                className=" w-10 h-10 rounded-xl cursor-pointer bg-white flex items-center justify-center shadow-sm">
+                                <IoAddCircleOutline
+                                    className=" text-cyan-600  "
+                                    size={18}
+                                />
+                            </div>
+
+                            <h4>
+                                افزودن جلسه جدید
+                            </h4>
+                        </div>
+                    )}
+
+                    {/*  */}
+
+                    {showADDLectureModal && (
+                        <div className=" flex flex-col gap-4 mt-2">
+                            <div>
+                                <label className="text-slate-600">
+                                    عنوان جلسه
+                                </label>
+
+                                <input
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLectureTitle(e.target.value)}
+                                    value={newLectureTitle}
+                                    className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+
+                            </div>
+                            <div>
+                                <label className="text-slate-600">
+                                    مدت جلسه
+                                </label>
+
+                                <input
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLectureDuration(e.target.value)}
+                                    value={newLectureDuration}
+                                    className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+
+                            </div>
+                            <div>
+                                <label className="text-slate-600">
+                                    URL جلسه
+                                </label>
+
+                                <input
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLectureURL(e.target.value)}
+                                    value={newLectureURL}
+                                    className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+
+                            </div>
+                            <div>
+                                <label className="text-slate-600">
+                                    ایا رایگان است
+                                </label>
+
+                                <select
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setNewLectureIsFree(e.target.value)}
+                                    name="isfree" className=" px-3 py-2 mr-2">
+                                    <option value="رایگان">رایگان</option>
+                                    <option value="غیر رایگان"> غیر رایگان</option>
+                                </select>
+
+                            </div>
+
+                            <div className=" w-full flex justify-between flex-row">
+                                <button
+                                    onClick={addNewLectureHandler}
+                                    className=" bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-2 rounded-md">
+                                    افزودن جلسه
+                                </button>
+                                <button
+                                    onClick={cleanupModal}
+                                    className=" bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md">
+                                    لغو
+                                </button>
+
+                            </div>
+
+                        </div>
+                    )}
+
+                </div>
 
             </div>
 
