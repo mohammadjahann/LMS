@@ -4,6 +4,7 @@ import React, { useReducer, useState } from "react";
 import AddCourseChapter from "../../components/educator/AddCourseChapter";
 import { MdDownloadDone } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
+import EducatorAddCourseHeader from "../../components/educator/EducatorAddCourseHeader";
 
 const AddCourse = () => {
 
@@ -76,7 +77,7 @@ const AddCourse = () => {
   }
 
   type ActionProps = {
-    type: "ADD_Chapter" | "SET_courseTitle" | "SET_category" | "SET_coursePrice" | "SET_discount" | "SET_courseThumbnail" | "SET_courseDescription",
+    type: "REMOVE_Chapter" | "ADD_Chapter" | "SET_courseTitle" | "SET_category" | "SET_coursePrice" | "SET_discount" | "SET_courseThumbnail" | "SET_courseDescription",
     payload?: string | number
   }
 
@@ -115,10 +116,13 @@ const AddCourse = () => {
           ]
 
         }
+
+      case "REMOVE_Chapter":
+        return {
+          ...state,
+          courseContent: state.courseContent.filter(chapter => chapter.chapterId !== action.payload)
+        }
     }
-
-
-
   }
 
   const [courseData, courseDataDispatch] = useReducer(courseReducer, initialCourseData)
@@ -134,6 +138,12 @@ const AddCourse = () => {
     addChapterModalCloser()
   }
 
+  const removeChapter = (chapterID: string) => {
+
+    courseDataDispatch({ type: "REMOVE_Chapter", payload: chapterID })
+
+  }
+
 
   console.log(courseData);
 
@@ -143,28 +153,7 @@ const AddCourse = () => {
 
       {/* Header */}
 
-      <div
-        className=" mb-8 flex flex-col lg:flex-row justify-between gap-5">
-
-        <div>
-
-          <h1 className="text-3xl font-MTNIrancell-Bold text-slate-800">
-            افزودن دوره جدید
-          </h1>
-
-          <p
-            className="text-slate-500 mt-2">
-            اطلاعات دوره، فصل‌ها و جلسات را ثبت کنید
-          </p>
-
-        </div>
-
-        <div
-          className="px-5 py-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-700">
-          وضعیت: پیش نویس
-        </div>
-
-      </div>
+      <EducatorAddCourseHeader />
 
       <div className=" grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6 ">
 
@@ -358,6 +347,7 @@ const AddCourse = () => {
                   key={chapter.chapterId}
                   chapterData={chapter}
                   index={index}
+                  removeChapter={removeChapter}
                 />
               ))}
 

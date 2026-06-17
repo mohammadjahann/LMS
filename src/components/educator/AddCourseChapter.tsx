@@ -5,12 +5,10 @@ import type { CourseContent } from "../../Types";
 type Props = {
     chapterData: CourseContent
     index?: number
+    removeChapter: (chapterID: string) => void
 }
 
-const AddCourseChapter = ({
-    chapterData,
-    index = 0
-}: Props) => {
+const AddCourseChapter = ({ chapterData, index = 0, removeChapter }: Props) => {
 
     return (
 
@@ -47,7 +45,9 @@ const AddCourseChapter = ({
                 </div>
 
                 <button className=" w-11 h-11 rounded-xl bg-red-50 hover:bg-red-100 text-red-500 flex items-center  justify-center transition">
-                    <MdDelete size={22} />
+                    <MdDelete
+                        onClick={() => removeChapter(chapterData.chapterId)}
+                        size={22} />
                 </button>
 
             </div>
