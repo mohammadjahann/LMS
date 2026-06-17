@@ -9,9 +9,10 @@ type Props = {
     index?: number
     removeChapter: (chapterID: string) => void
     addLecture: (chapterID: string, newLectureTitle: string, newLectureDuration: string, newLectureURL: string, newLectureIsFree: string) => void
+    removeLecture: (chapterID: string, lectureID: string) => void
 }
 
-const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture }: Props) => {
+const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, removeLecture }: Props) => {
 
     const [showADDLectureModal, setShowADDLectureModal] = useState<boolean>(false)
     const [newLectureTitle, setNewLectureTitle] = useState<string>('')
@@ -129,7 +130,9 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture }:
 
                         </div>
 
-                        <button className=" text-red-500 hover:bg-red-50 p-2 rounded-xl transition">
+                        <button
+                            onClick={() => removeLecture(chapterData.chapterId, lecture.lectureId)}
+                            className=" text-red-500 hover:bg-red-50 p-2 rounded-xl transition">
                             <MdDelete size={20} />
                         </button>
 
