@@ -34,6 +34,8 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, r
 
     const addNewLectureHandler = () => {
 
+        if (newLectureTitle === "" || newLectureDuration === "" || newLectureURL === "") return;
+
         addLecture(chapterData.chapterId, newLectureTitle, newLectureDuration, newLectureURL, newLectureIsFree)
         cleanupModal()
 

@@ -203,6 +203,9 @@ const AddCourse = () => {
   }
 
   const addNewChapter = async () => {
+
+    if (addChapterText === "") return;
+
     await courseDataDispatch({ type: 'ADD_Chapter' })
     addChapterModalCloser()
   }
