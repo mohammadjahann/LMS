@@ -5,7 +5,7 @@ import AddCourseChapter from "../../components/educator/AddCourseChapter";
 import { MdDownloadDone } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
 import EducatorAddCourseHeader from "../../components/educator/EducatorAddCourseHeader";
-import Lecture from "../../components/students/Lecture";
+import AddCourseLeft from "../../components/educator/AddCourseLeft";
 
 const AddCourse = () => {
 
@@ -71,9 +71,6 @@ const AddCourse = () => {
     educator: "",
     enrolledStudents: [],
     courseRatings: [],
-    createdAt: "",
-    updatedAt: "",
-    __v: 0,
     courseThumbnail: "",
   }
 
@@ -452,58 +449,7 @@ const AddCourse = () => {
 
         {/* left */}
 
-        <aside
-          className="h-fit sticky top-5 flex flex-col gap-5 " >
-
-          <div
-            className="bg-white rounded-[30px] p-6 border">
-
-            <h3
-              className=" text-xl mb-5 font-MTNIrancell-Bold">
-              خلاصه
-            </h3>
-
-            <div
-              className=" space-y-4">
-
-              <div
-                className="flex justify-between"
-              >
-                <span>فصل</span>
-                <span>۳</span>
-              </div>
-
-              <div
-                className="flex justify-between"
-              >
-                <span>جلسه</span>
-                <span>۲۱</span>
-              </div>
-
-              <div
-                className="flex justify-between"
-              >
-                <span>قیمت</span>
-                <span>
-                  ۴٬۹۰۰٬۰۰۰
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-
-          <button
-            className="w-full py-4 rounded-2xl bg-cyan-600 text-white text-lg">
-            ذخیره دوره
-          </button>
-
-          <button
-            className="w-full py-4 rounded-2xl border">
-            پیش نمایش
-          </button>
-
-        </aside>
+        <AddCourseLeft courseData={courseData} />
 
       </div >
     </div >
