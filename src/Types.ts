@@ -34,9 +34,7 @@ export type CourseType = {
   educator: string,
   enrolledStudents: string[],
   courseRatings: CourseRatings[],
-  createdAt: string,
-  updatedAt: string,
-  __v: number,
+  createdAt?: string,
   courseThumbnail: string,
 
 }
