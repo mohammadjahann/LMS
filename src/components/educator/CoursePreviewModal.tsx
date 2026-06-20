@@ -1,6 +1,9 @@
 import { createPortal } from "react-dom";
 import type { CourseType } from "../../Types";
 
+import useAddCourseContext from "../../hooks/useAddCourseContext";
+
+
 type Props = {
     courseData: CourseType
     show: boolean
@@ -10,13 +13,33 @@ type Props = {
 const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
     if (typeof document === "undefined") return null;
 
+    const { validator, addCourseToDatabase, courseDataDispatch, loading } = useAddCourseContext()
+
+    const publishCourse = async () => {
+
+        const isValid = validator()
+
+        if (isValid === "VALID") {
+
+            const courseAdded = await addCourseToDatabase();
+
+            if (courseAdded) courseDataDispatch({ type: "CLEANUP" })
+        }
+
+        closeModal()
+
+
+    }
+
+
+
     return createPortal(
         <>
             {/* Overlay */}
             <div
                 onClick={closeModal}
                 className={`
-                    fixed inset-0 z-[9998] bg-slate-950/30 backdrop-blur-md transition-all duration-300
+                    fixed inset-0 z-[100] bg-slate-950/30 backdrop-blur-md transition-all duration-300 font-MTNIrancell-Medium
                     ${show ? "opacity-100" : "opacity-0 pointer-events-none"}
                 `}
             />
@@ -24,20 +47,20 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
             {/* Modal Positioner */}
             <div
                 className={`
-                    fixed left-1/2 top-1/2 z-[9999] w-[95%] max-w-[1100px]
+                    fixed left-1/2 top-1/2 z-[101] w-[95%] max-w-[1100px]
                     -translate-x-1/2 transition-all duration-300
                     ${show ? "-translate-y-1/2 opacity-100" : "-translate-y-[45%] opacity-0 pointer-events-none"}
                 `}
             >
                 {/* Modal Container */}
                 <div
-                    className=" flex flex-col w-full max-h-[90vh] overflow-hidden /* کلید حل مشکل بیرون‌زدگی همینجاست */ rounded-[36px] bg-gradient-to-b from-cyan-50 via-white to-white border border-cyan-100 shadow-[0_40px_120px_rgba(0,0,0,.18)]">
+                    className=" flex flex-col w-full max-h-[90vh] overflow-hidden  rounded-[36px] bg-gradient-to-b from-cyan-50 via-white to-white border border-cyan-100 shadow-[0_40px_120px_rgba(0,0,0,.18)]">
 
                     {/* Header */}
 
                     <div
                         className="
-                            shrink-0  bg-white/70 backdrop-blur-xl border-b px-6 py-5 flex justify-between items-center z-10 ">
+                            shrink-0  bg-white/70 backdrop-blur-xl border-b px-6 py-5 flex dir justify-between items-center z-10 ">
                         <div>
                             <h2 className="text-3xl text-slate-800 font-MTNIrancell-Bold">
                                 پیش نمایش دوره
@@ -118,7 +141,7 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
                                     <div className="flex flex-col gap-5">
                                         <div className="flex justify-between">
                                             <span>قیمت</span>
-                                            <span>{courseData.coursePrice}</span>
+                                            <span>{Number(courseData.coursePrice).toLocaleString('fa-IR')}</span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span>تخفیف</span>
@@ -129,11 +152,21 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
                                             <span>{courseData.courseContent.length}</span>
                                         </div>
                                     </div>
-                                    <div className="mt-8 flex flex-col gap-3">
-                                        <button className="py-4 rounded-2xl bg-cyan-600 text-white">
-                                            انتشار دوره
-                                        </button>
-                                        <button onClick={closeModal} className="py-4 rounded-2xl border">
+                                    <div className="mt-8 flex flex-col gap-3 items-center">
+                                        {loading ? (
+                                            <div
+                                                className=" w-10 sm:w-10 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+                                            </div>
+                                        ) : (
+                                            <button
+                                                onClick={publishCourse}
+                                                className="py-4 rounded-2xl bg-cyan-600 text-white w-full">
+                                                انتشار دوره
+                                            </button>
+                                        )}
+
+                                        <button onClick={closeModal} className="py-4 rounded-2xl border w-full">
                                             برگشت
                                         </button>
                                     </div>
@@ -142,8 +175,8 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
 
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>,
         document.body
     )
