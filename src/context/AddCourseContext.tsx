@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, type Dispatch, type ReactNode } from "react"
+import React, { createContext, useReducer, useState, type Dispatch, type ReactNode } from "react"
 import type { ChapterContent, CourseType } from "../Types"
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
@@ -28,8 +28,9 @@ type ActionProps =
 type contextProps = {
     courseData: CourseType
     courseDataDispatch: Dispatch<ActionProps>
-    validator: () => ReactNode | boolean
+    validator: () => string | ReactNode
     addCourseToDatabase: () => void
+    loading: boolean
 }
 
 // eslint-disable-next-line
@@ -37,6 +38,8 @@ export const AddCourseContext = createContext<contextProps | null>(null)
 
 
 export const AddCourseContextProvider = ({ children }: { children: React.ReactNode }) => {
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const courseReducer = (state: CourseType, action: ActionProps) => {
 
@@ -198,7 +201,7 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
 
     const [courseData, courseDataDispatch] = useReducer(courseReducer, initialCourseData)
 
-    const validator = (): ReactNode | boolean => {
+    const validator = (): ReactNode | string => {
         if (courseData.courseContent.length === 0) {
             return toast.error('دوره باید حداقل یک فصل داشته باشد')
         }
@@ -219,10 +222,12 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
             return toast.error('دوره باید عنوان داشته باشد')
         }
 
-        return true
+        return "VALID"
     }
 
     const addCourseToDatabase = async () => {
+
+        setLoading(true)
 
         try {
 
@@ -232,13 +237,23 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
 
             if (error) throw error
 
+            toast.success('دوره با موفقیت افزوده شد', {
+                style: {
+                    direction: 'rtl'
+                }
+            })
+
+            return true
+
         } catch (error) {
             toast.error(error)
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
-        <AddCourseContext.Provider value={{ courseData, courseDataDispatch, validator, addCourseToDatabase }}>
+        <AddCourseContext.Provider value={{ courseData, courseDataDispatch, validator, addCourseToDatabase, loading }}>
 
             {children}
         </AddCourseContext.Provider>
