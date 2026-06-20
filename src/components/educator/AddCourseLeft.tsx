@@ -1,6 +1,8 @@
+import { useState } from "react"
 import useEducatorAuth from "../../hooks/useEducatorAuth"
 import { supabase } from "../../supabase"
 import type { CourseType } from "../../Types"
+import CoursePreviewModal from "./CoursePreviewModal"
 
 
 type Props = {
@@ -8,6 +10,8 @@ type Props = {
 }
 
 const AddCourseLeft = ({ courseData }: Props) => {
+
+    const [showPreview, setShowPreview] = useState(false)
 
     const { educatorData } = useEducatorAuth()
 
@@ -17,10 +21,7 @@ const AddCourseLeft = ({ courseData }: Props) => {
 
         courseData.courseContent.forEach(chapter => {
 
-            console.log(chapter.chapterContent);
-
             chapter.chapterContent.forEach(() => total += 1)
-
 
         })
 
@@ -85,7 +86,7 @@ const AddCourseLeft = ({ courseData }: Props) => {
                     >
                         <span>قیمت</span>
                         <span>
-                            {courseData.coursePrice}
+                            {Number(courseData.coursePrice).toLocaleString('fa-IR')}
                         </span>
                     </div>
 
@@ -100,9 +101,16 @@ const AddCourseLeft = ({ courseData }: Props) => {
             </button>
 
             <button
+                onClick={() => setShowPreview(true)}
                 className="w-full py-4 rounded-2xl border">
                 پیش نمایش
             </button>
+
+            <CoursePreviewModal
+                courseData={courseData}
+                show={showPreview}
+                closeModal={() => setShowPreview(false)}
+            />
 
         </aside>
     )
