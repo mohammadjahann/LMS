@@ -3,9 +3,10 @@ import type { ChapterContent, CourseType } from "../Types"
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { supabase } from "../supabase";
+import useEducatorAuth from "../hooks/useEducatorAuth";
 
 type ActionProps =
-    | { type: "SET_courseTitle"; payload: string }
+    { type: "SET_courseTitle"; payload: string }
     | { type: "SET_category"; payload: string }
     | { type: "SET_coursePrice"; payload: number }
     | { type: "SET_discount"; payload: number }
@@ -24,12 +25,14 @@ type ActionProps =
         }
     }
     | { type: "REMOVE_Lecture"; payload: { chapterID: string, lectureID: string } }
+    | { type: "CLEANUP" }
+
 
 type contextProps = {
     courseData: CourseType
     courseDataDispatch: Dispatch<ActionProps>
     validator: () => string | ReactNode
-    addCourseToDatabase: () => void
+    addCourseToDatabase: () => Promise<boolean>
     loading: boolean
 }
 
@@ -40,6 +43,8 @@ export const AddCourseContext = createContext<contextProps | null>(null)
 export const AddCourseContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [loading, setLoading] = useState<boolean>(false)
+
+    const { educatorData } = useEducatorAuth()
 
     const courseReducer = (state: CourseType, action: ActionProps) => {
 
@@ -133,6 +138,10 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
                 return { ...state, courseContent: updatedCourseContents }
 
 
+            case "CLEANUP":
+
+                return initialCourseData
+
         }
     }
 
@@ -225,15 +234,20 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
         return "VALID"
     }
 
-    const addCourseToDatabase = async () => {
+    const addCourseToDatabase = async (): Promise<boolean> => {
 
         setLoading(true)
+
+        let isAdded = false
 
         try {
 
             const { error } = await supabase
                 .from('courses')
-                .insert(courseData)
+                .insert({
+                    ...courseData,
+                    educator: `${educatorData?.name} ${educatorData?.family}`
+                })
 
             if (error) throw error
 
@@ -243,14 +257,20 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
                 }
             })
 
-            return true
+            isAdded = true
+
 
         } catch (error) {
             toast.error(error)
+
+
         } finally {
             setLoading(false)
         }
+
+        return isAdded
     }
+
 
     return (
         <AddCourseContext.Provider value={{ courseData, courseDataDispatch, validator, addCourseToDatabase, loading }}>
