@@ -151,7 +151,7 @@ const AddCourse = () => {
 
         {/* left */}
 
-        <AddCourseLeft courseData={courseData} />
+        <AddCourseLeft />
 
       </div >
     </div >

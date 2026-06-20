@@ -1,19 +1,15 @@
 import { useState } from "react"
-import useEducatorAuth from "../../hooks/useEducatorAuth"
-import { supabase } from "../../supabase"
-import type { CourseType } from "../../Types"
 import CoursePreviewModal from "./CoursePreviewModal"
+import useAddCourseContext from "../../hooks/useAddCourseContext"
 
 
-type Props = {
-    courseData: CourseType,
-}
 
-const AddCourseLeft = ({ courseData }: Props) => {
+
+const AddCourseLeft = () => {
 
     const [showPreview, setShowPreview] = useState(false)
 
-    const { educatorData } = useEducatorAuth()
+    const { courseData, validator, addCourseToDatabase, courseDataDispatch, loading } = useAddCourseContext()
 
     const lectureCounter = (): number => {
 
@@ -28,25 +24,15 @@ const AddCourseLeft = ({ courseData }: Props) => {
         return total
     }
 
-    const addCourseHandler = async () => {
+    const publishCourse = async () => {
 
-        try {
+        const isValid = validator()
 
-            const { error } = await supabase
-                .from("courses")
-                .insert({
-                    ...courseData,
-                    educator: `${educatorData?.name} ${educatorData?.family}`
-                })
+        if (isValid === "VALID") {
 
-            if (error) throw error
+            const courseAdded = await addCourseToDatabase();
 
-            console.log('sucsess');
-
-        } catch (error) {
-
-            console.log(error);
-
+            if (courseAdded) courseDataDispatch({ type: "CLEANUP" })
         }
 
     }
@@ -94,11 +80,18 @@ const AddCourseLeft = ({ courseData }: Props) => {
 
             </div>
 
-            <button
-                onClick={addCourseHandler}
-                className="w-full py-4 rounded-2xl bg-cyan-600 text-white text-lg">
-                ذخیره دوره
-            </button>
+            {loading ? (
+                <div
+                    className=" w-10 sm:w-10 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+                </div>
+            ) : (
+                <button
+                    onClick={publishCourse}
+                    className="py-4 rounded-2xl bg-cyan-600 text-white w-full">
+                    انتشار دوره
+                </button>
+            )}
 
             <button
                 onClick={() => setShowPreview(true)}
