@@ -2,6 +2,7 @@ import React, { createContext, useReducer, type Dispatch, type ReactNode } from 
 import type { ChapterContent, CourseType } from "../Types"
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
+import { supabase } from "../supabase";
 
 type ActionProps =
     | { type: "SET_courseTitle"; payload: string }
@@ -28,6 +29,7 @@ type contextProps = {
     courseData: CourseType
     courseDataDispatch: Dispatch<ActionProps>
     validator: () => ReactNode | boolean
+    addCourseToDatabase: () => void
 }
 
 // eslint-disable-next-line
@@ -220,8 +222,23 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
         return true
     }
 
+    const addCourseToDatabase = async () => {
+
+        try {
+
+            const { error } = await supabase
+                .from('courses')
+                .insert(courseData)
+
+            if (error) throw error
+
+        } catch (error) {
+            toast.error(error)
+        }
+    }
+
     return (
-        <AddCourseContext.Provider value={{ courseData, courseDataDispatch, validator }}>
+        <AddCourseContext.Provider value={{ courseData, courseDataDispatch, validator, addCourseToDatabase }}>
 
             {children}
         </AddCourseContext.Provider>
