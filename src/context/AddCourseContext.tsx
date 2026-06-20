@@ -1,6 +1,7 @@
-import React, { createContext, useReducer, type Dispatch } from "react"
+import React, { createContext, useReducer, type Dispatch, type ReactNode } from "react"
 import type { ChapterContent, CourseType } from "../Types"
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 
 type ActionProps =
     | { type: "SET_courseTitle"; payload: string }
@@ -26,6 +27,7 @@ type ActionProps =
 type contextProps = {
     courseData: CourseType
     courseDataDispatch: Dispatch<ActionProps>
+    validator: () => ReactNode | boolean
 }
 
 // eslint-disable-next-line
@@ -194,8 +196,32 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
 
     const [courseData, courseDataDispatch] = useReducer(courseReducer, initialCourseData)
 
+    const validator = (): ReactNode | boolean => {
+        if (courseData.courseContent.length === 0) {
+            return toast.error('دوره باید حداقل یک فصل داشته باشد')
+        }
+
+        if (courseData.courseDescription.trim().length < 20) {
+            return toast.error('دوره باید توضیحات کافی داشته باشد')
+        }
+
+        if (courseData.coursePrice === 0) {
+            return toast.error('دوره باید قیمت داشته باشد')
+        }
+
+        if (courseData.courseThumbnail.trim().length === 0) {
+            return toast.error('دوره باید کاور مناسب داشته باشد')
+        }
+
+        if (courseData.courseTitle.trim().length === 0) {
+            return toast.error('دوره باید عنوان داشته باشد')
+        }
+
+        return true
+    }
+
     return (
-        <AddCourseContext.Provider value={{ courseData, courseDataDispatch }}>
+        <AddCourseContext.Provider value={{ courseData, courseDataDispatch, validator }}>
 
             {children}
         </AddCourseContext.Provider>
