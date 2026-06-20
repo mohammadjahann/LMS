@@ -10,7 +10,6 @@ const AddCourse = () => {
 
   const { courseData, courseDataDispatch } = useAddCourseContext()
 
-  console.log(courseData);
 
   return (
     <div
@@ -47,6 +46,7 @@ const AddCourse = () => {
                 </label>
 
                 <input
+                  value={courseData.courseTitle}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: 'SET_courseTitle', payload: e.target.value })}
                   className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
 
@@ -81,6 +81,7 @@ const AddCourse = () => {
                 </label>
 
                 <input
+                  value={courseData.coursePrice}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_coursePrice", payload: e.target.value })}
                   className="w-full mt-2 rounded-2xl border p-4" />
 
@@ -93,6 +94,7 @@ const AddCourse = () => {
                 </label>
 
                 <input
+                  value={courseData.discount}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_discount", payload: e.target.value })}
                   className="w-full mt-2 rounded-2xl border p-4" />
 
@@ -114,6 +116,7 @@ const AddCourse = () => {
 
             <label htmlFor="image"> URL  را وارد نمایید</label>
             <input
+              value={courseData.courseThumbnail}
               id="image"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_courseThumbnail", payload: e.target.value })}
               className="w-full mt-2 rounded-2xl border p-4" />
@@ -133,6 +136,7 @@ const AddCourse = () => {
             </h2>
 
             <textarea
+              value={courseData.courseDescription}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => courseDataDispatch({ type: "SET_courseDescription", payload: e.target.value })}
               className="h-[300px] rounded-3xl border bg-slate-50 w-full p-4" />
 
