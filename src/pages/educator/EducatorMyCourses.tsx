@@ -1,7 +1,12 @@
 import EducatorCourseCard from '../../components/educator/EducatorCourseCard'
+import useEducatorAuth from '../../hooks/useEducatorAuth'
 
 const EducatorMyCourses = () => {
-    const courses = [1, 2, 3]
+
+    const { educatorData } = useEducatorAuth()
+
+    console.log(educatorData?.courses);
+
 
     return (
         <div className="dir min-h-screen">
@@ -112,7 +117,7 @@ const EducatorMyCourses = () => {
             <div
                 className=" grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                {courses.map((_, index) => (
+                {educatorData?.courses.map((_, index) => (
                     <EducatorCourseCard
                         key={index}
                     />

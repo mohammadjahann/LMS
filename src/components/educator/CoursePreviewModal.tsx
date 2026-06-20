@@ -2,6 +2,8 @@ import { createPortal } from "react-dom";
 import type { CourseType } from "../../Types";
 
 import useAddCourseContext from "../../hooks/useAddCourseContext";
+import { supabase } from "../../supabase";
+import useEducatorAuth from "../../hooks/useEducatorAuth";
 
 
 type Props = {
@@ -11,7 +13,8 @@ type Props = {
 }
 
 const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
-    if (typeof document === "undefined") return null;
+
+    const { educatorData, setEducatorData } = useEducatorAuth()
 
     const { validator, addCourseToDatabase, courseDataDispatch, loading } = useAddCourseContext()
 
@@ -22,6 +25,24 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
         if (isValid === "VALID") {
 
             const courseAdded = await addCourseToDatabase();
+
+            const updatedCourseList = [...educatorData?.courses ?? [], courseData._id]
+
+            await supabase
+                .from('educators')
+                .update({
+                    courses: updatedCourseList
+                })
+                .eq('id', educatorData?.id)
+
+
+            setEducatorData(prev => {
+                if (!prev) return null
+                return {
+                    ...prev,
+                    courses: updatedCourseList
+                }
+            })
 
             if (courseAdded) courseDataDispatch({ type: "CLEANUP" })
         }
