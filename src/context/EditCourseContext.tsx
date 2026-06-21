@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 type ActionProps =
     { type: "SET_DATA", payload: CourseType }
     | { type: "SET_TITLE", payload: string }
+    | { type: "SET_PRICE", payload: number }
+
 
 
 
@@ -49,6 +51,15 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                 return {
                     ...state,
                     courseTitle: action.payload
+                }
+
+            case "SET_PRICE":
+
+                if (!state) return null;
+
+                return {
+                    ...state,
+                    coursePrice: action.payload
                 }
 
 
