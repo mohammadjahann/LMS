@@ -104,5 +104,65 @@
     animation: basket-out .7s ease-out forwards
   }
 
+  @keyframes edit-course-modal-in {
+
+    0% {
+      transform: translateY(130%);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+
+  }
+
+  @keyframes edit-course-modal-out {
+    0% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(130%);
+    }
+  }
+
+  @keyframes edit-course-modal-opacity-out {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes edit-course-modal-opacity-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .edit-course-modal-opacity-in {
+    animation: edit-course-modal-opacity-in .3s ease forwards;
+  }
+
+  .edit-course-modal-opacity-out {
+    animation: edit-course-modal-opacity-out .3s ease .3s forwards;
+  }
+
+  .edit-course-modal-in {
+    animation: edit-course-modal-in .4s ease-in-out .3s forwards;
+    animation-fill-mode: backwards;
+  }
+
+  .edit-course-modal-out {
+    animation: edit-course-modal-out .3s ease-in-out forwards;
+
+  }
+
 
 }

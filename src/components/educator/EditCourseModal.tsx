@@ -1,17 +1,23 @@
 
 import { createPortal } from "react-dom";
 import { FiX, FiEdit3, FiPlayCircle, FiLock } from "react-icons/fi";
+import useEditCourseContext from "../../hooks/useEditCourseContext";
 
 
 const EditCourseModal = () => {
 
+    const { courseState, showModal, setShowModal } = useEditCourseContext()
+
+    console.log(courseState);
+
+
     return createPortal(
 
         <div
-            className="fixed dir inset-0 z-[999] bg-black/50 backdrop-blur-md flex items-center justify-center p-4 ">
+            className={`fixed dir inset-0 z-[999] bg-black/50 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-200 ${showModal ? "edit-course-modal-opacity-in" : " edit-course-modal-opacity-out pointer-events-none"}`}>
 
             <div
-                className=" w-full max-w-[1500px] h-[92vh] overflow-hidden rounded-[40px] bg-white flex flex-col">
+                className={`w-full max-w-[1500px] h-[92vh] overflow-hidden rounded-[40px] bg-white flex flex-col  transition-all duration-200 ${showModal ? "edit-course-modal-in" : "edit-course-modal-out "}`}>
 
                 {/* Header */}
 
@@ -31,6 +37,7 @@ const EditCourseModal = () => {
                     </div>
 
                     <button
+                        onClick={() => setShowModal(false)}
                         className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center ">
                         <FiX size={24} />
                     </button>
@@ -177,6 +184,7 @@ const EditCourseModal = () => {
                 >
 
                     <button
+                        onClick={() => setShowModal(false)}
                         className=" px-7 py-4 rounded-2xl border">
                         انصراف
                     </button>

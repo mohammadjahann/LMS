@@ -11,6 +11,7 @@ import {
 import { supabase } from "../../supabase"
 import type { CourseType } from "../../Types"
 import useEducatorAuth from "../../hooks/useEducatorAuth"
+import useEditCourseContext from "../../hooks/useEditCourseContext"
 
 type Props = {
     courseID: string
@@ -19,6 +20,8 @@ type Props = {
 const EducatorCourseCard = ({ courseID }: Props) => {
 
     const [courseData, setCourseData] = useState<CourseType | null>(null)
+
+    const { Dispatch, setShowModal } = useEditCourseContext()
 
     const { enrollmentsData, courseDurationCalculator, lectureCountCalculator, ratingCalculator } = useEducatorAuth()
 
@@ -66,6 +69,14 @@ const EducatorCourseCard = ({ courseID }: Props) => {
     }, [])
 
 
+    const handleEditBtn = () => {
+
+        if (!courseData) return;
+
+        Dispatch({ type: "SET_DATA", payload: courseData })
+        setShowModal(true)
+
+    }
 
 
 
@@ -142,6 +153,7 @@ const EducatorCourseCard = ({ courseID }: Props) => {
             />
 
             <button
+                onClick={handleEditBtn}
                 className=" absolute top-4 left-4 w-12 h-12 rounded-2xl bg-white/90 backdrop-blur flex items-center justify-center hover:scale-110 transition ">
                 <FiEdit
                     size={20}
@@ -232,6 +244,7 @@ const EducatorCourseCard = ({ courseID }: Props) => {
                 </span>
 
                 <button
+                    onClick={handleEditBtn}
                     className=" px-5 py-3 rounded-2xl bg-slate-900 text-white hover:scale-[1.03] transition">
                     ویرایش دوره
                 </button>
