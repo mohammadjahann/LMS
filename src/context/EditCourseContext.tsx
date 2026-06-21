@@ -1,4 +1,4 @@
-import { createContext, useReducer, type Dispatch, type ReactNode } from "react";
+import { createContext, useReducer, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
 import type { CourseType } from "../Types";
 
 type ActionProps =
@@ -10,12 +10,16 @@ type ActionProps =
 type ContextTypes = {
     courseState: CourseType | null,
     Dispatch: Dispatch<ActionProps>
+    showModal: boolean,
+    setShowModal: Dispatch<SetStateAction<boolean>>
 }
 
 // eslint-disable-next-line
 export const EditCourseContext = createContext<ContextTypes | null>(null)
 
 export const EditCourseContextProvider = ({ children }: { children: ReactNode }) => {
+
+    const [showModal, setShowModal] = useState<boolean>(false)
 
     const initialState: CourseType | null = null
 
@@ -37,7 +41,7 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
 
     return (
 
-        <EditCourseContext.Provider value={{ courseState, Dispatch }}>
+        <EditCourseContext.Provider value={{ courseState, Dispatch, showModal, setShowModal }}>
             {children}
         </EditCourseContext.Provider>
 
