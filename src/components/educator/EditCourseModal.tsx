@@ -1,6 +1,6 @@
 
 import { createPortal } from "react-dom";
-import { FiX, FiEdit3, FiPlayCircle, FiLock } from "react-icons/fi";
+import { FiX, FiEdit3 } from "react-icons/fi";
 import useEditCourseContext from "../../hooks/useEditCourseContext";
 
 
@@ -14,7 +14,7 @@ const EditCourseModal = () => {
     return createPortal(
 
         <div
-            className={`fixed dir inset-0 z-[999] bg-black/50 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-200 ${showModal ? "edit-course-modal-opacity-in" : " edit-course-modal-opacity-out pointer-events-none"}`}>
+            className={`fixed dir inset-0 z-[999] bg-black/50 backdrop-blur-md flex items-center justify-center px-36 transition-all duration-200 ${showModal ? "edit-course-modal-opacity-in" : " edit-course-modal-opacity-out pointer-events-none"}`}>
 
             <div
                 className={`w-full max-w-[1500px] h-[92vh] overflow-hidden rounded-[40px] bg-white flex flex-col  transition-all duration-200 ${showModal ? "edit-course-modal-in" : "edit-course-modal-out "}`}>
@@ -64,28 +64,40 @@ const EditCourseModal = () => {
                             </h3>
 
                             <div
-                                className="mt-7 grid md:grid-cols-2 gap-5">
+                                className="mt-7 grid md:grid-cols-2 gap-5 font-MTNIrancell-Medium">
 
-                                <input
-                                    className=" rounded-2xl p-4 border"
-                                    value="آموزش هوش مصنوعی"
-                                />
+                                <div className=" flex flex-col gap-2">
+                                    <label >عنوان دوره :</label>
+                                    <input
+                                        className=" rounded-2xl p-4 border"
+                                        value={courseState?.courseTitle}
+                                    />
+                                </div>
 
-                                <select
-                                    className=" rounded-2xl p-4 border">
-                                    <option>
-                                        BACK_END
-                                    </option>
-                                </select>
+                                <div className=" flex flex-col gap-2">
+                                    <label >دسته بندی :</label>
+                                    <select
+                                        className=" rounded-2xl p-4 border">
+                                        <option>
+                                            {courseState?.category}
+                                        </option>
+                                    </select>
+                                </div>
 
-                                <input
-                                    className="rounded-2xl p-4 border"
-                                    value="79.99"
-                                />
+                                <div className=" flex flex-col gap-2">
+                                    <label>قیمت دوره :</label>
+                                    <input
+                                        className="rounded-2xl p-4 border"
+                                        value={courseState?.coursePrice}
+                                    />
+                                </div>
 
-                                <input
-                                    className=" rounded-2xl p-4 border"
-                                    value="15" />
+                                <div className=" flex flex-col gap-2">
+                                    <label>نخفیف :</label>
+                                    <input
+                                        className=" rounded-2xl p-4 border"
+                                        value={courseState?.discount} />
+                                </div>
 
                             </div>
 
@@ -101,9 +113,10 @@ const EditCourseModal = () => {
 
                             <img
                                 className=" rounded-3xl h-[280px] object-cover w-full"
-                                src="https://static.roocket.ir/images/cover/2025/8/30/Xpi398GYbfXijbJ9xpRVvJm2XvifxUuo9C1nvQKx.jpg" />
-
-                            <input className="mt-5 rounded-2xl border p-4 w-full" />
+                                src={courseState?.courseThumbnail} />
+                            <input
+                                value={courseState?.courseThumbnail}
+                                className="mt-5 rounded-2xl border p-4 w-full" />
 
                         </section>
 
@@ -115,7 +128,9 @@ const EditCourseModal = () => {
                                 توضیحات
                             </h3>
 
-                            <textarea className=" w-full h-[260px] rounded-3xl border p-5" />
+                            <textarea
+                                value={courseState?.courseDescription}
+                                className=" w-full h-[260px] rounded-3xl border p-5" />
 
                         </section>
 
@@ -135,34 +150,38 @@ const EditCourseModal = () => {
 
                             </div>
 
-                            <div className=" mt-6 flex flex-col gap-4">
+                            {courseState?.courseContent.map(chapter => (
+                                <div key={chapter.chapterId} className=" mt-6 flex flex-col gap-4">
 
-                                <div className=" rounded-3xl border p-5">
+                                    <div className=" rounded-3xl border p-5">
 
-                                    <div className=" flex justify-between">
+                                        <div className=" flex justify-between">
 
-                                        <h4>
-                                            فصل اول
-                                        </h4>
+                                            <h4>
+                                                {chapter.chapterTitle}
+                                            </h4>
 
-                                        <FiEdit3 />
-                                    </div>
+                                            <FiEdit3 />
+                                        </div>
 
-                                    <div className="mt-4 space-y-3 ">
+                                        <div className="mt-4 space-y-3 ">
 
-                                        <div className=" rounded-2xl bg-slate-50 p-4 flex justify-between">
+                                            {chapter.chapterContent.map(lecture => (
+                                                <div key={lecture.lectureId} className=" rounded-2xl bg-slate-50 p-4 flex justify-between">
 
-                                            <span>
-                                                Lists and Tuples
-                                            </span>
+                                                    <span>
+                                                        {lecture.lectureTitle}
+                                                    </span>
 
-                                            <div
-                                                className="flex gap-4"
-                                            >
-                                                <FiPlayCircle />
-                                                <FiLock />
-                                                <FiEdit3 />
-                                            </div>
+                                                    <div
+                                                        className="flex gap-4"
+                                                    >
+
+                                                        <FiEdit3 />
+                                                    </div>
+
+                                                </div>
+                                            ))}
 
                                         </div>
 
@@ -170,8 +189,7 @@ const EditCourseModal = () => {
 
                                 </div>
 
-                            </div>
-
+                            ))}
                         </section>
 
                     </div>
