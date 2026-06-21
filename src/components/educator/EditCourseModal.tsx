@@ -107,8 +107,9 @@ const EditCourseModal = () => {
                                 </div>
 
                                 <div className=" flex flex-col gap-2">
-                                    <label>نخفیف :</label>
+                                    <label>تخفیف :</label>
                                     <input
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_DISCOUNT", payload: Number(e.target.value) })}
                                         className=" rounded-2xl p-4 border"
                                         value={courseState?.discount} />
                                 </div>

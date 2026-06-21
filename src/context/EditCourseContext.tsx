@@ -7,6 +7,7 @@ type ActionProps =
     { type: "SET_DATA", payload: CourseType }
     | { type: "SET_TITLE", payload: string }
     | { type: "SET_PRICE", payload: number }
+    | { type: "SET_DISCOUNT", payload: number }
 
 
 
@@ -62,6 +63,14 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                     coursePrice: action.payload
                 }
 
+            case "SET_DISCOUNT":
+
+                if (!state) return null;
+
+                return {
+                    ...state,
+                    discount: action.payload
+                }
 
         }
 
