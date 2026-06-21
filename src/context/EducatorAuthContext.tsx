@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import type { ChapterContent, CourseContent, EducatorProfileDataType, EnrolledStydentType } from "../Types";
+import type { ChapterContent, CourseContent, CourseRatings, EducatorProfileDataType, EnrolledStydentType } from "../Types";
 import humanizrDuration from "humanize-duration"
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
@@ -14,6 +14,7 @@ type EducatorAuthContextTypes = {
     setEnrollmentsData: Dispatch<SetStateAction<EnrolledStydentType[] | null>>
     courseDurationCalculator: (courseContent: CourseContent[]) => string,
     lectureCountCalculator: (chapters: CourseContent[]) => number,
+    ratingCalculator: (allRatings: CourseRatings[]) => number,
 }
 
 
@@ -95,9 +96,26 @@ export const EducatorAuthContextProvider = ({ children }: { children: React.Reac
         return lectureCount
     }
 
+    // function to calculate average rating of course
+
+    const ratingCalculator = (allRatings: CourseRatings[]): number => {
+        if (allRatings.length === 0) return 0;
+
+        let totalRating: number = 0
+
+        allRatings.forEach(rate => {
+            totalRating += rate.rating
+        })
+
+        totalRating = +(totalRating / allRatings.length).toFixed(1)
+
+        return totalRating
+
+    }
+
 
     return (
-        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout, enrollmentsData, setEnrollmentsData, courseDurationCalculator, lectureCountCalculator }}>
+        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout, enrollmentsData, setEnrollmentsData, courseDurationCalculator, lectureCountCalculator, ratingCalculator }}>
             {children}
         </EducatorAuthContext.Provider>
     )
