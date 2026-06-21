@@ -21,7 +21,7 @@ const EducatorCourseCard = ({ courseID }: Props) => {
 
     const [courseData, setCourseData] = useState<CourseType | null>(null)
 
-    const { Dispatch, setShowModal } = useEditCourseContext()
+    const { Dispatch, setShowModal, refresh } = useEditCourseContext()
 
     const { enrollmentsData, courseDurationCalculator, lectureCountCalculator, ratingCalculator } = useEducatorAuth()
 
@@ -66,7 +66,8 @@ const EducatorCourseCard = ({ courseID }: Props) => {
     useEffect(() => {
 
         getCourseData()
-    }, [])
+
+    }, [refresh])
 
 
     const handleEditBtn = () => {

@@ -2,14 +2,26 @@
 import { createPortal } from "react-dom";
 import { FiX, FiEdit3 } from "react-icons/fi";
 import useEditCourseContext from "../../hooks/useEditCourseContext";
-
+import type React from "react";
 
 const EditCourseModal = () => {
 
-    const { courseState, showModal, setShowModal } = useEditCourseContext()
+    const { setRefresh, validator, loading, courseState, showModal, setShowModal, Dispatch, updateDatabase } = useEditCourseContext()
 
-    console.log(courseState);
+    const saveChangeHandler = async () => {
 
+        const isValid = validator()
+
+        if (isValid === "VALID") {
+            const isUpdated = await updateDatabase(courseState?._id ?? '')
+
+            if (isUpdated === 1) {
+                setShowModal(false)
+                setRefresh(prev => prev += 1)
+            }
+        }
+
+    }
 
     return createPortal(
 
@@ -69,6 +81,7 @@ const EditCourseModal = () => {
                                 <div className=" flex flex-col gap-2">
                                     <label >عنوان دوره :</label>
                                     <input
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_TITLE", payload: e.target.value })}
                                         className=" rounded-2xl p-4 border"
                                         value={courseState?.courseTitle}
                                     />
@@ -213,10 +226,19 @@ const EditCourseModal = () => {
                         <button className=" px-7 py-4 rounded-2xl  bg-slate-900 text-white">
                             پیش نمایش
                         </button>
+                        {loading ? (
+                            <div
+                                className=" w-10 h-10 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
 
-                        <button className=" px-7 py-4 rounded-2xl bg-cyan-600 text-white">
-                            ذخیره تغییرات
-                        </button>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={saveChangeHandler}
+                                className=" px-7 py-4 rounded-2xl bg-cyan-600 text-white">
+                                ذخیره تغییرات
+                            </button>
+                        )}
+
 
                     </div>
 
