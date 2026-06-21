@@ -13,6 +13,7 @@ type EducatorAuthContextTypes = {
     enrollmentsData: EnrolledStydentType[] | null,
     setEnrollmentsData: Dispatch<SetStateAction<EnrolledStydentType[] | null>>
     courseDurationCalculator: (courseContent: CourseContent[]) => string,
+    lectureCountCalculator: (chapters: CourseContent[]) => number,
 }
 
 
@@ -81,9 +82,22 @@ export const EducatorAuthContextProvider = ({ children }: { children: React.Reac
         return humanizeTime(time)
     }
 
+    // Function to calculate total numbers of chapters
+
+    const lectureCountCalculator = (chapters: CourseContent[]): number => {
+
+        let lectureCount = 0
+
+        chapters.forEach(chapter => {
+            chapter.chapterContent.forEach(() => ++lectureCount)
+        })
+
+        return lectureCount
+    }
+
 
     return (
-        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout, enrollmentsData, setEnrollmentsData, courseDurationCalculator }}>
+        <EducatorAuthContext.Provider value={{ educatorData, setEducatorData, educator, loading, logout, enrollmentsData, setEnrollmentsData, courseDurationCalculator, lectureCountCalculator }}>
             {children}
         </EducatorAuthContext.Provider>
     )
