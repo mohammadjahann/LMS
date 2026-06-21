@@ -4,6 +4,7 @@ import useEducatorAuth from "../../hooks/useEducatorAuth";
 import { supabase } from "../../supabase";
 import { useEffect } from "react";
 import { AddCourseContextProvider } from "../../context/AddCourseContext";
+import { EditCourseContextProvider } from "../../context/EditCourseContext";
 
 
 
@@ -58,7 +59,9 @@ const Dashboard = () => {
         <div
           className="flex-1 bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-6">
           <AddCourseContextProvider>
-            <Outlet />
+            <EditCourseContextProvider>
+              <Outlet />
+            </EditCourseContextProvider>
           </AddCourseContextProvider>
         </div>
 
