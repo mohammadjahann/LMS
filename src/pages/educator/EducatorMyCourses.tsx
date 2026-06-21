@@ -5,9 +5,6 @@ const EducatorMyCourses = () => {
 
     const { educatorData } = useEducatorAuth()
 
-    console.log(educatorData?.courses);
-
-
     return (
         <div className="dir min-h-screen">
 
@@ -117,9 +114,10 @@ const EducatorMyCourses = () => {
             <div
                 className=" grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                {educatorData?.courses.map((_, index) => (
+                {educatorData?.courses.map((course, index) => (
                     <EducatorCourseCard
                         key={index}
+                        courseID={course}
                     />
                 ))}
 
