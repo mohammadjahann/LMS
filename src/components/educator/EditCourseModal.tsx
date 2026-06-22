@@ -1,8 +1,9 @@
 
 import { createPortal } from "react-dom";
-import { FiX, FiEdit3 } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import useEditCourseContext from "../../hooks/useEditCourseContext";
 import type React from "react";
+import EditCourseChapter from "./EditCourseChapter";
 
 const EditCourseModal = () => {
 
@@ -168,43 +169,7 @@ const EditCourseModal = () => {
                             </div>
 
                             {courseState?.courseContent.map(chapter => (
-                                <div key={chapter.chapterId} className=" mt-6 flex flex-col gap-4">
-
-                                    <div className=" rounded-3xl border p-5">
-
-                                        <div className=" flex justify-between">
-
-                                            <h4>
-                                                {chapter.chapterTitle}
-                                            </h4>
-
-                                            <FiEdit3 />
-                                        </div>
-
-                                        <div className="mt-4 space-y-3 ">
-
-                                            {chapter.chapterContent.map(lecture => (
-                                                <div key={lecture.lectureId} className=" rounded-2xl bg-slate-50 p-4 flex justify-between">
-
-                                                    <span>
-                                                        {lecture.lectureTitle}
-                                                    </span>
-
-                                                    <div
-                                                        className="flex gap-4"
-                                                    >
-
-                                                        <FiEdit3 />
-                                                    </div>
-
-                                                </div>
-                                            ))}
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                                <EditCourseChapter chapter={chapter} />
 
                             ))}
                         </section>
