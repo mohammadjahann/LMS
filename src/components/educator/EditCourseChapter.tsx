@@ -1,5 +1,6 @@
 import { FiEdit3 } from 'react-icons/fi'
 import type { CourseContent } from '../../Types'
+import EditCourseLecture from './EditCourseLecture'
 
 type Props = {
     chapter: CourseContent
@@ -26,20 +27,7 @@ const EditCourseChapter = ({ chapter }: Props) => {
                 <div className="mt-4 space-y-3 ">
 
                     {chapter.chapterContent.map(lecture => (
-                        <div key={lecture.lectureId} className=" rounded-2xl bg-slate-50 p-4 flex justify-between">
-
-                            <span>
-                                {lecture.lectureTitle}
-                            </span>
-
-                            <div
-                                className="flex gap-4"
-                            >
-
-                                <FiEdit3 />
-                            </div>
-
-                        </div>
+                        <EditCourseLecture lecture={lecture} />
                     ))}
 
                 </div>
