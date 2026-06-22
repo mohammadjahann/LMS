@@ -145,6 +145,7 @@ const EditCourseModal = () => {
                             </h3>
 
                             <textarea
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => Dispatch({ type: "SET_DESCRTPTION", payload: e.target.value })}
                                 value={courseState?.courseDescription}
                                 className=" w-full h-[260px] rounded-3xl border p-5" />
 
