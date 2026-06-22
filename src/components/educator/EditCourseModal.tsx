@@ -130,6 +130,7 @@ const EditCourseModal = () => {
                                 className=" rounded-3xl h-[280px] object-cover w-full"
                                 src={courseState?.courseThumbnail} />
                             <input
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_THUMBNAIL", payload: e.target.value })}
                                 value={courseState?.courseThumbnail}
                                 className="mt-5 rounded-2xl border p-4 w-full" />
 
