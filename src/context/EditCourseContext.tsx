@@ -11,6 +11,7 @@ type ActionProps =
     | { type: "SET_THUMBNAIL", payload: string }
     | { type: "SET_DESCRTPTION", payload: string }
     | { type: "SET_DELETE_CHAPTER", payload: string }
+    | { type: "SET_EDIT_CHAPTER", payload: { chapterID: string, newTitle: string } }
 
 
 
@@ -98,6 +99,23 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                     ...state,
                     courseContent: state.courseContent.filter(chapter => chapter.chapterId !== action.payload)
                 }
+
+            case "SET_EDIT_CHAPTER": {
+
+                if (!state) return null;
+
+                return {
+                    ...state,
+                    courseContent: state.courseContent.map(chapter =>
+                        chapter.chapterId === action.payload.chapterID
+                            ? {
+                                ...chapter,
+                                chapterTitle: action.payload.newTitle
+                            }
+                            : chapter
+                    )
+                }
+            }
 
         }
 
