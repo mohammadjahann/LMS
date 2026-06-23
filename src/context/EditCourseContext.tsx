@@ -2,6 +2,7 @@ import { createContext, useReducer, useState, type Dispatch, type ReactNode, typ
 import type { CourseType } from "../Types";
 import { supabase } from "../supabase";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from 'uuid';
 
 type ActionProps =
     { type: "SET_DATA", payload: CourseType }
@@ -12,6 +13,7 @@ type ActionProps =
     | { type: "SET_DESCRTPTION", payload: string }
     | { type: "SET_DELETE_CHAPTER", payload: string }
     | { type: "SET_EDIT_CHAPTER", payload: { chapterID: string, newTitle: string } }
+    | { type: "SET_ADD_CHAPTER", payload: string }
 
 
 
@@ -117,6 +119,22 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                 }
             }
 
+            case "SET_ADD_CHAPTER":
+                if (!state) return null;
+
+                return {
+                    ...state,
+                    courseContent: [
+                        ...state.courseContent,
+                        {
+                            chapterId: uuidv4(),
+                            chapterOrder: state.courseContent.length + 1,
+                            chapterTitle: action.payload,
+                            chapterContent: []
+                        }
+                    ]
+                }
+
         }
 
 
@@ -184,7 +202,11 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
         }
 
         if (isSuccess) {
-            toast.success('به روز رسانی با موفقیت انجام شد')
+            toast.success('به روز رسانی با موفقیت انجام شد', {
+                style: {
+                    direction: "rtl"
+                }
+            })
             return 1
         }
 

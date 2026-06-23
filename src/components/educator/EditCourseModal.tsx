@@ -4,8 +4,15 @@ import { FiX } from "react-icons/fi";
 import useEditCourseContext from "../../hooks/useEditCourseContext";
 import type React from "react";
 import EditCourseChapter from "./EditCourseChapter";
+import { useEffect, useRef, useState } from "react";
+import { MdCancel, MdFileDownloadDone } from "react-icons/md";
 
 const EditCourseModal = () => {
+
+    const [showAddChapter, setShowAddChapter] = useState<boolean>(false)
+    const [newChapterTitle, setNewChapterTitle] = useState<string>('')
+
+    const scrollRef = useRef<HTMLDivElement | null>(null)
 
     const { setRefresh, validator, loading, courseState, showModal, setShowModal, Dispatch, updateDatabase } = useEditCourseContext()
 
@@ -23,6 +30,24 @@ const EditCourseModal = () => {
         }
 
     }
+
+    useEffect(() => {
+
+        if (showModal) {
+            scrollRef.current?.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
+        }
+
+        if (!showModal) {
+            // eslint-disable-next-line
+            setShowAddChapter(false)
+            setNewChapterTitle('')
+        }
+
+
+    }, [showModal])
 
     return createPortal(
 
@@ -65,6 +90,7 @@ const EditCourseModal = () => {
                     {/* Body */}
 
                     <div
+                        ref={scrollRef}
                         className=" flex-1 overflow-y-auto p-8">
 
                         {/* General */}
@@ -156,15 +182,53 @@ const EditCourseModal = () => {
 
                         <section className="mt-7 rounded-[32px] border p-7">
 
-                            <div className=" flex justify-between">
+                            <div>
 
-                                <h3 className="text-2xl font-MTNIrancell-Bold">
-                                    ساختار دوره
-                                </h3>
+                                <div className=" flex justify-between">
 
-                                <button className=" px-5 py-3 rounded-2xl bg-cyan-600 text-white">
-                                    افزودن فصل
-                                </button>
+                                    <h3 className="text-2xl font-MTNIrancell-Bold">
+                                        ساختار دوره
+                                    </h3>
+
+                                    <button
+                                        onClick={() => setShowAddChapter(true)}
+                                        className=" px-5 py-3 rounded-2xl bg-cyan-600 text-white">
+                                        افزودن فصل
+                                    </button>
+
+                                </div>
+
+                                <div className={`w-full grid transition-all duration-200 ${showAddChapter ? " grid-rows-[1fr]" : " grid-rows-[0fr]"}`}>
+
+                                    <div className=' overflow-hidden bg-gray-300 rounded-md mt-2 flex items-center px-2'>
+
+                                        <input
+                                            value={newChapterTitle}
+                                            className='w-full py-2 px-3 bg-transparent outline-none'
+                                            type="text"
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewChapterTitle(e.target.value)}
+                                        />
+
+                                        <div className="flex gap-1 items-center">
+
+                                            <MdCancel
+                                                className=' text-[18px] text-red-500 cursor-pointer'
+                                                onClick={() => {
+                                                    setShowAddChapter(false)
+                                                    setNewChapterTitle('')
+                                                }} />
+                                            <MdFileDownloadDone
+                                                onClick={() => {
+                                                    Dispatch({ type: "SET_ADD_CHAPTER", payload: newChapterTitle })
+                                                    setNewChapterTitle('')
+                                                    setShowAddChapter(false)
+                                                }}
+                                                className=' text-[18px] text-green-600 cursor-pointer' />
+                                        </div>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
