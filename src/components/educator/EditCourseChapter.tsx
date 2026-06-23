@@ -1,6 +1,8 @@
 import { FiEdit3 } from 'react-icons/fi'
 import type { CourseContent } from '../../Types'
 import EditCourseLecture from './EditCourseLecture'
+import { FaTrashCan } from "react-icons/fa6";
+import useEditCourseContext from '../../hooks/useEditCourseContext';
 
 type Props = {
     chapter: CourseContent
@@ -9,6 +11,7 @@ type Props = {
 const EditCourseChapter = ({ chapter }: Props) => {
 
 
+    const { Dispatch } = useEditCourseContext()
 
     return (
         <div key={chapter.chapterId} className=" mt-6 flex flex-col gap-4">
@@ -21,7 +24,12 @@ const EditCourseChapter = ({ chapter }: Props) => {
                         {chapter.chapterTitle}
                     </h4>
 
-                    <FiEdit3 />
+                    <div className='flex gap-2'>
+                        <FiEdit3 className=' cursor-pointer' />
+                        <FaTrashCan
+                            onClick={() => Dispatch({ type: "SET_DELETE_CHAPTER", payload: chapter.chapterId })}
+                            className=' cursor-pointer' />
+                    </div>
                 </div>
 
                 <div className="mt-4 space-y-3 ">

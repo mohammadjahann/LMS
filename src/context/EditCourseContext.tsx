@@ -10,6 +10,7 @@ type ActionProps =
     | { type: "SET_DISCOUNT", payload: number }
     | { type: "SET_THUMBNAIL", payload: string }
     | { type: "SET_DESCRTPTION", payload: string }
+    | { type: "SET_DELETE_CHAPTER", payload: string }
 
 
 
@@ -89,6 +90,13 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                 return {
                     ...state,
                     courseDescription: action.payload
+                }
+            case "SET_DELETE_CHAPTER":
+                if (!state) return null;
+
+                return {
+                    ...state,
+                    courseContent: state.courseContent.filter(chapter => chapter.chapterId !== action.payload)
                 }
 
         }
