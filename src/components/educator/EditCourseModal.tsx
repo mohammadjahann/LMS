@@ -49,6 +49,28 @@ const EditCourseModal = () => {
 
     }, [showModal])
 
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+
+        if (showModal) {
+            // eslint-disable-next-line
+            setMounted(true)
+            return
+        }
+
+        const timer = setTimeout(() => {
+
+            setMounted(false)
+
+        }, 600)
+
+        return () => clearTimeout(timer)
+
+    }, [showModal])
+
+    if (!mounted) return null
+
     return createPortal(
 
         <div
