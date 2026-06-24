@@ -14,6 +14,17 @@ type ActionProps =
     | { type: "SET_DELETE_CHAPTER", payload: string }
     | { type: "SET_EDIT_CHAPTER", payload: { chapterID: string, newTitle: string } }
     | { type: "SET_ADD_CHAPTER", payload: string }
+    | {
+        type: "SET_ADD_LECTURE", payload: {
+            chapterID: string
+            newLectureData: {
+                lectureTitle: string,
+                lectureDuration: number,
+                lectureUrl: string,
+                isPreviewFree: boolean
+            }
+        }
+    }
 
 
 
@@ -135,6 +146,32 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                     ]
                 }
 
+            case "SET_ADD_LECTURE": {
+
+                if (!state) return null;
+
+                return {
+                    ...state,
+                    courseContent: state.courseContent.map(chapter => {
+                        if (chapter.chapterId !== action.payload.chapterID) return chapter
+
+                        return {
+                            ...chapter,
+                            chapterContent: [
+                                ...chapter.chapterContent,
+                                {
+                                    lectureId: uuidv4(),
+                                    lectureTitle: action.payload.newLectureData.lectureTitle,
+                                    lectureDuration: action.payload.newLectureData.lectureDuration,
+                                    lectureUrl: action.payload.newLectureData.lectureUrl,
+                                    isPreviewFree: action.payload.newLectureData.isPreviewFree,
+                                    lectureOrder: chapter.chapterContent.length + 1,
+                                }
+                            ]
+                        }
+                    })
+                }
+            }
         }
 
 
