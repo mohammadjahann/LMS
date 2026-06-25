@@ -177,7 +177,7 @@ const EditCourseChapter = ({ chapter }: Props) => {
                 <div className="mt-4 space-y-3 ">
 
                     {chapter.chapterContent.map(lecture => (
-                        <EditCourseLecture key={lecture.lectureId} lecture={lecture} />
+                        <EditCourseLecture key={lecture.lectureId} lecture={lecture} chapterID={chapter.chapterId} />
                     ))}
 
                     {!showNewLectureModal && (
