@@ -26,6 +26,17 @@ type ActionProps =
         }
     }
     | { type: "SET_DELETE_LECTURE", payload: { chapterID: string, LectureID: string } }
+    | {
+        type: "SET_EDIT_LECTURE", payload: {
+            chapterID: string, LectureID: string, updatedData: {
+
+                lectureTitle: string
+                lectureUrl: string,
+                lectureDuration: number,
+                isPreviewFree: boolean,
+            }
+        }
+    }
 
 
 
@@ -192,6 +203,35 @@ export const EditCourseContextProvider = ({ children }: { children: ReactNode })
                     })
                 }
             }
+
+            case "SET_EDIT_LECTURE": {
+
+                if (!state) return null
+
+                return {
+                    ...state,
+                    courseContent: state.courseContent?.map(chapter => {
+                        if (chapter.chapterId !== action.payload.chapterID) return chapter;
+
+                        return {
+                            ...chapter,
+                            chapterContent: chapter.chapterContent.map(lecture => {
+                                if (lecture.lectureId !== action.payload.LectureID) return lecture;
+
+                                return {
+                                    ...lecture,
+                                    lectureDuration: action.payload.updatedData.lectureDuration,
+                                    lectureTitle: action.payload.updatedData.lectureTitle,
+                                    lectureUrl: action.payload.updatedData.lectureUrl,
+                                    isPreviewFree: action.payload.updatedData.isPreviewFree
+                                }
+                            })
+                        }
+                    })
+                }
+
+            }
+
         }
 
 
