@@ -1,10 +1,84 @@
+import { useEffect, useMemo, useState } from 'react'
 import EditCourseModal from '../../components/educator/EditCourseModal'
 import EducatorCourseCard from '../../components/educator/EducatorCourseCard'
 import useEducatorAuth from '../../hooks/useEducatorAuth'
+import { supabase } from '../../supabase'
+import type { CourseType } from '../../Types'
 
 const EducatorMyCourses = () => {
 
-    const { educatorData } = useEducatorAuth()
+    const [courses, setCourses] = useState<CourseType[]>([])
+
+    const { educatorData, ratingCalculator } = useEducatorAuth()
+
+    useEffect(() => {
+        const fetcher = async () => {
+
+            if (!educatorData) return;
+
+            try {
+                const { data, error } = await supabase
+                    .from("courses")
+                    .select("*")
+                    .in("_id", educatorData.courses)
+
+                if (error) throw error;
+
+                setCourses(data)
+
+
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+        }
+
+        fetcher()
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }, [educatorData])
+
+
+    const statsData = useMemo(() => {
+
+        if (courses.length === 0) return null
+
+
+        const publishedcourses = courses.filter(course => course.isPublished)
+
+        const allrates: number[] = []
+
+        publishedcourses.forEach(course => {
+
+            const rate = ratingCalculator(course.courseRatings)
+
+            allrates.push(rate)
+
+        })
+
+
+
+        const calculateAvrage = () => {
+
+            let totalRate = 0
+
+            for (let i = 0; i <= allrates.length - 1; i++) {
+                totalRate += allrates[i]
+            }
+
+            return totalRate / allrates.length
+        }
+
+        const avreageRate = calculateAvrage().toFixed(2)
+
+        return { publishedCount: publishedcourses.length, avreageRate }
+
+    }, [courses, ratingCalculator])
 
     return (
         <>
@@ -38,7 +112,7 @@ const EducatorMyCourses = () => {
                         </p>
 
                         <h3 className="mt-3 text-3xl font-bold text-cyan-700">
-                            ۱۲
+                            {educatorData?.courses.length}
                         </h3>
 
                     </div>
@@ -50,7 +124,7 @@ const EducatorMyCourses = () => {
                         </p>
 
                         <h3 className="mt-3 text-3xl font-bold text-blue-700">
-                            ۹
+                            {statsData?.publishedCount ?? 0}
                         </h3>
 
                     </div>
@@ -74,51 +148,22 @@ const EducatorMyCourses = () => {
                         </p>
 
                         <h3 className="mt-3 text-3xl font-bold text-amber-700">
-                            ۴.۸
+                            {statsData?.avreageRate ?? 0.0}
                         </h3>
 
                     </div>
 
                 </div>
 
-                {/* Actions */}
-
-                <div
-                    className="mb-8 bg-white rounded-[30px] border p-5 flex flex-col lg:flex-row gap-4 justify-between">
-
-                    <input
-                        placeholder="جستجو در دوره‌ها..."
-                        className=" flex-1 rounded-2xl border p-4 outline-none focus:border-cyan-500 " />
-
-                    <div
-                        className="flex gap-3">
-
-                        <select
-                            className="rounded-2xl border px-5">
-
-                            <option>
-                                همه
-                            </option>
-
-                        </select>
-
-                        <button
-                            className=" px-6 rounded-2xl bg-cyan-600 text-white">
-                            افزودن دوره
-                        </button>
-
-                    </div>
-
-                </div>
 
                 {/* Courses */}
 
                 <div
                     className=" grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                    {educatorData?.courses.map((course, index) => (
+                    {educatorData?.courses.map((course) => (
                         <EducatorCourseCard
-                            key={index}
+                            key={course}
                             courseID={course}
                         />
                     ))}
