@@ -1,7 +1,8 @@
 import {
     PieChart,
     Pie,
-    Cell,
+    ResponsiveContainer,
+    Cell
 
 } from "recharts";
 import useEducatorAuth from "../../hooks/useEducatorAuth";
@@ -71,52 +72,68 @@ const PanelPieChart = () => {
 
 
     return (
-        <div className="w-[40%] flex flex-col items-center">
+        <div className="w-[100%] flex flex-col items-center">
 
             <h4>آمار فروش دوره ها</h4>
 
-            <PieChart width={300} height={400}>
+            <div className="w-full h-[300px]">
 
+                <ResponsiveContainer width="100%" height="100%">
 
-                {/* Inner circle */}
-                <Pie
-                    data={pieData}
-                    dataKey="count"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius="10%"
-                    outerRadius="80%"
-                    labelLine={false}
-                    label={renderCustomizedLabel}
-                >
-                    {pieData.map((item, i) => (
-                        <Cell
-                            key={`inner-cell-${i}`}
-                            fill={colors[i % colors.length]}
-                        />
-                    ))}
-                </Pie>
+                    <PieChart>
 
-                {/* Outer circle */}
-                <Pie
-                    data={pieData}
-                    dataKey="count"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius="83%"
-                    outerRadius="90%"
-                    labelLine={{ stroke: '#bdc3c7', strokeWidth: 1.5 }}
-                    label={{ fill: '#000000', fontWeight: 'bold', fontSize: '14px' }}
-                >
-                    {pieData.map((item, i) => (
-                        <Cell
-                            key={`outer-cell-${i}`}
-                            fill={colors[i % colors.length]}
-                            opacity={0.8}
-                        />
-                    ))}
-                </Pie>
-            </PieChart>
+                        {/* Inner circle */}
+                        <Pie
+                            data={pieData}
+                            dataKey="count"
+                            cx="50%"
+                            cy="50%"
+                            innerRadius="10%"
+                            outerRadius="80%"
+                            labelLine={false}
+                            label={renderCustomizedLabel}
+                        >
+                            {pieData.map((_, i) => (
+                                <Cell
+                                    key={i}
+                                    fill={colors[i % colors.length]}
+                                />
+                            ))}
+                        </Pie>
+
+                        {/* Outer circle */}
+                        <Pie
+                            data={pieData}
+                            dataKey="count"
+                            cx="50%"
+                            cy="50%"
+                            innerRadius="83%"
+                            outerRadius="90%"
+                            labelLine={{
+                                stroke: "#bdc3c7",
+                                strokeWidth: 1.5
+                            }}
+                            label={{
+                                fill: "#000",
+                                fontWeight: "bold",
+                                fontSize: 14
+                            }}
+                        >
+                            {pieData.map((_, i) => (
+                                <Cell
+                                    key={i}
+                                    fill={colors[i % colors.length]}
+                                    opacity={0.8}
+                                />
+                            ))}
+                        </Pie>
+
+                    </PieChart>
+
+                </ResponsiveContainer>
+
+            </div>
+
         </div>
     );
 };

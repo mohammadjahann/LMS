@@ -9,14 +9,14 @@ type Props = {
 
 const DetailsCard = ({ title, content, styles, contentStyles }: Props) => {
     return (
-        <div className={`bg-gradient-to-br font-MTNIrancell-Medium shadow-md  rounded-3xl p-6 ${styles}`}>
+        <div className={` text-center md:text-right bg-gradient-to-br font-MTNIrancell-Medium shadow-md  rounded-3xl p-6 ${styles}`}>
 
             <h3 className="text-lg">
                 {title}
             </h3>
 
             <p
-                className={`mt-4 font-bold  ${contentStyles ? contentStyles : 'text-4xl '}`}>
+                className={`mt-4 font-bold  ${contentStyles ? contentStyles : 'text-1xl md:text-4xl'}`}>
                 {content}
             </p>
 

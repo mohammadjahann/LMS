@@ -16,10 +16,10 @@ const RecentlyStudents = () => {
 
     return (
         <div
-            className=" bg-white rounded-3xl p-6 border border-slate-200">
+            className=" bg-white rounded-3xl py-2 px-1 md:py-4 md:px-6 border border-slate-200">
 
             <h2
-                className=" text-xl font-MTNIrancell-Bold mb-6">
+                className=" text-[16px] md:text-xl font-MTNIrancell-Bold mb-6 text-center">
                 دانشجویان اخیر
             </h2>
 

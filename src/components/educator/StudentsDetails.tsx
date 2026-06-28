@@ -17,20 +17,19 @@ const StudentsDetails = ({ studentData }: Props) => {
                 className="flex items-center gap-3">
 
                 <FaUserCircle
-                    size={44}
-                    className="text-cyan-600"
+                    className="text-cyan-600 text-[30px]"
                 />
 
                 <div>
 
-                    <p>
+                    <p className=" text-[12px] md:text-[16px]">
                         {studentData.user_name}
                         {" "}
                         {studentData.user_family}
                     </p>
 
                     <span
-                        className="text-sm text-slate-500">
+                        className="text-[11px] md:text-[14px] text-slate-500">
                         {studentData.course_title}
                     </span>
 
@@ -39,10 +38,10 @@ const StudentsDetails = ({ studentData }: Props) => {
             </div>
 
             <div className="flex flex-col items-end gap-2">
-                <span className=' text-[12px]'>
+                <span className=' text-[10px] md:text-[12px]'>
                     {new Date(studentData.timestamp).toLocaleDateString('fa-IR')}
                 </span>
-                <span className='text-emerald-600 font-MTNIrancell-Bold'>
+                <span className='text-emerald-600 font-MTNIrancell-Bold text-[10px] md:text-[16px]'>
                     {Number(studentData.cost).toLocaleString('fa-IR')}
                 </span>
             </div>

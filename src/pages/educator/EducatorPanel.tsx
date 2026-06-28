@@ -119,7 +119,7 @@ const EducatorPanel = () => {
                 <div>
 
                     <h1
-                        className="text-3xl font-MTNIrancell-Bold text-slate-800">
+                        className="text-xl md:text-3xl font-MTNIrancell-Bold text-slate-800">
                         داشبورد مدرس
                     </h1>
 

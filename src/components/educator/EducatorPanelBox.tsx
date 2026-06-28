@@ -19,7 +19,7 @@ const EducatorPanelBox = ({ children, styles, title, data }: Props) => {
                 {title}
             </h3>
 
-            <p className=" text-2xl md:text-3xl font-bold mt-3 text-slate-800">
+            <p className=" text-xl md:text-3xl font-bold mt-3 text-slate-800">
                 {data}
             </p>
 
