@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState, type ChangeEvent } from "react"
+import { useEffect, useMemo, useReducer, useState, type ChangeEvent } from "react"
 import { assets, filtersData } from "../../assets/assets"
 import CourseCard from "../../components/students/CourseCard"
 import type { CourseType, FiltersDataTypes } from "../../Types"
@@ -26,9 +26,9 @@ const CoursesList = () => {
       case 'SET_CATEGORY':
         return { ...state, category: action.payload }
       case 'SET_PRICE':
-        return { ...state, price: action.payload }
+        return { ...state, date: '', price: action.payload }
       case 'SET_DATE':
-        return { ...state, date: action.payload }
+        return { ...state, price: '', date: action.payload }
       default:
         return state
     }
@@ -42,7 +42,6 @@ const CoursesList = () => {
 
   const { products, status } = useAppSelector(state => state.productsData)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [filteredData, setFilteredData] = useState<CourseType[]>([])
   const [activeFilters, setActiveFilters] = useReducer(filterReducer, initialFilterState)
   const [searchInput, setSearchInput] = useState<string>('')
 
@@ -62,43 +61,61 @@ const CoursesList = () => {
     })
   }
 
-  useEffect(() => {
-    if (products.length === 0) return
 
-    let finalData = [...products]
+  const courseData: CourseType[] = useMemo(() => {
+
+    if (!products.length) return []
+
+    let result = [...products]
+
+    // get only published course
+    result = result.filter(course => course.isPublished)
+
+    // search
+    if (searchInput.trim()) {
+      result = result.filter(course =>
+        course.courseTitle
+          .toLowerCase()
+          .includes(searchInput.toLowerCase())
+      )
+    }
+
 
     if (activeFilters.category !== 'ALL') {
-      finalData = finalData.filter(
+      result = result.filter(
         course => course.category === activeFilters.category
       )
     }
 
-    if (activeFilters.price === 'highest') {
-      finalData.sort((a, b) => b.coursePrice - a.coursePrice)
-    } else if (activeFilters.price === 'lowest') {
-      finalData.sort((a, b) => a.coursePrice - b.coursePrice)
-    }
+    result.sort((a, b) => {
 
-    if (activeFilters.date === 'newest') {
-      finalData.sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      )
-    } else if (activeFilters.date === 'oldest') {
-      finalData.sort((a, b) =>
-        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      )
-    }
 
-    setFilteredData(finalData)
-  }, [activeFilters, products])
+      if (activeFilters.price === 'highest') {
+        return b.coursePrice - a.coursePrice
+      }
 
-  const handleSearchButtonClick = () => {
-    const result = products.filter(course =>
-      course.courseTitle.includes(searchInput)
-    )
-    setFilteredData(result)
-    setSearchInput('')
-  }
+      if (activeFilters.price === 'lowest') {
+        return a.coursePrice - b.coursePrice
+      }
+
+
+      const aDate = new Date(a.createdAt ?? 0).getTime()
+      const bDate = new Date(b.createdAt ?? 0).getTime()
+
+      if (activeFilters.date === 'newest') {
+        return bDate - aDate
+      }
+
+      if (activeFilters.date === 'oldest') {
+        return aDate - bDate
+      }
+
+      return 0
+    })
+
+    return result
+
+  }, [products, searchInput, activeFilters])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-blue-50 px-4 py-6 flex flex-col-reverse lg:flex-row gap-6">
@@ -129,11 +146,7 @@ const CoursesList = () => {
                   placeholder="جستجو دوره" />
               </div>
 
-              <button
-                onClick={handleSearchButtonClick}
-                className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 transition text-white text-sm font-medium">
-                جستجو
-              </button>
+
             </div>
 
             <button
@@ -157,7 +170,7 @@ const CoursesList = () => {
         {/* Count Bar */}
         <div className=" w-full  mb-5 flex items-center justify-between bg-cyan-50 border border-cyan-100 rounded-2xl px-4  py-3 text-slate-700">
           <span className="dir">
-            {filteredData.length || products.length} دوره یافت شد
+            {courseData?.length ?? 0} دوره یافت شد
           </span>
         </div>
 
@@ -166,7 +179,7 @@ const CoursesList = () => {
 
           <div className=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
 
-            {(filteredData.length ? filteredData : products).map(course => (
+            {courseData?.length > 0 && courseData?.map(course => (
               <CourseCard key={course._id} courseData={course} />
             ))}
 
