@@ -45,28 +45,28 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, r
     return (
 
         <div
-            className="group rounded-3xl bg-white border border-cyan-100 overflow-hidden hover:shadow-xl transition">
+            className="group rounded-xl bg-white border border-cyan-100 overflow-hidden hover:shadow-xl transition">
 
             {/* Header */}
 
             <div
-                className=" flex justify-between items-center px-5 py-5 bg-gradient-to-r from-cyan-50 to-white border-b">
+                className=" flex justify-between items-center py-2 px-2 md:px-5 md:py-5 bg-gradient-to-r from-cyan-50 to-white border-b">
 
                 <div
                     className=" flex items-center gap-4">
 
                     <div
-                        className=" w-11 h-11 rounded-2xl bg-cyan-600 text-white flex items-center justify-center font-bold">
+                        className=" w-7 h-7 rounded-md md:w-11 md:h-11 md:rounded-2xl bg-cyan-600 text-white flex items-center justify-center font-bold">
                         {index + 1}
                     </div>
 
                     <div>
 
-                        <h4 className="  text-lg  text-slate-800  font-MTNIrancell-Bold ">
+                        <h4 className=" text-sm  md:text-lg  text-slate-800  font-MTNIrancell-Bold ">
                             {chapterData.chapterTitle}
                         </h4>
 
-                        <p className="text-sm text-slate-500 mt-1">
+                        <p className=" text-[10px] md:text-sm text-slate-500 mt-1">
                             {chapterData.chapterContent.length}
                             {" "}
                             جلسه
@@ -76,23 +76,23 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, r
 
                 </div>
 
-                <button className=" w-11 h-11 rounded-xl bg-red-50 hover:bg-red-100 text-red-500 flex items-center  justify-center transition">
+                <button className=" w-8 h-8 md:w-11 md:h-11 rounded-sm bg-red-50 hover:bg-red-100 text-red-500 flex items-center  justify-center transition">
                     <MdDelete
                         onClick={() => removeChapter(chapterData.chapterId)}
-                        size={22} />
+                        className="text-[18px] md:text-[20px]" />
                 </button>
 
             </div>
 
             {/* Lectures */}
 
-            <div className="p-4 flex flex-col gap-3">
+            <div className="p-1 md:p-6 flex flex-col gap-3">
 
                 {chapterData.chapterContent.map((lecture) => (
 
                     <div
                         key={lecture.lectureId}
-                        className="flex justify-between items-center rounded-2xl border border-slate-100 bg-slate-50/70 px-4 py-3 hover:border-cyan-200 hover:bg-cyan-50 transition">
+                        className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/70 px-1 py-1 md:px-4 md:py-3 hover:border-cyan-200 hover:bg-cyan-50 transition">
 
                         <div
                             className="flex items-center gap-3">
@@ -108,11 +108,11 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, r
                             <div>
 
                                 <h5
-                                    className=" text-slate-700 font-medium">
+                                    className=" text-slate-700 font-medium text-[12px] md:text-[16px]">
                                     {lecture.lectureTitle}
                                 </h5>
 
-                                <div className=" mt-1 flex gap-3 text-xs text-slate-500">
+                                <div className=" mt-1 flex gap-3 text-[10px] text-slate-500">
 
                                     <span>
                                         {lecture.lectureDuration}
@@ -158,7 +158,7 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, r
                                 />
                             </div>
 
-                            <h4>
+                            <h4 className=" text-[12px] md:text-[16px]">
                                 افزودن جلسه جدید
                             </h4>
                         </div>
@@ -167,42 +167,42 @@ const AddCourseChapter = ({ chapterData, index = 0, removeChapter, addLecture, r
                     {/*  */}
 
                     {showADDLectureModal && (
-                        <div className=" flex flex-col gap-4 mt-2">
+                        <div className=" w-full flex flex-col gap-2 md:gap-4 mt-2">
                             <div>
-                                <label className="text-slate-600">
+                                <label className="text-[13px] md:text-[16px] text-slate-600 ">
                                     عنوان جلسه
                                 </label>
 
                                 <input
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLectureTitle(e.target.value)}
                                     value={newLectureTitle}
-                                    className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+                                    className=" w-full md:mt-2 rounded-xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
 
                             </div>
                             <div>
-                                <label className="text-slate-600">
+                                <label className="text-[13px] md:text-[16px] text-slate-600">
                                     مدت جلسه
                                 </label>
 
                                 <input
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLectureDuration(e.target.value)}
                                     value={newLectureDuration}
-                                    className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+                                    className=" w-full md:mt-2 rounded-xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
 
                             </div>
                             <div>
-                                <label className="text-slate-600">
+                                <label className="text-[13px] md:text-[16px] text-slate-600">
                                     URL جلسه
                                 </label>
 
                                 <input
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLectureURL(e.target.value)}
                                     value={newLectureURL}
-                                    className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+                                    className=" w-full md:mt-2 rounded-xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
 
                             </div>
                             <div>
-                                <label className="text-slate-600">
+                                <label className="text-[13px] md:text-[16px] text-slate-600">
                                     ایا رایگان است
                                 </label>
 
