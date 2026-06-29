@@ -13,7 +13,7 @@ const AddCourse = () => {
 
   return (
     <div
-      className="font-MTNIrancell-Medium dir min-h-screen  p-4 md:p-8 relative">
+      className="font-MTNIrancell-Medium dir min-h-screen  p-1 md:p-8 relative">
 
       {/* Header */}
 
@@ -29,10 +29,10 @@ const AddCourse = () => {
           {/* General */}
 
           <section
-            className=" bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[30px] border border-slate-200 p-6 shadow-sm">
+            className=" bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[10px] md:rounded-[20px] border border-slate-200 p-1 md:p-6 shadow-sm">
 
             <h2
-              className="text-xl font-MTNIrancell-Bold mb-6">
+              className="text-xl text-center md:text-right font-MTNIrancell-Bold mt-2 md:mt-0 mb-6">
               اطلاعات دوره
             </h2>
 
@@ -48,7 +48,7 @@ const AddCourse = () => {
                 <input
                   value={courseData.courseTitle}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: 'SET_courseTitle', payload: e.target.value })}
-                  className=" w-full mt-2 rounded-2xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
+                  className=" w-full mt-2 rounded-xl border border-slate-200 p-4 outline-none focus:border-cyan-500" />
 
               </div>
 
@@ -60,7 +60,7 @@ const AddCourse = () => {
 
                 <select
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => courseDataDispatch({ type: 'SET_category', payload: e.target.value })}
-                  className="w-full mt-2 rounded-2xl border p-4">
+                  className="w-full mt-2 rounded-xl border p-4">
 
                   <option value={"FRONT_END"}>
                     فرانت اند
@@ -83,7 +83,7 @@ const AddCourse = () => {
                 <input
                   value={courseData.coursePrice}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_coursePrice", payload: e.target.value })}
-                  className="w-full mt-2 rounded-2xl border p-4" />
+                  className="w-full mt-2 rounded-xl border p-4" />
 
               </div>
 
@@ -96,7 +96,7 @@ const AddCourse = () => {
                 <input
                   value={courseData.discount}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_discount", payload: e.target.value })}
-                  className="w-full mt-2 rounded-2xl border p-4" />
+                  className="w-full mt-2 rounded-xl border p-4 mb-2" />
 
               </div>
 
@@ -107,10 +107,10 @@ const AddCourse = () => {
           {/* Thumbnail */}
 
           <section
-            className="bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[30px] p-6 border">
+            className="bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[10px] md:rounded-[20px] p-1 pt-2 md:pt-0 md:p-6 border">
 
             <h2
-              className="text-xl font-MTNIrancell-Bold">
+              className="text-xl text-center mb-2 md:text-right md:mb-0 font-MTNIrancell-Bold">
               تصویر دوره
             </h2>
 
@@ -119,7 +119,7 @@ const AddCourse = () => {
               value={courseData.courseThumbnail}
               id="image"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_courseThumbnail", payload: e.target.value })}
-              className="w-full mt-2 rounded-2xl border p-4" />
+              className="w-full mt-2 rounded-xl border p-4" />
 
 
 
@@ -128,10 +128,10 @@ const AddCourse = () => {
           {/* Description */}
 
           <section
-            className="bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[30px] p-6 border">
+            className="bg-gradient-to-b  from-cyan-50 via-slate-50 to-white rounded-[10px] md:rounded-[20px] p-1 md:p-6 border">
 
             <h2
-              className=" text-xl mb-5 font-MTNIrancell-Bold">
+              className=" text-xl mt-3 text-center md:text-right mb-5 font-MTNIrancell-Bold">
               توضیحات دوره
             </h2>
 
