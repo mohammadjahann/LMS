@@ -58,18 +58,18 @@ const AddCourseStructure = ({ showAddChapterModal, setShowAddChapterModal }: Pro
 
     return (
         <section
-            className="bg-gradient-to-b from-cyan-50 via-white to-white rounded-[32px] border border-cyan-100 shadow-sm p-5 md:p-7 ">
+            className="bg-gradient-to-b from-cyan-50 via-white to-white rounded-[10px] md:rounded-[20px] border border-cyan-100 shadow-sm p-2 md:p-7 ">
 
             {/* Header */}
 
             <div
                 className=" w-full flex flex-col gap-4 items-center justify-between pb-6 border-b border-cyan-100">
 
-                <div className=" w-full flex gap-4 justify-between items-end">
+                <div className=" w-full flex flex-col gap-4 justify-between items-center md:flex-row md:items-end">
                     <div>
 
                         <h2
-                            className="text-2xl text-slate-800 font-MTNIrancell-Bold">
+                            className="text-xl md:text-2xl text-center md:text-right text-slate-800 font-MTNIrancell-Bold mt-2 md:mt-0">
                             ساختار دوره
                         </h2>
 
@@ -98,12 +98,12 @@ const AddCourseStructure = ({ showAddChapterModal, setShowAddChapterModal }: Pro
                             عنوان فصل
                         </label>
 
-                        <div className=" w-full mt-2 rounded-2xl border p-4 bg-white flex justify-between items-center">
+                        <div className=" w-full mt-2 rounded-xl border p-2 md:p-4 bg-white flex justify-between items-center">
                             <input
                                 value={addChapterText}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddChapterText(e.target.value)}
                                 placeholder="عنوان را وارد نمایید"
-                                className=" bg-transparent outline-none " />
+                                className=" bg-transparent outline-none w-2/3 " />
 
 
                             <div className=" flex gap-2">
