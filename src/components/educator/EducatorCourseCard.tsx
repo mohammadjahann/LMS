@@ -83,7 +83,7 @@ const EducatorCourseCard = ({ courseID }: Props) => {
 
     return !courseData ? (
         <div
-            className="overflow-hidden rounded-[34px] border bg-white p-10 flex flex-col items-center justify-center text-center">
+            className="overflow-hidden rounded-[14px] md:rounded-[24px] border bg-white p-10 flex flex-col items-center justify-center text-center">
 
             {/* Icon */}
 
@@ -141,30 +141,29 @@ const EducatorCourseCard = ({ courseID }: Props) => {
 
         </div>
     ) : (<div
-        className=" group overflow-hidden rounded-[34px] border bg-white hover:shadow-2xl transition font-MTNIrancell-Medium">
+        className=" group overflow-hidden rounded-[14px] md:rounded-[24px] border bg-white hover:shadow-2xl transition font-MTNIrancell-Medium">
 
         {/* Thumbnail */}
 
         <div className="relative">
 
             <img
-                className="h-[220px] w-full object-cover"
+                className="h-[150px] sm:h-[190px] md:h-[220px] w-full object-fill"
                 src={courseData.courseThumbnail ?? "https://placehold.co/1200x600"}
                 alt=""
             />
 
             <button
                 onClick={handleEditBtn}
-                className=" absolute top-4 left-4 w-12 h-12 rounded-2xl bg-white/90 backdrop-blur flex items-center justify-center hover:scale-110 transition ">
+                className=" absolute top-4 left-4 w-7 h-7 md:w-12 md:h-12 rounded-md bg-white/90 backdrop-blur flex items-center justify-center hover:scale-110 transition ">
                 <FiEdit
-                    size={20}
-                    className="text-cyan-700"
+                    className="text-cyan-700 text-[16px] md:text-[20px]"
                 />
             </button>
 
             <div
-                className={`absolute right-4 top-4 px-4 py-2 rounded-full  text-white ${courseData.isPublished ? 'bg-emerald-500' : 'bg-red-500'}`}>
-                {courseData.isPublished ? 'منتشر شده' : 'درحال توسعه'}
+                className={`absolute right-4 top-4 px-4 py-2 rounded-md  text-white text-[12px] md:text-[16px] ${courseData.isPublished ? 'bg-emerald-500' : 'bg-red-500'}`}>
+                {courseData.isPublished ? 'منتشر شده' : 'در صف انتشار'}
             </div>
 
         </div>
@@ -174,59 +173,59 @@ const EducatorCourseCard = ({ courseID }: Props) => {
         <div className="p-6">
 
             <h3
-                className="text-2xl font-MTNIrancell-Bold text-slate-800 text-right" dir="ltr">
+                className="text-xl md:text-2xl text-center md:text-right font-MTNIrancell-Bold text-slate-800 " dir="ltr">
                 {courseData.courseTitle}
             </h3>
 
             <p
-                className="mt-3  text-slate-500 line-clamp-2 " dangerouslySetInnerHTML={{ __html: courseData.courseDescription }} >
+                className="mt-3 text-center md:text-right text-slate-500 line-clamp-2 " dangerouslySetInnerHTML={{ __html: courseData.courseDescription }} >
 
             </p>
 
             {/* Stats */}
 
             <div
-                className="mt-6 grid grid-cols-2 gap-4">
+                className="mt-6 grid grid-cols-2 gap-4 text-center">
 
                 <div
-                    className=" rounded-2xl bg-cyan-50 p-4">
+                    className=" rounded-2xl bg-cyan-50 p-4 flex flex-col items-center">
 
                     <FiUsers />
 
-                    <p className="mt-3">
+                    <p className="mt-3 text-[12px] md:text-[16px]">
                         {enrollmentCount} دانشجو
                     </p>
 
                 </div>
 
                 <div
-                    className="rounded-2xl bg-blue-50 p-4">
+                    className="rounded-2xl bg-blue-50 p-4 flex flex-col items-center">
 
                     <FiBookOpen />
 
-                    <p className="mt-3">
+                    <p className="mt-3 text-[12px] md:text-[16px]">
                         {lectureCountCalculator(courseData.courseContent)} جلسه
                     </p>
 
                 </div>
 
                 <div
-                    className="rounded-2xl bg-amber-50 p-4">
+                    className="rounded-2xl bg-amber-50 p-4 flex flex-col items-center">
 
                     <FiStar />
 
-                    <p className="mt-3">
+                    <p className="mt-3 text-[12px] md:text-[16px]">
                         {ratingCalculator(courseData.courseRatings)}
                     </p>
 
                 </div>
 
                 <div
-                    className=" rounded-2xl bg-emerald-50  p-4">
+                    className=" rounded-2xl bg-emerald-50  p-4 flex flex-col items-center">
 
                     <FiClock />
 
-                    <p className="mt-3">
+                    <p className="mt-3 text-[12px] md:text-[16px]">
                         {courseDurationCalculator(courseData.courseContent)}
                     </p>
 
@@ -240,13 +239,15 @@ const EducatorCourseCard = ({ courseID }: Props) => {
                 className="mt-6 pt-5 border-t flex justify-between items-center">
 
                 <span
-                    className="text-2xl font-bold text-cyan-700">
+                    className="text-xl md:text-2xl font-bold text-cyan-700">
                     {Number(courseData.coursePrice).toLocaleString('fa-IR')}
                 </span>
 
                 <button
                     onClick={handleEditBtn}
-                    className=" px-5 py-3 rounded-2xl bg-slate-900 text-white hover:scale-[1.03] transition">
+                    className="
+                      px-3 py-2 rounded-xl text-sm bg-slate-900 text-white hover:scale-[1.03] transition
+                      md:px-5 md:py-3 md:rounded-2xl ms:text-[16px]">
                     ویرایش دوره
                 </button>
 
