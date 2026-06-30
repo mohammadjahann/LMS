@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { assets } from "../../assets/assets";
 import { FaInstagram, FaGithub } from "react-icons/fa";
 
 const EducatorFooter = () => {
@@ -13,7 +12,7 @@ const EducatorFooter = () => {
         className="justify-self-center md:justify-self-start"
       >
         <img
-          src={assets.logo_dark}
+          src='/src/assets/logo-dark.png'
           alt="Logo"
           className="w-36"
         />

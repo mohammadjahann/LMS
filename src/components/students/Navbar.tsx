@@ -41,7 +41,7 @@ const Navbar = () => {
             <Link to={'/'}>
                 <img
                     className=" w-28 lg:w-32 cursor-pointer"
-                    src='/src/assets/logo.svg'
+                    src='/src/assets/logo.png'
                     alt="" />
             </Link>
 
