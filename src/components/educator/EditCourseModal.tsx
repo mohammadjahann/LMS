@@ -74,23 +74,35 @@ const EditCourseModal = () => {
     return createPortal(
 
         <div
-            className={`fixed dir inset-0 z-[999] bg-black/50 backdrop-blur-md flex items-center justify-center px-36 transition-all duration-200 ${showModal ? "edit-course-modal-opacity-in" : " edit-course-modal-opacity-out pointer-events-none"}`}>
+            className={`
+            fixed dir inset-0 z-[999] bg-black/50 backdrop-blur-md flex items-center justify-center px-2 transition-all duration-200 ${showModal ? "edit-course-modal-opacity-in" : " edit-course-modal-opacity-out pointer-events-none"}
+            md:px-36`}>
 
             <div
-                className={`w-full max-w-[1500px] h-[92vh] overflow-hidden rounded-[40px] bg-white flex flex-col  transition-all duration-200 ${showModal ? "edit-course-modal-in" : "edit-course-modal-out "}`}>
+                className={`
+                w-full max-w-[1500px] h-[92vh] overflow-hidden rounded-[20px] bg-white flex flex-col  transition-all duration-200 ${showModal ? "edit-course-modal-in" : "edit-course-modal-out "}
+                md:rounded-[40px]`}>
 
                 {/* Header */}
 
                 <div
-                    className=" px-8 py-6 border-b flex justify-between items-center">
+                    className="
+                     px-2 py-3 border-b flex justify-between items-center
+                     md:px-8 md:py-6">
 
                     <div>
 
-                        <h2 className=" text-3xl font-MTNIrancell-Bold">
+                        <h2
+                            className=" 
+                         text-xl font-MTNIrancell-Bold
+                         md:text-3xl">
                             ویرایش دوره
                         </h2>
 
-                        <p className="text-slate-500 mt-1">
+                        <p
+                            className="
+                            text-[12px] text-slate-500 mt-1
+                            md:text-[16px]">
                             تغییر اطلاعات و ساختار دوره
                         </p>
 
@@ -98,8 +110,13 @@ const EditCourseModal = () => {
 
                     <button
                         onClick={() => setShowModal(false)}
-                        className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center ">
-                        <FiX size={24} />
+                        className="
+                        w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center
+                        md:w-14 md:h-14 md:rounded-2xl ">
+                        <FiX
+                            className="
+                            text-[18px]
+                            md:text-xl" />
                     </button>
 
                 </div>
@@ -113,33 +130,56 @@ const EditCourseModal = () => {
 
                     <div
                         ref={scrollRef}
-                        className=" flex-1 overflow-y-auto p-8">
+                        className=" 
+                        flex-1 overflow-y-auto p-2
+                        md:p-8">
 
                         {/* General */}
 
                         <section
-                            className="rounded-[32px] bg-cyan-50 border p-7">
+                            className="
+                            rounded-[12px] bg-cyan-50 border p-2
+                            md:rounded-[22px] md:p-7">
 
-                            <h3 className=" text-2xl font-MTNIrancell-Bold">
+                            <h3
+                                className="
+                                text-xl text-center font-MTNIrancell-Bold
+                                md:text-2xl md:text-right">
                                 اطلاعات کلی
                             </h3>
 
                             <div
-                                className="mt-7 grid md:grid-cols-2 gap-5 font-MTNIrancell-Medium">
+                                className="
+                                mt-2 grid  gap-5 font-MTNIrancell-Medium
+                                md:grid-cols-2 md:mt-7">
 
                                 <div className=" flex flex-col gap-2">
-                                    <label >عنوان دوره :</label>
+                                    <label
+                                        className="
+                                        text-[12px]
+                                        md:text-[16px]">
+                                        عنوان دوره :
+                                    </label>
                                     <input
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_TITLE", payload: e.target.value })}
-                                        className=" rounded-2xl p-4 border"
+                                        className=" 
+                                        rounded-md p-2 border text-[12px]
+                                        md:rounded-2xl md:p-4 md:text-[16px]"
                                         value={courseState?.courseTitle}
                                     />
                                 </div>
 
                                 <div className=" flex flex-col gap-2">
-                                    <label >دسته بندی :</label>
+                                    <label
+                                        className="
+                                        text-[12px]
+                                        md:text-[16px]">
+                                        دسته بندی :
+                                    </label>
                                     <select
-                                        className=" rounded-2xl p-4 border">
+                                        className=" 
+                                        rounded-md p-2 border text-[12px]
+                                        md:rounded-2xl md:p-4 md:text-[16px]">
                                         <option>
                                             {courseState?.category}
                                         </option>
@@ -147,19 +187,33 @@ const EditCourseModal = () => {
                                 </div>
 
                                 <div className=" flex flex-col gap-2">
-                                    <label>قیمت دوره :</label>
+                                    <label
+                                        className="
+                                        text-[12px]
+                                        md:text-[16px]">
+                                        دوره :
+                                    </label>
                                     <input
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_PRICE", payload: Number(e.target.value) })}
-                                        className="rounded-2xl p-4 border"
+                                        className=" 
+                                        rounded-md p-2 border text-[12px]
+                                        md:rounded-2xl md:p-4 md:text-[16px]"
                                         value={courseState?.coursePrice}
                                     />
                                 </div>
 
                                 <div className=" flex flex-col gap-2">
-                                    <label>تخفیف :</label>
+                                    <label
+                                        className="
+                                        text-[12px]
+                                        md:text-[16px]">
+                                        تخفیف :
+                                    </label>
                                     <input
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_DISCOUNT", payload: Number(e.target.value) })}
-                                        className=" rounded-2xl p-4 border"
+                                        className=" 
+                                        rounded-md p-2 border text-[12px] mb-2
+                                        md:rounded-2xl md:p-4 md:text-[16px] md:mb-0"
                                         value={courseState?.discount} />
                                 </div>
 
@@ -169,64 +223,92 @@ const EditCourseModal = () => {
 
                         {/* Thumbnail */}
 
-                        <section className="mt-7 rounded-[32px] border p-7">
+                        <section
+                            className="
+                            mt-3 rounded-[12px] border p-2
+                            md:mt-7 md:rounded-[22px]  md:p-7">
 
-                            <h3 className="text-2xl mb-5 font-MTNIrancell-Bold">
+                            <h3
+                                className="
+                            text-xl text-center mb-2 mt-2 font-MTNIrancell-Bold
+                            md:text-2xl md:mb-5 md:text-right">
                                 تصویر
                             </h3>
 
                             <img
-                                className=" rounded-3xl h-[280px] object-cover w-full"
+                                className="
+                                 rounded-xl h-[180px] object-fill w-full
+                                 md:rounded-3xl md:h-[280px]"
                                 src={courseState?.courseThumbnail} />
                             <input
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => Dispatch({ type: "SET_THUMBNAIL", payload: e.target.value })}
                                 value={courseState?.courseThumbnail}
-                                className="mt-5 rounded-2xl border p-4 w-full" />
+                                className=" 
+                                        w-full mb-2 mt-2 rounded-md p-2 border text-[12px]
+                                        md:rounded-2xl md:p-4 md:mb-0 md:text-[16px]" />
 
                         </section>
 
                         {/* Description */}
 
-                        <section className=" mt-7 rounded-[32px] border p-7">
+                        <section
+                            className="
+                            mt-2 rounded-[12px] border p-2
+                            md:mt-7 md:rounded-[32px] md:p-7">
 
-                            <h3 className="text-2xl mb-5 font-MTNIrancell-Bold">
+                            <h3
+                                className="
+                                text-xl text-center mt-2 mb-5 font-MTNIrancell-Bold
+                                md:text-2xl md:text-right md:mt-0 md:mb-5">
                                 توضیحات
                             </h3>
 
                             <textarea
                                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => Dispatch({ type: "SET_DESCRTPTION", payload: e.target.value })}
                                 value={courseState?.courseDescription}
-                                className=" w-full h-[260px] rounded-3xl border p-5" />
+                                className="
+                                 w-full h-[260px] rounded-xl border p-2
+                                 md:rounded-3xl md:p-5" />
 
                         </section>
 
                         {/* Chapters */}
 
-                        <section className="mt-7 rounded-[32px] border p-7">
+                        <section
+                            className="
+                            mt-2 rounded-[12px] border p-2
+                            md:mt-7 md:rounded-[22px]  md:p-7">
 
                             <div>
 
-                                <div className=" flex justify-between">
+                                <div
+                                    className=" 
+                                flex justify-between items-center ">
 
-                                    <h3 className="text-2xl font-MTNIrancell-Bold">
+                                    <h3
+                                        className="
+                                    text-xl font-MTNIrancell-Bold
+                                    md:text-2xl">
                                         ساختار دوره
                                     </h3>
 
                                     <button
                                         onClick={() => setShowAddChapter(true)}
-                                        className=" px-5 py-3 rounded-2xl bg-cyan-600 text-white">
+                                        className="
+                                        px-3 py-2 rounded-xl text-[14px] bg-cyan-600 text-white
+                                        md:px-5 md:py-3 md:rounded-2xl md:text-[16px]">
                                         افزودن فصل
                                     </button>
 
                                 </div>
 
-                                <div className={`w-full grid transition-all duration-200 ${showAddChapter ? " grid-rows-[1fr]" : " grid-rows-[0fr]"}`}>
+                                <div className={`w-full grid transition-all mt-2 duration-200 ${showAddChapter ? " grid-rows-[1fr]" : " grid-rows-[0fr]"}`}>
 
-                                    <div className=' overflow-hidden bg-gray-300 rounded-md mt-2 flex items-center px-2'>
+                                    <div className=' overflow-hidden bg-gray-300 rounded-md  flex items-center '>
 
                                         <input
                                             value={newChapterTitle}
-                                            className='w-full py-2 px-3 bg-transparent outline-none'
+                                            className='w-full py-2 px-3 mt-2 bg-transparent outline-none'
                                             type="text"
                                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewChapterTitle(e.target.value)}
                                         />
@@ -266,36 +348,38 @@ const EditCourseModal = () => {
 
                 {/* Footer */}
 
-                <div className=" border-t p-6 flex justify-between"
-                >
+                <div
+                    className=" 
+                 border-t px-1 py-2 flex justify-between items-center 
+                 md:p-6 ">
 
                     <button
                         onClick={() => setShowModal(false)}
-                        className=" px-7 py-4 rounded-2xl border">
+                        className=" 
+                        px-3 py-2 rounded-xl border
+                        md:px-7 md:py-4 md:rounded-2xl">
                         انصراف
                     </button>
 
-                    <div
-                        className="flex gap-3">
 
-                        <button className=" px-7 py-4 rounded-2xl  bg-slate-900 text-white">
-                            پیش نمایش
+
+
+                    {loading ? (
+                        <div
+                            className=" w-10 h-10 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
+
+                        </div>
+                    ) : (
+                        <button
+                            onClick={saveChangeHandler}
+                            className=" 
+                            px-3 py-2 rounded-xl bg-cyan-600 text-white
+                            md:px-7 md:py-4">
+                            ذخیره تغییرات
                         </button>
-                        {loading ? (
-                            <div
-                                className=" w-10 h-10 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
-
-                            </div>
-                        ) : (
-                            <button
-                                onClick={saveChangeHandler}
-                                className=" px-7 py-4 rounded-2xl bg-cyan-600 text-white">
-                                ذخیره تغییرات
-                            </button>
-                        )}
+                    )}
 
 
-                    </div>
 
                 </div>
 
