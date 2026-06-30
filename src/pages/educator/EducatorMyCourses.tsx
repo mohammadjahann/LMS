@@ -86,15 +86,15 @@ const EducatorMyCourses = () => {
 
                 {/* Header */}
 
-                <div className="mb-8">
+                <div className="mb-2 md:mb-8">
 
                     <h1
-                        className="text-3xl font-MTNIrancell-Bold text-slate-800">
+                        className="text-[18px] md:text-3xl text-center md:text-right mt-2 md:mt-0 font-MTNIrancell-Bold text-slate-800">
                         دوره‌های من
                     </h1>
 
                     <p
-                        className="mt-2 text-slate-500">
+                        className="mt-2 text-slate-500 text-center md:text-right">
                         مدیریت، ویرایش و بررسی عملکرد دوره‌ها
                     </p>
 
@@ -105,7 +105,7 @@ const EducatorMyCourses = () => {
                 <div
                     className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8 ">
 
-                    <div className="rounded-3xl bg-cyan-50 p-5 border border-cyan-100">
+                    <div className="rounded-xl text-center  bg-cyan-50 p-5 border border-cyan-100">
 
                         <p className="text-slate-500">
                             تعداد دوره‌ها
@@ -117,7 +117,7 @@ const EducatorMyCourses = () => {
 
                     </div>
 
-                    <div className="rounded-3xl bg-blue-50 p-5 border">
+                    <div className="rounded-xl text-center bg-blue-50 p-5 border">
 
                         <p className="text-slate-500">
                             منتشر شده
@@ -129,7 +129,7 @@ const EducatorMyCourses = () => {
 
                     </div>
 
-                    <div className="rounded-3xl bg-emerald-50 p-5 border">
+                    <div className="rounded-xl text-center bg-emerald-50 p-5 border">
 
                         <p className="text-slate-500">
                             دانشجو
@@ -141,7 +141,7 @@ const EducatorMyCourses = () => {
 
                     </div>
 
-                    <div className="rounded-3xl bg-amber-50 p-5 border">
+                    <div className="rounded-xl text-center bg-amber-50 p-5 border">
 
                         <p className="text-slate-500">
                             میانگین امتیاز
