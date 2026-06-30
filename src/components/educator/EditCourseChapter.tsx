@@ -130,13 +130,19 @@ const EditCourseChapter = ({ chapter }: Props) => {
     }
 
     return (
-        <div key={chapter.chapterId} className=" mt-6 flex flex-col gap-4">
+        <div key={chapter.chapterId}
+            className=" 
+        mt-1 flex flex-col gap-4
+        md:mt-6">
 
-            <div className=" rounded-3xl border p-5">
+            <div
+                className=" 
+            rounded-xl border p-2 py-3
+            md:rounded-3xl  md:p-5">
 
                 <div className='flex flex-col w-full'>
 
-                    <div className=" flex justify-between">
+                    <div className=" flex justify-between items-center">
 
                         <h4>
                             {chapter.chapterTitle}

@@ -86,15 +86,23 @@ const EditCourseLecture = ({ lecture, chapterID }: Props) => {
 
 
     return (
-        <div key={lecture.lectureId} className=" rounded-2xl bg-slate-50 p-4 flex flex-col font-MTNIrancell-Medium">
+        <div key={lecture.lectureId}
+            className="
+             rounded-md shadow-md bg-slate-50 pt-4 p-2 flex flex-col font-MTNIrancell-Medium
+             md:rounded-2xl md:p-4">
 
-            <div className="flex justify-between" >
-                <span>
+            <div className="flex justify-between items-center" >
+                <span
+                    className="
+                    text-[12px]
+                    md:text-[16px]">
                     {lecture.lectureTitle}
                 </span>
 
                 <div
-                    className="flex gap-4"
+                    className="
+                    flex gap-2
+                    md:gap-4"
                 >
                     <MdOutlineDeleteOutline
                         onClick={deleteBtnHandler}
@@ -108,14 +116,16 @@ const EditCourseLecture = ({ lecture, chapterID }: Props) => {
 
             {/* Edit lecture modal */}
 
-            <div className={`w-full grid transition-all duration-200 ${showEditModal ? ' grid-rows-[1fr]' : ' grid-rows-[0fr]'}`}>
+            <div className={`
+                w-full grid transition-all duration-200 ${showEditModal ? ' grid-rows-[1fr]' : ' grid-rows-[0fr]'}`}>
 
                 <div className=" w-full overflow-hidden mt-4">
 
                     <div className=" w-full bg-cyan-100 px-3 py-4 rounded-md border-black/20 border text-[14px] flex flex-col gap-3">
 
                         <div className="">
-                            <label>عنوان جلسه :</label>
+                            <label>
+                                عنوان جلسه :</label>
                             <input
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => editDispatch({ type: "SET_TITLE", payload: e.target.value })}
                                 value={editLectureState.lectureTitle}
