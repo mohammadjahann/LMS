@@ -128,16 +128,30 @@ const MyStudents = () => {
   // //////////////////////////////////
 
   return (
-    <div className="w-full min-h-screen dir  p-4 md:p-8">
+    <div className="
+    w-full min-h-screen dir p-2
+    md:p-8">
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div
+        className="
+        flex flex-col  justify-between gap-4 mb-8
+        md:flex-row md:items-center
+        ">
 
         <div>
-          <h1 className="text-2xl md:text-3xl font-MTNIrancell-Bold text-slate-800">
+          <h1
+            className="
+          text-xl text-center font-MTNIrancell-Bold text-slate-800
+          md:text-2xl md:text-right
+          ">
             لیست دانشجویان
           </h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <p
+            className="
+           text-slate-500 text-xs text-center mt-1
+            md:text-sm md:text-right
+           ">
             مدیریت و بررسی دانشجویان ثبت‌نام شده
           </p>
         </div>
