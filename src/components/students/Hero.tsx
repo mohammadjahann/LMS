@@ -1,30 +1,168 @@
-
 import SearchBar from "./SearchBar"
-
-
 
 const Hero = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full pt-20 md:pt-36 px-7 md:px-0 space-y-7 bg-gradient-to-b from-cyan-100/70 text-center">
 
-      <h1
-        className=" text-[14px] esm:text-[16px] sm:text-[20px] md:text-[32px] relative font-MTNIrancell-Bold text-gray-800 max-w-3xl mx-auto">
-        آینده خود را با دوره های آموزشی مناسب ، سکه با هدف رشد و پیشرفت شما طراحی شده
-        <span
-          className="text-blue-600">
-          ,تضمین کنید
-        </span>
-        <img
-          className="md:block hidden absolute -bottom-7 right-0"
-          src="./src/assets/sktech.svg" alt="sketch" />
-      </h1>
+    <section
+      className="
+       dir relative overflow- w-full bg-gradient-to-b from-cyan-100/70 via-cyan-50 to-white px-4  py-6
+       sm:px-10
+       md:px-14
+       lg:px-36 lg:py-20
+      "
+    >
 
-      <p
-        className="text-gray-500 text-[10px] esm:text-[12px] sm:text-[14px] md:text-[20px]">
-        ما در کنار هم محتوا های به روز ، سطح بالا ،با پیگیری های منظم ، به روزرسانی های دائمی را فراهم میکنیم تا شما در رسیدن به اهدافتان موفق شوید</p>
 
-      <SearchBar />
-    </div>
+      <div
+        className="
+         relative flex flex-col-reverse lg:flex-row items-center gap-12
+        ">
+
+        {/* Text */}
+
+        <div
+          className="
+           w-full text-center dir
+           lg:w-[55%] lg:text-right
+          "
+        >
+
+          <span
+            className="
+             inline-flex px-4 py-2 rounded-full bg-white/70 border border-cyan-200 text-cyan-700 text-sm
+            ">
+            🚀 آموزش پروژه‌محور برنامه‌نویسی
+          </span>
+
+          <h1
+            className="
+             mt-6 text-4xl leading-10 font-MTNIrancell-Bold text-slate-900
+             md:text-5xl
+            "
+          >
+
+            <span
+              className="
+               inline-block text-cyan-600 bg-cyan-100 px-3 rounded-2xl
+              ">
+              یادگیری
+            </span>
+
+            {" "}رو از امروز شروع کن
+
+            <br />
+
+            و مسیر شغلیت رو بساز
+
+          </h1>
+
+          <p
+            className="
+             mt-6 text-slate-500 leading-9 max-w-[700px] mx-auto 
+            ">
+            با آموزش‌های پروژه‌محور و فارسی، قدم‌به‌قدم
+            مهارت واقعی کسب کن، پروژه بساز و آماده ورود
+            به بازار کار شو.
+          </p>
+
+          {/* Search */}
+
+          <div
+            className="
+             mt-8
+            "
+          >
+            <SearchBar />
+          </div>
+
+          {/* Stats */}
+
+          <div
+            className="
+             mt-10 flex flex-wrap justify-center gap-4
+             lg:justify-start
+            "
+          >
+
+            <div
+              className="
+               border bg-white/80 rounded-3xl px-6 py-4
+              ">
+
+              <p className="text-2xl font-bold text-slate-800">
+                +۲۰۰
+              </p>
+
+              <span
+                className="text-slate-500 text-sm"
+              >
+                دوره آموزشی
+              </span>
+
+            </div>
+
+            <div
+              className="   
+               border bg-white/80 rounded-3xl px-6 py-4
+              ">
+              <p className="text-2xl font-bold text-slate-800">
+                +۱۰K
+              </p>
+
+              <span
+                className="text-slate-500 text-sm"
+              >
+                دانشجو
+              </span>
+
+            </div>
+
+            <div
+              className="
+               border bg-white/80 rounded-3xl px-6 py-4
+              ">
+              <p className="text-2xl font-bold text-slate-800">
+                +۳۰
+              </p>
+
+              <span
+                className="text-slate-500 text-sm"
+              >
+                مدرس فعال
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Image */}
+
+        <div
+          className="
+           w-full relative flex justify-center
+           lg:w-[45%]
+          ">
+
+          <div
+            className="
+             absolute inset-0 bg-cyan-200/30 blur-[100px]
+            "/>
+
+          <img
+            src="./src/assets/hero.png"
+            alt="hero"
+            className="
+             relative w-full max-w-[650px] object-contain animate-float
+            "/>
+
+        </div>
+
+      </div>
+
+    </section>
+
   )
 }
 
