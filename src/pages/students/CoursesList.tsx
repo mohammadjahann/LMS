@@ -5,6 +5,7 @@ import type { CourseType, FiltersDataTypes } from "../../Types"
 import Filters from "../../components/students/LogIn/Filters"
 import { useAppDispatch, useAppSelector } from "../../redux/student/hooks"
 import { fetchProducts } from "../../redux/student/productSlice"
+import { useParams } from "react-router-dom"
 
 const filtersDatas: FiltersDataTypes[] = filtersData
 
@@ -45,7 +46,26 @@ const CoursesList = () => {
   const [activeFilters, setActiveFilters] = useReducer(filterReducer, initialFilterState)
   const [searchInput, setSearchInput] = useState<string>('')
 
+  const params = useParams()
+
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+
+    if (params.input) {
+
+      // eslint-disable-next-line
+      setSearchInput(params.input)
+
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+
+
+  }, [])
 
   useEffect(() => {
     if (status !== 'FULLFILED') {

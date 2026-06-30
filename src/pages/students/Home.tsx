@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <div
-      className="flex flex-col items-center  text-center">
+      className="flex flex-col items-center  text-center overflow-x-hidden">
       <Hero />
       <Companies />
       <CouresSection />
