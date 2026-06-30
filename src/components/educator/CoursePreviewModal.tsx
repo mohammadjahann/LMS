@@ -75,18 +75,18 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
             >
                 {/* Modal Container */}
                 <div
-                    className=" flex flex-col w-full max-h-[90vh] overflow-hidden  rounded-[36px] bg-gradient-to-b from-cyan-50 via-white to-white border border-cyan-100 shadow-[0_40px_120px_rgba(0,0,0,.18)]">
+                    className=" flex flex-col w-full max-h-[90vh] overflow-hidden  rounded-[10px] md:rounded-[20px] bg-gradient-to-b from-cyan-50 via-white to-white border border-cyan-100 shadow-[0_40px_120px_rgba(0,0,0,.18)]">
 
                     {/* Header */}
 
                     <div
                         className="
-                            shrink-0  bg-white/70 backdrop-blur-xl border-b px-6 py-5 flex dir justify-between items-center z-10 ">
+                            shrink-0  bg-white/70 backdrop-blur-xl border-b px-3 md:px-6 py-5 flex dir justify-between items-center z-10 ">
                         <div>
-                            <h2 className="text-3xl text-slate-800 font-MTNIrancell-Bold">
+                            <h2 className="text-xl text-slate-800 font-MTNIrancell-Bold">
                                 پیش نمایش دوره
                             </h2>
-                            <p className="text-slate-500 mt-2">
+                            <p className="text-slate-500 mt-1 md:mt-2">
                                 بررسی نهایی قبل از انتشار
                             </p>
                         </div>
@@ -100,7 +100,7 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
 
                     {/* Body  */}
 
-                    <div className="flex-1 overflow-y-auto p-6 md:p-8 dir">
+                    <div className="flex-1 overflow-y-auto py-5 px-2 md:p-8 dir">
                         <div className="grid xl:grid-cols-[1fr_360px] gap-8">
 
                             {/* Right */}
@@ -109,7 +109,7 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
 
                                 {/* Cover */}
 
-                                <div className="overflow-hidden rounded-[32px] border">
+                                <div className="overflow-hidden rounded-[12px] md:rounded-[22px] border">
                                     <img
                                         className="w-full h-[300px] object-cover"
                                         src={courseData.courseThumbnail || "https://placehold.co/1200x600"}
@@ -118,13 +118,13 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
 
                                 {/* Title */}
 
-                                <div className="bg-white rounded-[32px] p-7 border">
+                                <div className="bg-white rounded-[12px] md:rounded-[22px] p-7 border">
                                     <div className="flex gap-3 mb-4">
                                         <span className="px-4 py-2 rounded-full bg-cyan-100 text-cyan-700">
                                             {courseData.category}
                                         </span>
                                     </div>
-                                    <h1 className="text-3xl text-slate-800 font-MTNIrancell-Bold">
+                                    <h1 className="text-xl md:text-3xl text-slate-800 font-MTNIrancell-Bold">
                                         {courseData.courseTitle || "عنوان دوره"}
                                     </h1>
                                     <p className="mt-6 text-slate-600 leading-9">
@@ -134,8 +134,8 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
 
                                 {/* Chapters */}
 
-                                <div className="bg-white rounded-[32px] border p-6">
-                                    <h3 className="text-2xl mb-6 font-MTNIrancell-Bold">
+                                <div className="bg-white rounded-[12px] md:rounded-[22px] border p-6">
+                                    <h3 className="text-xl md:text-2xl mb-6 font-MTNIrancell-Bold">
                                         ساختار دوره
                                     </h3>
                                     <div className="flex flex-col gap-4">
@@ -157,7 +157,7 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
                             {/* Sidebar */}
 
                             <aside className="flex flex-col gap-5">
-                                <div className="sticky top-0 bg-white rounded-[32px] p-6 border">
+                                <div className="sticky top-0 bg-white rounded-[12px] md:rounded-[22px] py-5 px-2 md:px-5 border">
                                     <h3 className="text-xl mb-6 font-MTNIrancell-Bold">خلاصه دوره</h3>
                                     <div className="flex flex-col gap-5">
                                         <div className="flex justify-between">
@@ -182,12 +182,12 @@ const CoursePreviewModal = ({ courseData, show, closeModal }: Props) => {
                                         ) : (
                                             <button
                                                 onClick={publishCourse}
-                                                className="py-4 rounded-2xl bg-cyan-600 text-white w-full">
+                                                className="py-4 rounded-xl bg-cyan-600 text-white w-full">
                                                 انتشار دوره
                                             </button>
                                         )}
 
-                                        <button onClick={closeModal} className="py-4 rounded-2xl border w-full">
+                                        <button onClick={closeModal} className="py-4 rounded-xl border w-full">
                                             برگشت
                                         </button>
                                     </div>
