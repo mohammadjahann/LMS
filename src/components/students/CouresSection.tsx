@@ -1,62 +1,65 @@
-import { Link } from "react-router-dom"
-import CourseCard from "./CourseCard"
-import { useAppSelector } from "../../redux/student/hooks"
-
+import { Link } from "react-router-dom";
+import CourseCard from "./CourseCard";
+import { useAppSelector } from "../../redux/student/hooks";
 
 const CouresSection = () => {
-
-  const { products, status } = useAppSelector(state => state.productsData)
-
+  const { products, status } = useAppSelector(
+    (state) => state.productsData
+  );
 
   return (
+    <section className="w-full relative overflow-hidden pt-3 pb-6 bg-gradient-to-b from-white  via-cyan-100 to-cyan-50">
 
-    <div
-      className=" w-full  bg-gradient-to-t from-cyan-100/70  ">
-      <div className="flex flex-col justify-center items-center my-3 gap-4 py-16 px-8 md:px-20 lg:px-40">
+      {/* decorative background blur */}
 
-        <h2
-          className="text-3xl font-MTNIrancell-Light text-gray-800">
+      <div className="relative flex flex-col items-center text-center px-6 md:px-16 lg:px-32">
+
+        {/* badge */}
+        <span className="px-4 py-2 rounded-full bg-cyan-50 border border-cyan-100 text-cyan-700 text-sm">
+          جدیدترین دوره‌ها
+        </span>
+
+        <h2 className="mt-6 text-3xl md:text-4xl font-MTNIrancell-Bold text-slate-800">
           آموزش از بهترین اساتید
         </h2>
 
-        <p
-          className="text-sm md:text-base text-gray-500 mt-3">
-          بهترین و تاپ ریت ترین دوره های موجود را در زمینه های متفاوت دریافت کنید <br />از برنامه نویسی گرفته تا دوره های مربوط به بیزنس شخصی ، دوره های ما برای بهترین نتایج اماده سازی شده اند
+        <p className="mt-4 text-slate-500 max-w-2xl leading-7">
+          بهترین دوره‌های پروژه‌محور در حوزه‌های مختلف برنامه‌نویسی و کسب‌وکار،
+          طراحی شده برای ورود سریع به بازار کار
         </p>
 
+        {/* courses */}
+        {status === "FULLFILED" ? (
+          <div className="w-full mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        {status === 'FULLFILED' ? (
-          <div
-            className=" w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 ">
             {products.slice(0, 4).map((course) => (
-
-              <CourseCard courseData={course} key={course._id} />
-
+              <div
+                key={course._id}
+                className="transition hover:-translate-y-2 duration-300"
+              >
+                <CourseCard courseData={course} />
+              </div>
             ))}
 
           </div>
         ) : (
-
-          <div className=" w-full flex items-center justify-center my-8 flex-col gap-3">
-            <h4>بارگذاری دوره ها</h4>
-            <div
-              className=" w-16 sm:w-20 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin">
-
-            </div>
+          <div className="w-full mt-14 flex flex-col items-center gap-4">
+            <div className="w-14 h-14 border-4 border-slate-200 border-t-cyan-500 rounded-full animate-spin" />
+            <p className="text-slate-500 text-sm">در حال بارگذاری دوره‌ها...</p>
           </div>
-
         )}
 
+        {/* CTA */}
         <Link
-          to={'/courses-list'}
+          to={"/courses-list"}
           onClick={() => scrollTo(0, 0)}
-          className="text-gray-500 border border-gray-500/30 px-10 py-3 rounded mt-4 bg-cyan-600 text-white">
-          نمایش تمام دوره ها
+          className="mt-12 inline-flex items-center gap-2 px-8 py-3 rounded-2xl  bg-gradient-to-r from-cyan-600 to-cyan-500  text-white shadow-lg shadow-cyan-200  hover:scale-105 active:scale-100 transition">
+          مشاهده همه دوره‌ها
         </Link>
 
       </div>
-    </div>
-  )
-}
+    </section>
+  );
+};
 
-export default CouresSection
+export default CouresSection;

@@ -1,38 +1,53 @@
-
+import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <div
-      className=" bg-gradient-to-b bg-cyan-100/70 w-full flex flex-col items-center gap-4 pt-10 pb-24 px-8 md:px-0">
+    <section className="relative w-full overflow-hidden">
 
-      <h1
-        className=" text-xl md:text-4xl text-gray-800 font-MTNIrancell-DemiBold">
-        یاد گیری مداوم ، هر زمان ، هر کجا
-      </h1>
+      {/* background glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-50 to-white" />
+      <div className="absolute top-36 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-200/30 blur-3xl rounded-full" />
 
-      <p
-        className=" text-gray-500 sm:text-sm font-MTNIrancell-Light">
-        آموزش انلاین به همراه پشتیبانی مداوم از دوره ها ، امکان یادگیری با راندمان بالا را فراهم میکند تا شما بهنترین نتایج را بگیرید
-      </p>
+      <div className="relative flex flex-col items-center text-center gap-6 pt-20 pb-28 px-6 md:px-10 lg:px-20">
 
-      <div
-        className="flex items-center font-MTNIrancell-Medium gap-6 mt-4">
+        {/* badge */}
+        <span className="px-4 py-2 rounded-full bg-white/70 border border-cyan-100 text-cyan-700 text-sm shadow-sm backdrop-blur">
+          یادگیری هوشمند
+        </span>
 
-        <button
-        className=" px-10 py-3 rounded-md text-white bg-blue-600">
-          شروع کنید
-        </button>
+        <h1 className="text-2xl md:text-4xl font-MTNIrancell-Bold text-slate-800 leading-snug">
+          یادگیری مداوم، <span className="text-cyan-600">هر زمان</span>، هر کجا
+        </h1>
 
-        <button
-        className="flex items-center gap-2">
-          جزئیات بیشتر <img src="./src/assets/arrow_icon.svg" alt="arrow icon" />
+        <p className="max-w-2xl text-slate-500 text-sm md:text-base leading-7 dir">
+          آموزش آنلاین به همراه پشتیبانی مداوم از دوره‌ها، تجربه‌ای ایجاد می‌کند که
+          یادگیری را سریع‌تر، عمیق‌تر و کاربردی‌تر می‌کند.
+        </p>
+
+        {/* buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
+
+          <Link
+            to={'courses-list'}
+            className="px-10 py-3 rounded-2xl text-white  bg-gradient-to-r from-cyan-600 to-cyan-500  shadow-lg shadow-cyan-200  hover:scale-105 active:scale-100 transition">
+            شروع کنید
+          </Link>
+
+          <button
+            className="px-6 py-3 rounded-2xl flex items-center gap-2  text-slate-700 hover:text-cyan-600 transition">
+            جزئیات بیشتر
+            <img
+              src="./src/assets/arrow_icon.svg"
+              alt="arrow icon"
+              className="w-4 h-4"
+            />
           </button>
 
+        </div>
+
       </div>
+    </section>
+  );
+};
 
-
-    </div>
-  )
-}
-
-export default CallToAction
+export default CallToAction;
