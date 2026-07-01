@@ -261,9 +261,11 @@ export const AddCourseContextProvider = ({ children }: { children: React.ReactNo
 
 
         } catch (error) {
-            toast.error(error)
-
-
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error("خطایی رخ داد");
+            }
         } finally {
             setLoading(false)
         }
