@@ -5,6 +5,7 @@ import {
     Cell
 
 } from "recharts";
+import type { PieLabelRenderProps } from "recharts";
 import useEducatorAuth from "../../hooks/useEducatorAuth";
 import { useEffect, useState } from "react";
 
@@ -18,8 +19,17 @@ const colors = [
 const RADIAN = Math.PI / 180;
 
 //Custom label for inner circle
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, courseName }: { cx: number, cy: number, midAngle: number, innerRadius: number, outerRadius: number, courseName: string }) => {
+const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle = 0,
+    innerRadius,
+    outerRadius,
+    payload,
+}: PieLabelRenderProps) => {
+
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -32,10 +42,9 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, cou
             dominantBaseline="central"
             fontWeight="bold"
             fontSize={9}
-            width={10}
         >
-            {courseName}
-        </text >
+            {payload?.courseName}
+        </text>
     );
 };
 
