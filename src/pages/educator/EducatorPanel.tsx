@@ -34,29 +34,25 @@ const EducatorPanel = () => {
 
         const courseCount = educatorData.courses.length
 
-        const getStudentCount = async () => {
-
+        const getStudentCount = async (): Promise<number> => {
             try {
-                const { count, error } =
-                    await supabase
-                        .from("enrollments")
-                        .select("*", {
-                            count: "exact",
-                            head: true
-                        })
-                        .in("course_id", educatorData.courses)
+                const { count, error } = await supabase
+                    .from("enrollments")
+                    .select("*", {
+                        count: "exact",
+                        head: true,
+                    })
+                    .in("course_id", educatorData.courses);
+
                 if (error) throw error;
 
-                return count
+                return count ?? 0;
 
             } catch (error) {
-                console.log(error);
-                return 0
-
+                console.error(error);
+                return 0;
             }
-        }
-
-        const studentCount = getStudentCount()
+        };
 
         const incomeCalculator = () => {
 
@@ -71,15 +67,18 @@ const EducatorPanel = () => {
 
         const income = incomeCalculator()
 
-        // eslint-disable-next-line
-        setStatsData(prev => {
 
-            return {
+        const updateStats = async () => {
+            const studentCount = await getStudentCount();
+
+            setStatsData({
                 courseCount,
                 studentCount,
-                income
-            }
-        })
+                income,
+            });
+        };
+
+        updateStats();
 
 
     }, [educatorData, enrollmentsData])
