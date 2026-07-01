@@ -3,7 +3,7 @@ import type { FiltersDataTypes } from "../../../Types"
 
 type Props = {
     filterData: FiltersDataTypes
-    addFilter: (e: ChangeEvent<HTMLFormElement>) => void
+    addFilter: (e: ChangeEvent<HTMLInputElement>) => void
     activeFilters: {
         category: 'ALL' | 'FRONT_END' | 'BACK_END',
         price: '' | 'highest' | 'lowest',
@@ -31,7 +31,6 @@ const Filters = ({ filterData, addFilter, activeFilters }: Props) => {
 
             <form
                 name={filterData.formName}
-                onChange={(e: ChangeEvent<HTMLFormElement>) => addFilter(e)}
                 className=" flex flex-col gap-3"
             >
                 {filterData.filters.map(filter => (
@@ -45,6 +44,7 @@ const Filters = ({ filterData, addFilter, activeFilters }: Props) => {
                         </span>
 
                         <input
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => addFilter(e)}
                             id={filter.id}
                             name={filterData.inputsName}
                             type="radio"

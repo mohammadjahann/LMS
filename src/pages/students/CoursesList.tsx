@@ -9,41 +9,64 @@ import { useParams } from "react-router-dom"
 
 const filtersDatas: FiltersDataTypes[] = filtersData
 
-type Filterprops = {
-  category: string,
-  price: string,
-  date: string
-}
+type FilterProps = {
+  category: "ALL" | "FRONT_END" | "BACK_END";
+  price: "" | "highest" | "lowest";
+  date: "" | "newest" | "oldest";
+};
 
-type ActionProps = {
-  type: string,
-  payload: string
-}
+type ActionProps =
+  | {
+    type: "SET_CATEGORY";
+    payload: FilterProps["category"];
+  }
+  | {
+    type: "SET_PRICE";
+    payload: FilterProps["price"];
+  }
+  | {
+    type: "SET_DATE";
+    payload: FilterProps["date"];
+  };
 
 const CoursesList = () => {
 
-  const filterReducer = (state: Filterprops, action: ActionProps) => {
+  const filterReducer = (
+    state: FilterProps,
+    action: ActionProps
+  ): FilterProps => {
     switch (action.type) {
-      case 'SET_CATEGORY':
-        return { ...state, category: action.payload }
-      case 'SET_PRICE':
-        return { ...state, date: '', price: action.payload }
-      case 'SET_DATE':
-        return { ...state, price: '', date: action.payload }
-      default:
-        return state
-    }
-  }
+      case "SET_CATEGORY":
+        return {
+          ...state,
+          category: action.payload,
+        };
 
-  const initialFilterState: Filterprops = {
-    category: 'ALL',
-    price: '',
-    date: ''
-  }
+      case "SET_PRICE":
+        return {
+          ...state,
+          date: "",
+          price: action.payload,
+        };
+
+      case "SET_DATE":
+        return {
+          ...state,
+          price: "",
+          date: action.payload,
+        };
+    }
+  };
+
+  const initialFilterState: FilterProps = {
+    category: "ALL",
+    price: "",
+    date: "",
+  };
 
   const { products, status } = useAppSelector(state => state.productsData)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [activeFilters, setActiveFilters] = useReducer(filterReducer, initialFilterState)
+  const [activeFilters, dispatchFilter] = useReducer(filterReducer, initialFilterState);
   const [searchInput, setSearchInput] = useState<string>('')
 
   const params = useParams()
@@ -74,12 +97,31 @@ const CoursesList = () => {
   }, [status, dispatch])
 
   const addFilter = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setActiveFilters({
-      type: `SET_${name.toUpperCase()}`,
-      payload: value
-    })
-  }
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "category":
+        dispatchFilter({
+          type: "SET_CATEGORY",
+          payload: value as FilterProps["category"],
+        });
+        break;
+
+      case "price":
+        dispatchFilter({
+          type: "SET_PRICE",
+          payload: value as FilterProps["price"],
+        });
+        break;
+
+      case "date":
+        dispatchFilter({
+          type: "SET_DATE",
+          payload: value as FilterProps["date"],
+        });
+        break;
+    }
+  };
 
 
   const courseData: CourseType[] = useMemo(() => {
