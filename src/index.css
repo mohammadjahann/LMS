@@ -164,5 +164,35 @@
 
   }
 
+  @keyframes succsess-in {
+
+    0% {
+      transform: translateX(300px)
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+
+  }
+
+  .succsess-in {
+    animation: succsess-in .3s ease-in-out;
+  }
+
+
+  @keyframes modal-closer {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(300px);
+    }
+  }
+
+  .modal-closer {
+    animation: modal-closer .6s ease-in-out;
+  }
 
 }

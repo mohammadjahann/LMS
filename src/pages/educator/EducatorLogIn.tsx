@@ -26,7 +26,7 @@ const EducatorLogIn = () => {
 
     const timeout = setTimeout(() => {
       navigate('/educator/panel')
-    }, 1000)
+    }, 2000)
 
     return () => clearTimeout(timeout)
 
@@ -74,7 +74,11 @@ const EducatorLogIn = () => {
       }
 
     } finally {
-      setLoading(false)
+
+      setTimeout(() => {
+
+        setLoading(false)
+      }, 2000);
     }
 
 
