@@ -82,7 +82,7 @@ const AddCourse = () => {
 
                 <input
                   value={courseData.coursePrice}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_coursePrice", payload: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_coursePrice", payload: Number(e.target.value) })}
                   className="w-full mt-2 rounded-xl border p-4" />
 
               </div>
@@ -95,7 +95,7 @@ const AddCourse = () => {
 
                 <input
                   value={courseData.discount}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_discount", payload: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => courseDataDispatch({ type: "SET_discount", payload: Number(e.target.value) })}
                   className="w-full mt-2 rounded-xl border p-4 mb-2" />
 
               </div>
