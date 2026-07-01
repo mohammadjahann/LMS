@@ -65,7 +65,7 @@ const MyStudents = () => {
 
   // Calculate Stats Section Datas
 
-  const statsDatas: { totalSell: number, topSeller: string } = useMemo(() => {
+  const statsDatas: { totalSell: number, topSeller: string } | undefined = useMemo(() => {
 
     if (!enrollmentsData) return;
 
@@ -175,8 +175,8 @@ const MyStudents = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 ">
 
         <DetailsCard title="کل دانشجویان" content={enrollmentsData?.length.toString()} styles="bg-white" contentStyles="text-xl" />
-        <DetailsCard title='درآمد این ماه' content={statsDatas.totalSell.toLocaleString('fa-IR')} styles="bg-white" contentStyles="text-xl" />
-        <DetailsCard title='پرفوش ترین دوره' content={statsDatas.topSeller} styles="bg-gradient-to-tl from-blue-400 to-cyan-500 text-white" contentStyles="text-xl" />
+        <DetailsCard title='درآمد این ماه' content={statsDatas?.totalSell.toLocaleString('fa-IR')} styles="bg-white" contentStyles="text-xl" />
+        <DetailsCard title='پرفوش ترین دوره' content={statsDatas?.topSeller} styles="bg-gradient-to-tl from-blue-400 to-cyan-500 text-white" contentStyles="text-xl" />
 
       </div>
 
