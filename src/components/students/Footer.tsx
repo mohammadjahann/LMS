@@ -1,4 +1,3 @@
-import React from "react";
 
 const Footer = () => {
   return (
@@ -14,7 +13,7 @@ const Footer = () => {
             <div className="w-10 h-10 bg-[#b7f1f6] rounded-lg flex items-center justify-center text-slate-900 font-bold text-xl">
               {"</>"}
             </div>
-            <h2 className="font-MTNIrancell-Bold text-2xl text-[#cffafe]">آکادمی ایدمی</h2>
+            <h2 className="font-MTNIrancell-Bold text-2xl text-[#cffafe]">آکادمی کد</h2>
           </div>
 
           <p className="mt-4 text-sm text-[#ecfeff]/70 leading-loose text-justify font-MTNIrancell-Light">
