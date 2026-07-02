@@ -55,7 +55,6 @@ A modern **Learning Management System (LMS)** built with **React**, **TypeScript
 | State Management | Redux Toolkit, Context API |
 | Backend | Supabase |
 | Charts | Recharts |
-| Editor | Quill |
 | Notifications | React Toastify |
 
 ---
@@ -68,12 +67,9 @@ src
 ├── components
 ├── context
 ├── hooks
-├── layouts
 ├── pages
 ├── redux
-├── services
-├── types
-└── utils
+└── types 
 ```
 
 ---
@@ -131,12 +127,13 @@ npm run build
 
 ## 📷 Screenshots
 
-_Add screenshots here._
+<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/e60c941b-4dca-456e-804e-8b0dac3cbcd8" />
+
 
 ---
 
 ## 👨‍💻 Author
 
-**Mohammad**
+**Mohammad Jahan Abadi**
 
 If you like this project, consider giving it a ⭐.
