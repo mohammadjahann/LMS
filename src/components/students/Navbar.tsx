@@ -5,6 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import LoggedInPanel from "../LoggedInPanel";
 import useAuth from "../../hooks/useAuth";
 import UserBasket from "./UserBasket";
+import logo from "../../assets/logo.png"
 
 
 const Navbar = () => {
@@ -41,7 +42,7 @@ const Navbar = () => {
             <Link to={'/'}>
                 <img
                     className=" w-28 lg:w-32 cursor-pointer"
-                    src='/src/assets/logo.png'
+                    src={logo}
                     alt="" />
             </Link>
 

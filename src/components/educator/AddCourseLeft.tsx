@@ -1,6 +1,8 @@
 import { useState } from "react"
 import CoursePreviewModal from "./CoursePreviewModal"
 import useAddCourseContext from "../../hooks/useAddCourseContext"
+import useEducatorAuth from "../../hooks/useEducatorAuth"
+import { supabase } from "../../supabase"
 
 
 
@@ -10,6 +12,8 @@ const AddCourseLeft = () => {
     const [showPreview, setShowPreview] = useState(false)
 
     const { courseData, validator, addCourseToDatabase, courseDataDispatch, loading } = useAddCourseContext()
+
+    const { educatorData, setEducatorData } = useEducatorAuth()
 
     const lectureCounter = (): number => {
 
@@ -31,6 +35,27 @@ const AddCourseLeft = () => {
         if (isValid === "VALID") {
 
             const courseAdded = await addCourseToDatabase();
+
+
+
+            const updatedCourseList = [...educatorData?.courses ?? [], courseData._id]
+
+            await supabase
+                .from('educators')
+                .update({
+                    courses: updatedCourseList
+                })
+                .eq('id', educatorData?.id)
+
+
+            setEducatorData(prev => {
+                if (!prev) return null
+                return {
+                    ...prev,
+                    courses: updatedCourseList
+                }
+            })
+
 
             if (courseAdded) courseDataDispatch({ type: "CLEANUP" })
         }

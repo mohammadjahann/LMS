@@ -11,7 +11,7 @@ const AuthHeader = ({ title, text }: AuthHeaderProps) => {
 
             <h4
                 className="">
-               {title}
+                {title}
             </h4>
 
             <span className="text-[10px]">

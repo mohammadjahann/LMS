@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import arrow from "../../assets/arrow_icon.svg"
+
 
 const CallToAction = () => {
   return (
@@ -37,7 +39,7 @@ const CallToAction = () => {
             className="px-6 py-3 rounded-2xl flex items-center gap-2  text-slate-700 hover:text-cyan-600 transition">
             جزئیات بیشتر
             <img
-              src="./src/assets/arrow_icon.svg"
+              src={arrow}
               alt="arrow icon"
               className="w-4 h-4"
             />

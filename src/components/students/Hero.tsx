@@ -1,4 +1,5 @@
 import SearchBar from "./SearchBar"
+import heroImage from "../../../src/assets/hero.png"
 
 const Hero = () => {
   return (
@@ -151,7 +152,7 @@ const Hero = () => {
             "/>
 
           <img
-            src="./src/assets/hero.png"
+            src={heroImage}
             alt="hero"
             className="
              relative w-full max-w-[650px] object-contain animate-float

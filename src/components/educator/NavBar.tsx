@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useEducatorAuth from "../../hooks/useEducatorAuth"
 import { TbLogout2 } from "react-icons/tb";
+import logo from "../../assets/logo.png"
 
 
 const EducatorNavBar = () => {
@@ -12,7 +13,7 @@ const EducatorNavBar = () => {
 
       {/* Logo */}
       <Link to={'/'}>
-        <img src="/src/assets/logo.png" alt="" className="w-28" />
+        <img src={logo} alt="" className="w-28" />
       </Link>
 
       <TbLogout2

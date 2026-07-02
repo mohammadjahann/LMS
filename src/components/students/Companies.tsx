@@ -1,4 +1,9 @@
 import Marquee from "react-fast-marquee";
+import microsoft from "../../assets/microsoft_logo.svg"
+import walmart from "../../assets/walmart_logo.svg"
+import accenture from "../../assets/accenture_logo.svg"
+import adobe from "../../assets/adobe_logo.svg"
+import paypal from "../../assets/paypal_logo.svg"
 
 type CompanyData = {
   src: string;
@@ -6,11 +11,11 @@ type CompanyData = {
 };
 
 const companiesData: CompanyData[] = [
-  { src: "./src/assets/microsoft_logo.svg", alt: "microsoft" },
-  { src: "./src/assets/walmart_logo.svg", alt: "walmart" },
-  { src: "./src/assets/accenture_logo.svg", alt: "accenture" },
-  { src: "./src/assets/adobe_logo.svg", alt: "adobe" },
-  { src: "./src/assets/paypal_logo.svg", alt: "paypal" },
+  { src: microsoft, alt: "microsoft" },
+  { src: walmart, alt: "walmart" },
+  { src: accenture, alt: "accenture" },
+  { src: adobe, alt: "adobe" },
+  { src: paypal, alt: "paypal" },
 ];
 
 const Companies = () => {
