@@ -1,73 +1,142 @@
-# React + TypeScript + Vite
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-764ABC?logo=redux&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# 🎓 Learning Management System (LMS)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A modern **Learning Management System (LMS)** built with **React**, **TypeScript**, and **Supabase**. The application provides dedicated dashboards for both students and instructors with role-based authentication, protected routes, and a responsive user experience.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 👨‍🎓 Student Panel
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- User Authentication
+- Browse & Search Courses
+- Shopping Cart
+- Course Enrollment
+- Student Dashboard
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 👨‍🏫 Instructor Panel
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Instructor Authentication
+- Course Management (Create, Edit & Delete)
+- Student Management
+- Analytics Dashboard
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### ⚙️ General Features
+
+- Component-Based Architecture
+- Separate Layouts for Student & Instructor Panels
+- Protected Routes
+- Role-Based Authentication
+- Responsive Design
+- Rich Text Editor
+- Toast Notifications
+- Reusable Components
+- Custom Hooks
+
+---
+
+## 🛠 Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Frontend | React 19 |
+| Language | TypeScript |
+| Build Tool | Vite |
+| Styling | Tailwind CSS |
+| Routing | React Router v7 |
+| State Management | Redux Toolkit, Context API |
+| Backend | Supabase |
+| Charts | Recharts |
+| Editor | Quill |
+| Notifications | React Toastify |
+
+---
+
+## 📂 Project Structure
+
+```text
+src
+├── assets
+├── components
+├── context
+├── hooks
+├── layouts
+├── pages
+├── redux
+├── services
+├── types
+└── utils
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚡ Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Clone the repository
+
+```bash
+git clone https://github.com/your-username/your-repository.git
 ```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Build for production
+
+```bash
+npm run build
+```
+
+---
+
+## 💡 Project Highlights
+
+- Component-Based Architecture
+- Separate Layouts for Student & Instructor
+- Protected Routes & Role-Based Authentication
+- Global State Management with Redux Toolkit & Context API
+- Responsive UI with Tailwind CSS
+- Analytics Dashboard using Recharts
+- Backend Integration with Supabase
+
+---
+
+## 🔮 Future Improvements
+
+- Unit Testing
+- Lazy Loading
+- Error Boundaries
+- CI/CD Pipeline
+- Dark Mode
+- Internationalization (i18n)
+
+---
+
+## 📷 Screenshots
+
+_Add screenshots here._
+
+---
+
+## 👨‍💻 Author
+
+**Mohammad**
+
+If you like this project, consider giving it a ⭐.
